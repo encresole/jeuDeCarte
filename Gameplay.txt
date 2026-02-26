@@ -1,0 +1,383 @@
+========================================================
+   AGES OF CLASH — JEU DE CARTES COMPLET
+   Structure inspirée Pokémon TCG Pocket
+========================================================
+
+========================================================
+  REGLES DU JEU
+========================================================
+
+OBJECTIF
+--------
+Éliminer tous les personnages actifs et sur le banc adverse.
+Le dernier joueur avec des personnages vivants gagne.
+
+MISE EN PLACE
+-------------
+- Chaque joueur commence avec 5 cartes en main
+- On pose 1 carte Personnage en position ACTIVE (obligatoire)
+- On peut poser jusqu'à 3 cartes Personnage sur le BANC
+- Les Sorts et Objets se jouent depuis la main pendant son tour
+
+ENERGIE
+-------
+- Commence à 100% pour TOUS les personnages
+- Se dépense quand on attaque
+- Se recharge de +20% à chaque tour pour le personnage ACTIF
+- Se recharge de +30% à chaque tour pour les personnages sur le BANC
+  (le banc recharge plus vite, comme dans le vrai Pokémon TCG !)
+- Maximum 100%, minimum 0%
+- Si énergie insuffisante → impossible d'attaquer ce tour
+
+TOUR DE JEU
+-----------
+1. Piocher 1 carte
+2. Jouer des Objets ou Sorts depuis la main (optionnel)
+3. Attaquer avec le personnage ACTIF (optionnel)
+4. Si le personnage actif est KO → on remplace depuis le banc
+
+REMPLACEMENT
+------------
+- Si personnage actif KO → le joueur DOIT mettre un perso du banc en actif
+- Si banc vide et actif KO → DEFAITE IMMEDIATE
+
+SYNERGIES
+---------
+Chevalier + Samourai  → "Code de l'Honneur" : +15 ATQ aux deux
+Cowboy + Soldat       → "Feu Croisé"        : +30 ATQ combinées
+Samourai + Cowboy     → "Duel Légendaire"   : premier attaquant fait x2 dégâts
+Chevalier + Soldat    → "Bouclier & Blindage": le plus défensif protège l'autre
+
+========================================================
+  LOGIQUE A CODER (Raphael)
+========================================================
+
+Joueur.java
+-----------
+- Personnage actif         : Personnage personnageActif
+- Banc (max 3)             : List<Personnage> banc
+- Main (max 7)             : List<Carte> main
+- Pioche                   : Deck deck
+
+Personnage.java
+---------------
+- int pv
+- int pvMax
+- int atq
+- int energie = 100        // commence à 100%
+- boolean estActif         // true = position active, false = banc
+- Objet objetEquipe        // null si rien équipé
+
+void rechargerEnergie() {
+    if (estActif) energie = Math.min(100, energie + 20);
+    else          energie = Math.min(100, energie + 30);
+}
+
+boolean peutAttaquer(int coutEnergie) {
+    return energie >= coutEnergie;
+}
+
+Partie.java
+-----------
+- Vérifier si banc vide + actif KO → defaite
+- Appliquer recharge énergie à TOUS les persos chaque début de tour
+- Gérer les synergies inter-factions
+
+Combat.java
+-----------
+- Calculer dégâts : atq attaquant - 0 (pas de DEF !)
+- Appliquer synergies
+- Gérer effets spéciaux (headshot, embuscade, etc.)
+- Random pour effets probabilistes
+
+========================================================
+  LES CARTES — 4 FACTIONS x 7 CARTES = 28 CARTES
+========================================================
+
+  Structure par faction :
+  - 3 Personnages
+  - 2 Sorts
+  - 2 Objets
+
+========================================================
+  ⚔️ FACTION CHEVALIERS
+  Style : Défense convertie en attaque, magie divine
+========================================================
+
+👤 PERSONNAGES
+--------------
+
+Sire Aldric l'Indomptable
+  PV        : 150
+  ATQ       : 50
+  Énergie   : Attaque coûte 30%
+  Effet     : Bouclier Divin — bloque la première attaque reçue en combat
+
+Paladin Maudit
+  PV        : 120
+  ATQ       : 65
+  Énergie   : Attaque coûte 25%
+  Effet     : Martyr — si KO, inflige 40 dégâts au perso adverse qui l'a éliminé
+
+Écuyer Brave
+  PV        : 70
+  ATQ       : 35
+  Énergie   : Attaque coûte 15%
+  Effet     : Sacrifice — peut donner tous ses PV restants à Aldric (action gratuite)
+
+✨ SORTS
+--------
+
+Jugement Divin
+  Coût énergie  : 0% (sort gratuit)
+  Effet         : Inflige 50 dégâts fixes au perso adverse actif, ignore tout
+
+Bénédiction Royale
+  Coût énergie  : 0% (sort gratuit)
+  Effet         : Soigne 35 PV sur n'importe quel personnage allié
+
+🎒 OBJETS (équipables sur un personnage)
+-----------------------------------------
+
+Excalibur
+  Effet         : +30 ATQ permanent sur le personnage équipé
+
+Bouclier du Roi
+  Effet         : Le personnage équipé ne peut pas être ciblé par des Sorts adverses
+
+========================================================
+  🗡️ FACTION SAMOURAÏS
+  Style : Vitesse, frappe en premier, combos
+========================================================
+
+👤 PERSONNAGES
+--------------
+
+Kenshi la Lame Silencieuse
+  PV        : 110
+  ATQ       : 80
+  Énergie   : Attaque coûte 25%
+  Effet     : Priorité — attaque toujours AVANT l'adversaire, même si c'est son tour
+
+Maître Takeda
+  PV        : 130
+  ATQ       : 60
+  Énergie   : Attaque coûte 30%
+  Effet     : Combo — +40 ATQ si un autre Samouraï est sur le banc
+
+Ronin Sans Maître
+  PV        : 90
+  ATQ       : 70
+  Énergie   : Attaque coûte 20%
+  Effet     : Frénésie — ATQ x2 mais perd 20 PV après chaque attaque
+
+✨ SORTS
+--------
+
+Iaïdo Éclair
+  Coût énergie  : 0%
+  Effet         : Attaque surprise — l'adversaire ne peut pas activer son effet spécial ce tour
+
+Code Bushido
+  Coût énergie  : 0%
+  Effet         : +20 ATQ à tous les Samouraïs (actif + banc) pendant 3 tours
+
+🎒 OBJETS
+----------
+
+Katana Muramasa
+  Effet         : +25 ATQ + ignore les effets de protection adverses
+
+Armure de Laque Noire
+  Effet         : -20 dégâts reçus permanent sur le personnage équipé
+
+========================================================
+  🤠 FACTION COWBOYS
+  Style : Chance, pièges, imprévisible
+========================================================
+
+👤 PERSONNAGES
+--------------
+
+Jesse "Deadshot" Kane
+  PV        : 100
+  ATQ       : 75
+  Énergie   : Attaque coûte 20%
+  Effet     : Headshot — 30% de chance d'étourdir l'adversaire (perd son prochain tour)
+
+Doc Holliday
+  PV        : 90
+  ATQ       : 60
+  Énergie   : Attaque coûte 25%
+  Effet     : Duel — les deux personnages actifs attaquent en même temps ce tour
+
+Calamity Jane
+  PV        : 85
+  ATQ       : 65
+  Énergie   : Attaque coûte 20%
+  Effet     : Esquive — évite automatiquement 1 attaque sur 3 reçues
+
+✨ SORTS
+--------
+
+Coup de Chance
+  Coût énergie  : 0%
+  Effet         : Aléatoire (Random) — soit soigne 40 PV allié, soit inflige 40 dégâts adverse
+
+Embuscade
+  Coût énergie  : 0%
+  Effet         : Piège — la prochaine attaque adverse lui revient dessus (retournée)
+
+🎒 OBJETS
+----------
+
+Colt Peacemaker
+  Effet         : +20 ATQ + cette attaque ne peut pas être retournée ou esquivée
+
+Étoile de Shérif
+  Effet         : Immunisé contre étourdissement et effets de paralysie
+
+========================================================
+  💣 FACTION SOLDATS
+  Style : Technologie, explosifs, dégâts de zone
+========================================================
+
+👤 PERSONNAGES
+--------------
+
+Sergent "Ironwall" Cross
+  PV        : 140
+  ATQ       : 55
+  Énergie   : Attaque coûte 35%
+  Effet     : Blindage — les 30 premiers dégâts reçus par tour sont annulés
+
+Agent Fantôme
+  PV        : 95
+  ATQ       : 70
+  Énergie   : Attaque coûte 25%
+  Effet     : Camouflage — ne peut pas être ciblé par des effets adverses pendant 2 tours
+
+Sniper Elite
+  PV        : 85
+  ATQ       : 80
+  Énergie   : Attaque coûte 30%
+  Effet     : Tir de précision — peut attaquer directement un personnage sur le BANC adverse
+
+✨ SORTS
+--------
+
+Frappe Aérienne
+  Coût énergie  : 0%
+  Effet         : 80 dégâts fixes à n'importe quelle cible, impossible à bloquer ou retourner
+
+Grenade EMP
+  Coût énergie  : 0%
+  Effet         : Désactive tous les Objets équipés adverses pendant 2 tours
+
+🎒 OBJETS
+----------
+
+Gilet Pare-balles
+  Effet         : -20 dégâts reçus permanent MAIS ATQ -10 (lourd à porter)
+
+Drone de Combat
+  Effet         : Inflige automatiquement 15 dégâts au perso adverse actif à chaque début de tour
+
+========================================================
+  LES 3 DECKS DE DEPART
+========================================================
+
+DECK "Honneur Éternel"
+  Factions    : Chevaliers + Samouraïs
+  Synergie    : Code de l'Honneur (+15 ATQ aux deux)
+  Style       : Équilibré, résistant, combos puissants
+
+DECK "Poudre et Plomb"
+  Factions    : Cowboys + Soldats
+  Synergie    : Feu Croisé (+30 ATQ combinées)
+  Style       : Agressif, imprévisible, dégâts massifs
+
+DECK "Clash des Âges"
+  Factions    : 1 de chaque faction
+  Synergie    : Toutes disponibles
+  Style       : Polyvalent, toutes les stratégies possibles
+
+========================================================
+  EFFETS SPECIAUX A CODER (Raphael)
+========================================================
+
+Headshot (30%)
+  → Random rand = new Random()
+  → if(rand.nextInt(100) < 30) adverse.setEtourdi(true)
+
+Coup de Chance (50/50)
+  → if(rand.nextBoolean()) soigner() else attaquer()
+
+Embuscade
+  → boolean piegeActif dans Joueur.java
+  → si piegeActif == true → retourner dégâts sur attaquant
+
+Drone de Combat
+  → List<Effet> effetsActifs dans Partie.java
+  → appliqué à chaque debutDeTour()
+
+Synergies
+  → stream().filter(c -> c.getFaction() == Faction.X).count() >= 2
+
+Grenade EMP
+  → for(Objet o : adverse.getObjetsEquipes()) o.setActif(false)
+
+Sniper Elite (cible banc)
+  → Combat.java : autoriser ciblage de banc[index] si Sniper actif
+
+Recharge énergie banc/actif
+  → for(Personnage p : joueur.getBanc()) p.rechargerEnergie()
+  → joueur.getActif().rechargerEnergie()
+
+========================================================
+  STRUCTURE PROJET GITHUB
+========================================================
+
+src/
+├── model/
+│   ├── Carte.java
+│   ├── Personnage.java       ← PV, ATQ, energie, estActif
+│   ├── Sort.java             ← effet instantané
+│   ├── Objet.java            ← équipement permanent
+│   ├── Deck.java             ← ArrayList<Carte>
+│   ├── MainJeu.java          ← 5 cartes au départ
+│   ├── Joueur.java           ← actif, banc, main, deck
+│   ├── Partie.java           ← tours, fin de partie, synergies
+│   ├── Combat.java           ← calcul dégâts, effets
+│   ├── Effet.java            ← interface
+│   ├── Faction.java          ← enum CHEVALIER, SAMOURAI, COWBOY, SOLDAT
+│   └── ActionTour.java       ← enum ATTAQUER, JOUER_SORT, EQUIPER, PASSER
+├── controller/
+│   ├── GameController.java
+│   ├── CarteController.java
+│   └── DeckController.java
+├── data/
+│   ├── CarteDAO.java
+│   ├── ChargeurCartes.java
+│   └── cartes.json
+└── view/
+    ├── MainApp.java
+    ├── PlateauView.java      ← zone active + banc
+    ├── CarteView.java        ← affichage carte
+    ├── MainJoueurView.java   ← 5 cartes en main
+    ├── InfoJoueurView.java   ← PV, energie
+    └── AnimationCombat.java  ← effets visuels
+
+========================================================
+  RAPPELS IMPORTANTS
+========================================================
+- JavaFX uniquement, pas Swing
+- Énergie commence à 100% (pas 33% comme Rocket League)
+- Banc recharge +30% par tour, Actif +20% par tour
+- Pas de DEF, seulement ATQ
+- 5 cartes en main au départ comme Pokémon TCG Pocket
+- 1 actif + max 3 sur le banc
+- Sorts gratuits en énergie (coût 0%)
+- Objets équipés permanents sur un personnage
+- Commits réguliers sur GitHub chaque mercredi !
+========================================================
