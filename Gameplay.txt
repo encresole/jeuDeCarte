@@ -9,8 +9,7 @@
 
 OBJECTIF
 --------
-Éliminer tous les personnages actifs et sur le banc adverse.
-Le dernier joueur avec des personnages vivants gagne.
+Éliminer 5 des personnages actifs et sur le banc adverse.
 
 MISE EN PLACE
 -------------
@@ -49,7 +48,7 @@ Samourai + Cowboy     → "Duel Légendaire"   : premier attaquant fait x2 dég�
 Chevalier + Soldat    → "Bouclier & Blindage": le plus défensif protège l'autre
 
 ========================================================
-  LOGIQUE A CODER (Raphael)
+  LOGIQUE A CODER 
 ========================================================
 
 Joueur.java
@@ -380,4 +379,5 @@ src/
 - Sorts gratuits en énergie (coût 0%)
 - Objets équipés permanents sur un personnage
 - Commits réguliers sur GitHub chaque mercredi !
+
 ========================================================
