@@ -23,8 +23,19 @@ public class MainMenu {
         cardPanel = new JPanel(cardLayout);
 
         // Initialiser les différents panneaux (screens)
+        int largeur = frame.getWidth();
+        int hauteur = frame.getHeight();
         menuPanel = new JPanel();
-        menuPanel.add(new JLabel("Menu Principal"));
+        menuPanel.setLayout(null);
+        JLabel title = new JLabel("AGES OF CLASH");
+        int demiLargeur = largeur / 2;
+        int demiHauteur = hauteur / 2;
+        title.setBounds(370,270,100,30);
+        JButton buttonJouer = new JButton("Jouer");
+        buttonJouer.setBounds(370,300,100,30);
+        menuPanel.add(title);
+        menuPanel.add(buttonJouer);
+        
 
         creerDeckPanel = new JPanel();
         creerDeckPanel.add(new JLabel("Créer un Deck"));
@@ -46,24 +57,17 @@ public class MainMenu {
         // Afficher le premier panneau (Menu)
         showMenu();
 
-        // Simuler le changement d'écran après quelques secondes
-        Timer timer = new Timer(3000, e -> showCreerDeck());  // Après 3 secondes, passer à "Créer un Deck"
-        timer.setRepeats(false);  // Ne répète pas l'événement
-        timer.start();
-    }
 
-    // Méthodes pour afficher les différents panneaux
+    }
+    
+    
+
     private void showMenu() {
         cardLayout.show(cardPanel, "Menu");
     }
 
     private void showCreerDeck() {
         cardLayout.show(cardPanel, "Créer un Deck");
-
-        // Simuler la transition vers "Combat" après quelques secondes
-        Timer timer = new Timer(3000, e -> showCombat());
-        timer.setRepeats(false);  // Ne répète pas l'événement
-        timer.start();
     }
 
     private void showCombat() {

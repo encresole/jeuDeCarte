@@ -370,7 +370,7 @@ src/
 ========================================================
   RAPPELS IMPORTANTS
 ========================================================
-- JavaFX uniquement, pas Swing
+- Swing
 - Énergie commence à 100% (pas 33% comme Rocket League)
 - Banc recharge +30% par tour, Actif +20% par tour
 - Pas de DEF, seulement ATQ
