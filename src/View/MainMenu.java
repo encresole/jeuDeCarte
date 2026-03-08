@@ -6,11 +6,11 @@ import java.awt.*;
 public class MainMenu {
 
     // Panneaux pour chaque "écran" de ton application
-    private JPanel menuPanel;
-    private JPanel creerDeckPanel;
-    private JPanel combatPanel;
-    private CardLayout cardLayout;
-    private JPanel cardPanel;
+	public JPanel menuPanel;
+	public JPanel creerDeckPanel;
+	public JPanel combatPanel;
+	public CardLayout cardLayout;
+	public JPanel cardPanel;
 
     public MainMenu() {
         // Créer la fenêtre principale (JFrame)
@@ -23,18 +23,7 @@ public class MainMenu {
         cardPanel = new JPanel(cardLayout);
 
         // Initialiser les différents panneaux (screens)
-        int largeur = frame.getWidth();
-        int hauteur = frame.getHeight();
-        menuPanel = new JPanel();
-        menuPanel.setLayout(null);
-        JLabel title = new JLabel("AGES OF CLASH");
-        int demiLargeur = largeur / 2;
-        int demiHauteur = hauteur / 2;
-        title.setBounds(370,270,100,30);
-        JButton buttonJouer = new JButton("Jouer");
-        buttonJouer.setBounds(370,300,100,30);
-        menuPanel.add(title);
-        menuPanel.add(buttonJouer);
+        menuPanel = new MenuStart(this);
         
 
         creerDeckPanel = new JPanel();
@@ -62,15 +51,15 @@ public class MainMenu {
     
     
 
-    private void showMenu() {
+    public void showMenu() {
         cardLayout.show(cardPanel, "Menu");
     }
 
-    private void showCreerDeck() {
+    public void showCreerDeck() {
         cardLayout.show(cardPanel, "Créer un Deck");
     }
 
-    private void showCombat() {
+    public void showCombat() {
         cardLayout.show(cardPanel, "Combat");
     }
 
