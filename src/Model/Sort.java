@@ -1,6 +1,7 @@
 package Model;
 
 public class Sort extends Carte  {
+	private static final long serialVersionUID = 1L;
 	/*
 	 * On fera une classe effet avec un dictionnaire de tout les effets avec comme clé le nom de
 	 * l'effet et comme valeur une fonction ou sinon plein de if avec ce qui ce passe si

@@ -1,6 +1,13 @@
 package Model;
 
+import java.util.ArrayList;
+
 public class Model {
+	
+	public Model() {
+		// TODO Auto-generated constructor stub
+		initCartes();
+	}
 	
 	public static enum Faction {CHEVALIER,SAMURAI,COWBOY,SOLDAT};
 	public static enum ActionJoueur {ATTAQUER, JOUER_SORT, EQUIPER, PASSER};
@@ -13,4 +20,11 @@ public class Model {
 	public static EtatApp ETAT;
 
 	public Partie partieEnCours;
+	
+	public ArrayList<Carte> lesCartes = new ArrayList<Carte>();
+	
+	public void initCartes() {
+		lesCartes.add(new Personnage("Aldric",150,100));
+		lesCartes.add(new Personnage("Kenshi",110,80));
+	}
 }
