@@ -36,18 +36,15 @@ public class CreerDeck extends JPanel {
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
-
         int xOffset = 50; 
         int yOffset = 50;
-
-
         for (int i = 0; i < cartes.size(); i++) {
-            cartes.get(i).dessiner(g, xOffset + i * 120, yOffset, scale);
+            Carte c = cartes.get(i);
+            c.setPosition(xOffset + i * 120, yOffset);
+            if (c.getParent() == null) {
+                this.add(c); 
+            }
+            c.repaint(); 
         }
-    }
-
-    public void setScale(float newScale) {
-        this.scale = newScale;
-        repaint(); 
     }
 }

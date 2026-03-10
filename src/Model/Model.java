@@ -2,10 +2,15 @@ package Model;
 
 import java.util.ArrayList;
 
+import Controller.MenuController;
+
 public class Model {
 	
-	public Model() {
+	MenuController mc;
+	
+	public Model(MenuController mc) {
 		// TODO Auto-generated constructor stub
+		this.mc=mc;
 		initCartes();
 	}
 	
@@ -24,7 +29,7 @@ public class Model {
 	public ArrayList<Carte> lesCartes = new ArrayList<Carte>();
 	
 	public void initCartes() {
-		lesCartes.add(new Personnage("Aldric",150,100));
-		lesCartes.add(new Personnage("Kenshi",110,80));
+		lesCartes.add(new Personnage("Aldric",mc,150,100));
+		lesCartes.add(new Personnage("Kenshi",mc,110,80));
 	}
 }

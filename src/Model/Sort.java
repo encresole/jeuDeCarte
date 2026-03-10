@@ -1,5 +1,7 @@
 package Model;
 
+import Controller.MenuController;
+
 public class Sort extends Carte  {
 	private static final long serialVersionUID = 1L;
 	/*
@@ -10,8 +12,8 @@ public class Sort extends Carte  {
 	 */
 	public Effet effet;
 
-	public Sort(String nom, Effet effet) {
-		super(nom);
+	public Sort(String nom,MenuController mc, Effet effet) {
+		super(nom,mc);
 		this.effet = effet;
 	}
 }

@@ -2,15 +2,18 @@ package Controller;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 
+import Model.Joueur;
 import View.MenuManager;
 
-public class MenuController implements ActionListener {
+public class MenuController implements ActionListener, MouseListener {
 	public MenuManager menuManager;
+	public Joueur joueur;
 	
-	
-	public MenuController() {
-		super();
+	public MenuController(Joueur joueur) {
+		this.joueur=joueur;
 	}
 
 
@@ -32,6 +35,41 @@ public class MenuController implements ActionListener {
 		} else if (e.getActionCommand()=="QUITTER") {
 			System.exit(0);
 		}
+	}
+
+
+	@Override
+	public void mouseClicked(MouseEvent e) {
+		// TODO Auto-generated method stub
+		System.out.println(e.getSource());
+	}
+
+
+	@Override
+	public void mousePressed(MouseEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+
+	@Override
+	public void mouseReleased(MouseEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+
+	@Override
+	public void mouseEntered(MouseEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+
+	@Override
+	public void mouseExited(MouseEvent e) {
+		// TODO Auto-generated method stub
+		
 	}
 	
 }
