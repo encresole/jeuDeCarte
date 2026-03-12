@@ -5,7 +5,10 @@ import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.awt.image.BufferedImage;
+import java.io.IOException;
 
+import javax.imageio.ImageIO;
 import javax.swing.JPanel;
 
 import Controller.MenuController;
@@ -37,7 +40,17 @@ public abstract class Carte extends JPanel implements MouseListener {
         g.drawRect(0, 0, width, heigth);
         g.setColor(Color.WHITE);
         g.fillRect(1, 1, width - 1, heigth - 1);
-        g.setColor(Color.BLACK);
+        BufferedImage image = null;
+        
+		try {
+			image = ImageIO.read(getClass().getResource("/images/personnages/Sire Aldric l'indomptable.jpg"));
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+        g.drawImage(image, 0, 0, width - 1, heigth - 1, this);
+        
+        g.setColor(Color.WHITE);
         g.drawString(nom, 10, 20);
     }
     
