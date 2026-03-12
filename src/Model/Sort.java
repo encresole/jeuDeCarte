@@ -13,7 +13,7 @@ public class Sort extends Carte  {
 	public Effet effet;
 
 	public Sort(String nom,MenuController mc, Effet effet) {
-		super(nom,mc);
+		super(nom,nom,mc);
 		this.effet = effet;
 	}
 }

@@ -8,7 +8,7 @@ public class Objet extends Carte {
 	public Effet effet;
 
 	public Objet(String nom,MenuController mc, Effet effet) {
-		super(nom, mc);
+		super(nom,nom, mc);
 		this.effet = effet;
 	}
 

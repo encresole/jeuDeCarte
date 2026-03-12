@@ -29,7 +29,7 @@ public class Model {
 	public ArrayList<Carte> lesCartes = new ArrayList<Carte>();
 	
 	public void initCartes() {
-		lesCartes.add(new Personnage("Aldric",mc,150,100));
-		lesCartes.add(new Personnage("Kenshi",mc,110,80));
+		lesCartes.add(new Personnage("Aldric","Sire Aldric l'Indomptable",mc,150,100));
+		lesCartes.add(new Personnage("Kenshi","Kenshi la Lame Silencieuse",mc,110,80));
 	}
 }

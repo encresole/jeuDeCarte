@@ -10,8 +10,8 @@ public class Personnage extends Carte {
 	public int energie;
 	public Boolean estActif;
 	
-	public Personnage(String nom,MenuController mc, int pv, int attaque) {
-		super(nom,mc);
+	public Personnage(String nom,String nomComplet,MenuController mc, int pv, int attaque) {
+		super(nom,nomComplet,mc);
 		this.pv = pv;
 		this.attaque = attaque;
 		this.energie = 100;

@@ -3,25 +3,29 @@ package Model;
 import java.awt.Color;
 
 import java.awt.Graphics;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 
 import javax.swing.JPanel;
 
 import Controller.MenuController;
 
-public abstract class Carte extends JPanel {
+public abstract class Carte extends JPanel implements MouseListener {
 	private static final long serialVersionUID = 1L;
 	
 	public String nom;
+	public String nomComplet;
     public int width = 100;
     public int heigth = 150;
     public MenuController mc;
 
     // Constructeur de la carte
-    public Carte(String nom, MenuController mc) {
+    public Carte(String nom, String nomComplet, MenuController mc) {
         this.nom = nom;
+        this.nomComplet=nomComplet;
         this.mc=mc;
         this.setLayout(null);
-        this.addMouseListener(mc);
+        this.addMouseListener(this);
         this.setBounds(0, 0, width, heigth);
     }
 
@@ -39,5 +43,27 @@ public abstract class Carte extends JPanel {
     
     public void setPosition(int x,int y) {
     	this.setLocation(x,y);
+    }
+    
+    
+    @Override
+    public void mouseClicked(MouseEvent e) {
+    	mc.carteClique(nom);
+    }
+    
+    @Override
+    public void mouseEntered(MouseEvent e) {
+    }
+    
+    @Override
+    public void mouseExited(MouseEvent e) {
+    }
+    
+    @Override
+    public void mousePressed(MouseEvent e) {
+    }
+    
+    @Override
+    public void mouseReleased(MouseEvent e) {
     }
 }

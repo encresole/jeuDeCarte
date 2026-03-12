@@ -8,7 +8,7 @@ import java.awt.event.MouseListener;
 import Model.Joueur;
 import View.MenuManager;
 
-public class MenuController implements ActionListener, MouseListener {
+public class MenuController implements ActionListener {
 	public MenuManager menuManager;
 	public Joueur joueur;
 	
@@ -36,40 +36,9 @@ public class MenuController implements ActionListener, MouseListener {
 			System.exit(0);
 		}
 	}
-
-
-	@Override
-	public void mouseClicked(MouseEvent e) {
-		// TODO Auto-generated method stub
-		System.out.println(e.getSource());
-	}
-
-
-	@Override
-	public void mousePressed(MouseEvent e) {
-		// TODO Auto-generated method stub
-		
-	}
-
-
-	@Override
-	public void mouseReleased(MouseEvent e) {
-		// TODO Auto-generated method stub
-		
-	}
-
-
-	@Override
-	public void mouseEntered(MouseEvent e) {
-		// TODO Auto-generated method stub
-		
-	}
-
-
-	@Override
-	public void mouseExited(MouseEvent e) {
-		// TODO Auto-generated method stub
-		
-	}
 	
+	public void carteClique(String nom) {
+		
+	}
+
 }
