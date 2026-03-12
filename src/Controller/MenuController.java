@@ -2,10 +2,10 @@ package Controller;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
 
 import Model.Joueur;
+import Model.Model;
+import Model.Model.EtatPossible;
 import View.MenuManager;
 
 public class MenuController implements ActionListener {
@@ -38,7 +38,19 @@ public class MenuController implements ActionListener {
 	}
 	
 	public void carteClique(String nom) {
+		EtatPossible etat = Model.etatApp;
 		
+		if (etat== EtatPossible.CREATIONDECK) {
+			joueur.deck.ajouter(null);
+		}
+		System.out.println("carte "+ nom);
+		System.out.println("cliquée dans "+ etat);
+		System.out.println(joueur.deck);
+		System.out.println(joueur.deck.size());
+	}
+	
+	public void changeEtat(Model.EtatPossible etat) {
+		Model.etatApp=etat;
 	}
 
 }

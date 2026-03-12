@@ -45,6 +45,11 @@ public abstract class Carte extends JPanel implements MouseListener {
     	this.setLocation(x,y);
     }
     
+    @Override
+    public String toString() {
+    	return this.nom;
+    }
+    
     
     @Override
     public void mouseClicked(MouseEvent e) {

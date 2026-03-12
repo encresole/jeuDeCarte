@@ -45,14 +45,17 @@ public class MenuManager {
     }
 
     public void showMenu() {
+    	menuController.changeEtat(Model.EtatPossible.MENU);
     	cardLayout.show(cardPanel, "Menu");
     }
     
     public void showStart() {
+    	menuController.changeEtat(Model.EtatPossible.START);
         cardLayout.show(cardPanel, "Start");
     }
     
     public void showCreer() {
+    	menuController.changeEtat(Model.EtatPossible.CREATIONDECK);
         cardLayout.show(cardPanel, "Crée");
     }
 

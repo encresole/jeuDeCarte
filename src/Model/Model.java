@@ -16,13 +16,13 @@ public class Model {
 	
 	public static enum Faction {CHEVALIER,SAMURAI,COWBOY,SOLDAT};
 	public static enum ActionJoueur {ATTAQUER, JOUER_SORT, EQUIPER, PASSER};
-	public static enum TypeDePartie {JcJ,JcE}
-	public static enum EtatApp {MENU,COMBAT,CREATIONDECK}
+	public static enum TypeDePartie {JcJ,JcE};
+	public static enum EtatPossible {START,MENU,COMBAT,CREATIONDECK};
 	
 	public static int TAILLEDECK=20;
 	public int TAILLEMAINDEBUT=5;
 	
-	public static EtatApp ETAT;
+	public static EtatPossible etatApp=EtatPossible.START;
 
 	public Partie partieEnCours;
 	
@@ -31,5 +31,6 @@ public class Model {
 	public void initCartes() {
 		lesCartes.add(new Personnage("Aldric","Sire Aldric l'Indomptable",mc,150,100));
 		lesCartes.add(new Personnage("Kenshi","Kenshi la Lame Silencieuse",mc,110,80));
+		
 	}
 }
