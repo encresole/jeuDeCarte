@@ -1,5 +1,6 @@
 package Model;
 
+
 import Controller.MenuController;
 
 public class Sort extends Carte  {
@@ -12,8 +13,8 @@ public class Sort extends Carte  {
 	 */
 	public Effet effet;
 
-	public Sort(String nom,MenuController mc, Effet effet) {
-		super(nom,nom,mc);
+	public Sort(String nom,String image,MenuController mc, Effet effet) {
+		super(nom,nom,image,mc);
 		this.effet = effet;
 	}
 }

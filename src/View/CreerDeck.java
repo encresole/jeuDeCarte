@@ -41,10 +41,7 @@ public class CreerDeck extends JPanel {
         for (int i = 0; i < cartes.size(); i++) {
             Carte c = cartes.get(i);
             c.setPosition(xOffset + i * 120, yOffset);
-            if (c.getParent() == null) {
-                this.add(c); 
-            }
-            c.repaint(); 
+            this.add(c); 
         }
     }
 }

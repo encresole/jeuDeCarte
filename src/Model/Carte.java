@@ -2,6 +2,7 @@ package Model;
 
 import java.awt.Color;
 
+
 import java.awt.Graphics;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
@@ -21,11 +22,13 @@ public abstract class Carte extends JPanel implements MouseListener {
     public int width = 100;
     public int heigth = 150;
     public MenuController mc;
+    public String image;
 
     // Constructeur de la carte
-    public Carte(String nom, String nomComplet, MenuController mc) {
+    public Carte(String nom, String nomComplet,String image, MenuController mc) {
         this.nom = nom;
         this.nomComplet=nomComplet;
+        this.image=image;
         this.mc=mc;
         this.setLayout(null);
         this.addMouseListener(this);
@@ -41,12 +44,12 @@ public abstract class Carte extends JPanel implements MouseListener {
         g.setColor(Color.WHITE);
         g.fillRect(1, 1, width - 1, heigth - 1);
         BufferedImage image = null;
-        
+        System.out.println(this.image);
 		try {
-			image = ImageIO.read(getClass().getResource("/images/personnages/Sire Aldric l'indomptable.jpg"));
+			image = ImageIO.read(getClass().getResource(this.image));
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
-			e.printStackTrace();
+			
 		}
         g.drawImage(image, 0, 0, width - 1, heigth - 1, this);
         

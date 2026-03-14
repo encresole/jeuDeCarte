@@ -1,5 +1,6 @@
 package Model;
 
+
 import Controller.MenuController;
 
 public class Objet extends Carte {
@@ -7,8 +8,8 @@ public class Objet extends Carte {
 	
 	public Effet effet;
 
-	public Objet(String nom,MenuController mc, Effet effet) {
-		super(nom,nom, mc);
+	public Objet(String nom,String image,MenuController mc, Effet effet) {
+		super(nom,nom,image, mc);
 		this.effet = effet;
 	}
 
