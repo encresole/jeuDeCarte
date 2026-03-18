@@ -22,43 +22,35 @@ public abstract class Carte extends JPanel implements MouseListener {
     public int width = 100;
     public int heigth = 150;
     public MenuController mc;
-    public String image;
+    public String cheminImage;
+    public BufferedImage image = null;
 
-    // Constructeur de la carte
-    public Carte(String nom, String nomComplet,String image, MenuController mc) {
+    
+    public Carte(String nom, String nomComplet,String cheminImage, MenuController mc) {
         this.nom = nom;
         this.nomComplet=nomComplet;
-        this.image=image;
+        this.cheminImage=cheminImage;
         this.mc=mc;
         this.setLayout(null);
         this.addMouseListener(this);
-        this.setBounds(0, 0, width, heigth);
+        try {
+			image = ImageIO.read(getClass().getResource(this.cheminImage));
+		} catch (IOException e) {
+			System.err.println("Image pas trouvée");
+		}
     }
 
-    // Dessiner la carte à une position (x, y) avec un facteur d'échelle
     @Override
     protected void paintComponent(Graphics g) {
-        super.paintComponent(g); // toujours appeler le super
+        super.paintComponent(g);
         g.setColor(Color.BLACK);
         g.drawRect(0, 0, width, heigth);
         g.setColor(Color.WHITE);
         g.fillRect(1, 1, width - 1, heigth - 1);
-        BufferedImage image = null;
-        System.out.println(this.image);
-		try {
-			image = ImageIO.read(getClass().getResource(this.image));
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			
-		}
         g.drawImage(image, 0, 0, width - 1, heigth - 1, this);
         
         g.setColor(Color.WHITE);
         g.drawString(nom, 10, 20);
-    }
-    
-    public void setPosition(int x,int y) {
-    	this.setLocation(x,y);
     }
     
     @Override
@@ -69,7 +61,7 @@ public abstract class Carte extends JPanel implements MouseListener {
     
     @Override
     public void mouseClicked(MouseEvent e) {
-    	mc.carteClique(nom);
+    	mc.carteClique(this);
     }
     
     @Override

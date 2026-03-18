@@ -7,24 +7,36 @@ public class MainMenu extends JPanel {
 	private static final long serialVersionUID = 1L;
 
 	public MenuManager menuManager;
+	JLabel title;
+	JPanel panelDesButtons;
 	JButton buttonJouer;
 	JButton buttonCreer;
 	JButton buttonOption;
 	JButton buttonQuitter;
-	public MainMenu(MenuManager menuManager) {
-		
-		this.menuManager=menuManager;
-		this.setLayout(null);
+	JPanel leftWrapper;
+	JPanel topPanel;
 	
-		JLabel title = new JLabel("Ages of Clash");
-		title.setBounds(370,50,100,30);
+	public MainMenu(MenuManager menuManager) {
+		this.menuManager=menuManager;
+		this.setLayout(new BorderLayout());
 		
+		title = new JLabel("AGES OF CLASH");
+		title.setHorizontalAlignment(JLabel.CENTER);
+		title.setFont(new Font("Arial", Font.BOLD, 30));
 		this.add(title,BorderLayout.NORTH);
 		
-	    JPanel actions = new JPanel();
-	    actions.setBounds(0,300,800,550);
-	    actions.setLayout(new FlowLayout());
+		topPanel = new JPanel(new BorderLayout());
+		topPanel.setBorder(BorderFactory.createEmptyBorder(20, 0, 20, 0)); // top, left, bottom, right
+		
+		topPanel.add(title, BorderLayout.CENTER);
+		this.add(topPanel, BorderLayout.NORTH);
+		
+		panelDesButtons= new JPanel();
+		
+		panelDesButtons.setLayout(new BoxLayout(panelDesButtons,BoxLayout.Y_AXIS));
 	    
+		panelDesButtons.setBorder(BorderFactory.createEmptyBorder(0, 20, 0, 0));
+		
 	    buttonJouer=new JButton("Jouer");
 	    buttonCreer=new JButton("Creer un deck");
 	    buttonOption=new JButton("Option");
@@ -37,13 +49,23 @@ public class MainMenu extends JPanel {
 	    buttonCreer.setActionCommand("CREER");
 	    buttonOption.setActionCommand("OPTION");
 	    buttonQuitter.setActionCommand("QUITTER");
-	    actions.add(buttonJouer);
-	    actions.add(buttonCreer);
-	    actions.add(buttonOption);
-	    actions.add(buttonQuitter);
+	    
+	    panelDesButtons.add(buttonJouer);
+	    panelDesButtons.add(Box.createVerticalStrut(10)); // espace
+	    panelDesButtons.add(buttonCreer);
+	    panelDesButtons.add(Box.createVerticalStrut(10)); // espace
+	    panelDesButtons.add(buttonOption);
+	    panelDesButtons.add(Box.createVerticalStrut(10)); // espace
+	    panelDesButtons.add(buttonQuitter);
+	    
+	    leftWrapper = new JPanel();
+	    leftWrapper.setLayout(new BoxLayout(leftWrapper, BoxLayout.Y_AXIS));
+	    
+	    leftWrapper.add(Box.createVerticalGlue());
+	    leftWrapper.add(panelDesButtons);
+	    leftWrapper.add(Box.createVerticalGlue());
 
-	    this.add(actions, BorderLayout.CENTER);
+	    this.add(leftWrapper, BorderLayout.LINE_START);
 	}
     
-  
 }
