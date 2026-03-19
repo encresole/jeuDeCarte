@@ -1,6 +1,5 @@
 package Model;
 
-
 import Controller.MenuController;
 
 public class Objet extends Carte {
