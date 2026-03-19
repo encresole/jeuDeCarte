@@ -9,22 +9,30 @@ import java.awt.*;
 
 public class MenuManager {
 	public MenuController menuController;
-	public JPanel startPanel;
-	public JPanel menuPanel;
-	public JPanel creePanel;
-	public CardLayout cardLayout;
-	public JPanel cardPanel;
 	public Model model;
+	
+	public MenuStart startPanel;
+	public MainMenu menuPanel;
+	public CreerDeck creePanel;
+	public JPanel cardPanel;
+	
+	
+	public CardLayout cardLayout;
+	
+	
+	
+	public JFrame frame;
+	public Dimension frameSize;
+	
 
     public MenuManager(MenuController menuController,Model model) {
     	
     	this.menuController= menuController;
     	this.model=model;
     	
-        JFrame frame = new JFrame("Jeu de Cartes");
+        frame = new JFrame("Jeu de Cartes");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setSize(800, 600);
-        frame.setResizable(false);
         
         cardLayout = new CardLayout();
         cardPanel = new JPanel(cardLayout);
@@ -40,6 +48,9 @@ public class MenuManager {
 
         frame.add(cardPanel);
         frame.setVisible(true);
+        
+        frameSize=frame.getSize();
+        frame.addComponentListener(menuController);
         showStart();
 
     }
@@ -58,5 +69,10 @@ public class MenuManager {
     	menuController.changeEtat(Model.EtatPossible.CREATIONDECK);
         cardLayout.show(cardPanel, "Crée");
     }
+
+	public void onFrameResize() {
+		// TODO Auto-generated method stub
+		creePanel.onFrameResize(frameSize);
+	}
 
 }

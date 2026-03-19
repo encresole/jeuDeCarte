@@ -27,6 +27,7 @@ public class CreerDeck extends JPanel {
     public JButton buttonRetour;
     public JScrollPane cartesDispo;
     public JScrollPane cartesDuDeck;
+    public JPanel leftPanel;
 
     public CreerDeck(MenuManager menuManager) {
         this.menuManager= menuManager;
@@ -46,7 +47,7 @@ public class CreerDeck extends JPanel {
         grandLeftPanel.add(panelPourLeLabel,BorderLayout.PAGE_START);
         labelCartesDispo.setBorder(BorderFactory.createEmptyBorder(10, 0, 10, 0));
         
-        JPanel leftPanel= new JPanel();
+        leftPanel= new JPanel();
         leftPanel.setLayout(new GridLayout(0, 2, 10, 10)); 
         leftPanel.setPreferredSize(new Dimension(400, Math.round(200*cartes.size())/2)); 
         leftPanel.setBorder(BorderFactory.createEmptyBorder(0, 40, 0, 0));
@@ -70,8 +71,16 @@ public class CreerDeck extends JPanel {
         buttonRetour.setActionCommand("SHOWMENU");
         buttonRetour.addActionListener(menuManager.menuController);
         this.add(buttonRetour,BorderLayout.PAGE_END);
-        
-        
+     
     }
-
+    
+    public void onFrameResize(Dimension size) {
+    	leftPanel.setPreferredSize(new Dimension(size.width/2, Math.round(200*cartes.size())/2));
+    	leftPanel.revalidate();
+    	leftPanel.repaint();
+    	System.out.println(size);
+    }
+    
+    
+    
 }
