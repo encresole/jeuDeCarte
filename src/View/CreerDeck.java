@@ -1,7 +1,6 @@
 package View;
 
 import javax.swing.BorderFactory;
-import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
@@ -20,7 +19,7 @@ public class CreerDeck extends JPanel {
     public MenuManager menuManager;
     public ArrayList<Carte> cartes;
     public float scale=1; 
-    public JButton buttonRetour;
+    public ButtonAgesOfClash buttonRetour;
     public JScrollPane cartesDispo;
     public JScrollPane cartesDuDeck;
     public JPanel leftPanel;
@@ -98,7 +97,7 @@ public class CreerDeck extends JPanel {
         this.add(cartesDispo,BorderLayout.LINE_START);
         this.add(cartesDuDeck,BorderLayout.LINE_END);
         
-        this.buttonRetour= new JButton("Retour");
+        this.buttonRetour= new ButtonAgesOfClash("Retour");
         buttonRetour.setActionCommand("SHOWMENU");
         buttonRetour.addActionListener(menuManager.menuController);
         this.add(buttonRetour,BorderLayout.PAGE_END);

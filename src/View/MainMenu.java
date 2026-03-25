@@ -1,46 +1,44 @@
 package View;
 
 import javax.swing.*;
+
 import java.awt.*;
 
-public class MainMenu extends JPanel {
+public class MainMenu extends PanelAgesOfClash {
 	private static final long serialVersionUID = 1L;
 
 	public MenuManager menuManager;
-	JLabel title;
-	JPanel panelDesButtons;
-	JButton buttonJouer;
-	JButton buttonCreer;
-	JButton buttonOption;
-	JButton buttonQuitter;
-	JPanel leftWrapper;
-	JPanel topPanel;
+	LabelTitle title;
+	PanelAgesOfClash panelDesButtons;
+	ButtonAgesOfClash buttonJouer;
+	ButtonAgesOfClash buttonCreer;
+	ButtonAgesOfClash buttonOption;
+	ButtonAgesOfClash buttonQuitter;
+	PanelAgesOfClash leftWrapper;
+	PanelAgesOfClash topPanel;
 	
 	public MainMenu(MenuManager menuManager) {
 		this.menuManager=menuManager;
 		this.setLayout(new BorderLayout());
-		
-		title = new JLabel("AGES OF CLASH");
+		title = new LabelTitle("AGES OF CLASH");
 		title.setHorizontalAlignment(JLabel.CENTER);
-		title.setFont(new Font("Arial", Font.BOLD, 30));
 		this.add(title,BorderLayout.NORTH);
 		
-		topPanel = new JPanel(new BorderLayout());
+		topPanel = new PanelAgesOfClash(new BorderLayout());
 		topPanel.setBorder(BorderFactory.createEmptyBorder(20, 0, 20, 0)); // top, left, bottom, right
-		
 		topPanel.add(title, BorderLayout.CENTER);
 		this.add(topPanel, BorderLayout.NORTH);
 		
-		panelDesButtons= new JPanel();
+		panelDesButtons= new PanelAgesOfClash();
 		
 		panelDesButtons.setLayout(new BoxLayout(panelDesButtons,BoxLayout.Y_AXIS));
 	    
 		panelDesButtons.setBorder(BorderFactory.createEmptyBorder(0, 20, 0, 0));
 		
-	    buttonJouer=new JButton("Jouer");
-	    buttonCreer=new JButton("Creer un deck");
-	    buttonOption=new JButton("Option");
-	    buttonQuitter=new JButton("Quitter");
+	    buttonJouer=new ButtonAgesOfClash("Jouer");
+	    buttonCreer=new ButtonAgesOfClash("Creer un deck");
+	    buttonOption=new ButtonAgesOfClash("Option");
+	    buttonQuitter=new ButtonAgesOfClash("Quitter");
 	    buttonJouer.addActionListener(menuManager.menuController);
 	    buttonCreer.addActionListener(menuManager.menuController);
 	    buttonOption.addActionListener(menuManager.menuController);
@@ -58,7 +56,7 @@ public class MainMenu extends JPanel {
 	    panelDesButtons.add(Box.createVerticalStrut(10)); // espace
 	    panelDesButtons.add(buttonQuitter);
 	    
-	    leftWrapper = new JPanel();
+	    leftWrapper = new PanelAgesOfClash();
 	    leftWrapper.setLayout(new BoxLayout(leftWrapper, BoxLayout.Y_AXIS));
 	    
 	    leftWrapper.add(Box.createVerticalGlue());

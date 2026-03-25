@@ -5,7 +5,8 @@ import java.util.ArrayList;
 import Controller.MenuController;
 
 public class Model {
-	
+
+
 	MenuController mc;
 	
 	public Model(MenuController mc) {

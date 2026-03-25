@@ -5,7 +5,6 @@ import java.awt.BorderLayout;
 import javax.swing.BorderFactory;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
-import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
@@ -18,9 +17,9 @@ public class ChoixJoueur extends JPanel {
 	public JPanel panelPourLabel = new JPanel();
 	public JPanel panelDesButtons= new JPanel();
 	public JLabel labelChoix;
-	public JButton buttonJoueur1 = new JButton("Joueur 1");
-	public JButton buttonJoueur2 = new JButton("Joueur 2");
-	public JButton buttonRetour = new JButton("Retour");
+	public ButtonAgesOfClash buttonJoueur1 = new ButtonAgesOfClash("Joueur 1");
+	public ButtonAgesOfClash buttonJoueur2 = new ButtonAgesOfClash("Joueur 2");
+	public ButtonAgesOfClash buttonRetour = new ButtonAgesOfClash("Retour");
 	
 	public ChoixJoueur(MenuManager menuManager) {
 		this.menuManager=menuManager;

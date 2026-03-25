@@ -1,18 +1,19 @@
 package View;
 
+
 import java.awt.Component;
-import java.awt.Font;
 
 import javax.swing.*;
 
-public class MenuStart extends JPanel {
+
+public class MenuStart extends PanelAgesOfClash {
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
 	
-	public JLabel title;
-	public JButton buttonJouer;
+	public LabelTitle title;
+	public ButtonAgesOfClash buttonJouer;
 	public MenuManager menuManager;
 	public JPanel centerPanel;
 	
@@ -22,14 +23,14 @@ public class MenuStart extends JPanel {
         this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
        
         
-        title = new JLabel("AGES OF CLASH");
-        title.setFont(new Font("Arial", Font.BOLD, 30));
+        title = new LabelTitle("AGES OF CLASH");
         title.setAlignmentX(Component.CENTER_ALIGNMENT);
         
-        buttonJouer = new JButton("Jouer");
+        buttonJouer = new ButtonAgesOfClash("Jouer");
         buttonJouer.addActionListener(menuManager.menuController);
         buttonJouer.setActionCommand("SHOWMENU");
         buttonJouer.setAlignmentX(Component.CENTER_ALIGNMENT);
+        
         
         
         
