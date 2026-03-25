@@ -110,7 +110,7 @@ public class CreerDeck extends JPanel {
     	leftPanel.setPreferredSize(new Dimension(size.width/2-20, Math.round(200*cartes.size())/2));
     	leftPanel.revalidate();
     	leftPanel.repaint();
-    	rightPanel.setPreferredSize(new Dimension(size.width/2, Math.round(200*cartes.size())/2));
+    	rightPanel.setPreferredSize(new Dimension(size.width/2, Math.round(200*menuManager.model.joueurEnCours.deck.size())/2));
     	rightPanel.revalidate();
     	rightPanel.repaint();
     	System.out.println(size);
@@ -121,6 +121,17 @@ public class CreerDeck extends JPanel {
         rightPanel.setPreferredSize(new Dimension(size.width/2, Math.round(200*menuManager.model.joueurEnCours.deck.size())/2));
         this.labelCartesDeck.setText("VOUS AVEZ "+ menuManager.model.joueurEnCours.deck.size() +"/20 CARTES");
         rightPanel.revalidate();
+    	rightPanel.repaint();
+    }
+    
+    public void onPlayerModified() {
+    	rightPanel.removeAll();
+    	System.out.println("player modified to "+ menuManager.model.joueurEnCours);
+    	this.labelCartesDeck.setText("VOUS AVEZ "+ menuManager.model.joueurEnCours.deck.size() +"/20 CARTES");
+    	for (Carte carte : menuManager.model.joueurEnCours.deck) {
+			rightPanel.add(carte.copy());
+		}
+    	rightPanel.revalidate();
     	rightPanel.repaint();
     }
 }

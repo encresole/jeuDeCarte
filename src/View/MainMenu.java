@@ -46,7 +46,7 @@ public class MainMenu extends JPanel {
 	    buttonOption.addActionListener(menuManager.menuController);
 	    buttonQuitter.addActionListener(menuManager.menuController);
 	    buttonJouer.setActionCommand("JOUER");
-	    buttonCreer.setActionCommand("CREER");
+	    buttonCreer.setActionCommand("CHOISIS");
 	    buttonOption.setActionCommand("OPTION");
 	    buttonQuitter.setActionCommand("QUITTER");
 	    

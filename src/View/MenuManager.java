@@ -14,6 +14,7 @@ public class MenuManager {
 	public MenuStart startPanel;
 	public MainMenu menuPanel;
 	public CreerDeck creePanel;
+	public ChoixJoueur choixJoueurPanel;
 	public JPanel cardPanel;
 	
 	
@@ -40,11 +41,13 @@ public class MenuManager {
         startPanel = new MenuStart(this);
         menuPanel= new MainMenu(this);
         creePanel = new CreerDeck(this);
+        choixJoueurPanel = new ChoixJoueur(this);
         
 
         cardPanel.add(startPanel, "Start");
         cardPanel.add(menuPanel,"Menu");
         cardPanel.add(creePanel,"Crée");
+        cardPanel.add(choixJoueurPanel,"Choisis");
 
         frame.add(cardPanel);
         frame.setVisible(true);
@@ -68,6 +71,11 @@ public class MenuManager {
     public void showCreer() {
     	menuController.changeEtat(Model.EtatPossible.CREATIONDECK);
         cardLayout.show(cardPanel, "Crée");
+    }
+    
+    public void showChoisis() {
+    	menuController.changeEtat(Model.EtatPossible.CHOIXJOUEUR);
+        cardLayout.show(cardPanel, "Choisis");
     }
 
 	public void onFrameResize() {

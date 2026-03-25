@@ -17,7 +17,7 @@ public class Model {
 	public static enum Faction {CHEVALIER,SAMURAI,COWBOY,SOLDAT};
 	public static enum ActionJoueur {ATTAQUER, JOUER_SORT, EQUIPER, PASSER};
 	public static enum TypeDePartie {JcJ,JcE};
-	public static enum EtatPossible {START,MENU,COMBAT,CREATIONDECK};
+	public static enum EtatPossible {START,MENU,COMBAT,CREATIONDECK, CHOIXJOUEUR};
 	
 	public static int TAILLEDECK=20;
 	public int TAILLEMAINDEBUT=5;
@@ -28,9 +28,13 @@ public class Model {
 	
 	public ArrayList<Carte> lesCartes = new ArrayList<Carte>();
 	
-	public Joueur joueur1 = new Joueur();
-	public Joueur joueur2 = new Joueur();
+	public Joueur joueur1 = new Joueur("Player 1");
+	public Joueur joueur2 = new Joueur("Player 2");
 	public Joueur joueurEnCours=joueur1;
+	
+	public void setJoueurEnCours(Joueur j) {
+		joueurEnCours = j;
+	}
 	
 	public void initCartes() {
 		lesCartes.add(new Personnage("Aldric","Sire Aldric l'Indomptable","/images/personnages/Sire Aldric l'indomptable.jpg",mc,150,100));

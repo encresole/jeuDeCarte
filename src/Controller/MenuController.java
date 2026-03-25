@@ -27,6 +27,7 @@ public class MenuController implements ActionListener, ComponentListener {
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		// TODO Auto-generated method stub
+		System.out.println(e.getActionCommand());
 		if (e.getActionCommand()=="SHOWMENU") {
 			menuManager.showMenu();
 		} else if (e.getActionCommand()=="JOUER") {
@@ -38,6 +39,16 @@ public class MenuController implements ActionListener, ComponentListener {
 		
 		} else if (e.getActionCommand()=="QUITTER") {
 			System.exit(0);
+		} else if (e.getActionCommand()=="CHOISIS") {
+			menuManager.showChoisis();
+		} else if (e.getActionCommand()=="SETJOUEUR1") {
+			m.setJoueurEnCours(m.joueur1);
+			menuManager.creePanel.onPlayerModified();
+			menuManager.showCreer();
+		} else if (e.getActionCommand()=="SETJOUEUR2") {
+			m.setJoueurEnCours(m.joueur2);
+			menuManager.creePanel.onPlayerModified();
+			menuManager.showCreer();
 		}
 	}
 	
