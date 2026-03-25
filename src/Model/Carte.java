@@ -25,6 +25,7 @@ public abstract class Carte extends JPanel implements MouseListener {
     public String cheminImage;
     public BufferedImage image = null;
 
+    public abstract Carte copy();
     
     public Carte(String nom, String nomComplet,String cheminImage, MenuController mc) {
         this.nom = nom;
@@ -39,7 +40,11 @@ public abstract class Carte extends JPanel implements MouseListener {
 			System.err.println("Image pas trouvée");
 		}
     }
-
+    
+    public Carte(Carte c) {
+    	this(c.nom, c.nomComplet, c.cheminImage, c.mc);
+    }
+    
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);

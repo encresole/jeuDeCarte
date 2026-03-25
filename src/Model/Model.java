@@ -28,6 +28,10 @@ public class Model {
 	
 	public ArrayList<Carte> lesCartes = new ArrayList<Carte>();
 	
+	public Joueur joueur1 = new Joueur();
+	public Joueur joueur2 = new Joueur();
+	public Joueur joueurEnCours=joueur1;
+	
 	public void initCartes() {
 		lesCartes.add(new Personnage("Aldric","Sire Aldric l'Indomptable","/images/personnages/Sire Aldric l'indomptable.jpg",mc,150,100));
 		lesCartes.add(new Personnage("Kenshi","Kenshi la Lame Silencieuse","/images/personnages/Kenshi la lame silencieuse.jpg",mc,110,80));

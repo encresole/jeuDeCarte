@@ -1,6 +1,6 @@
 package Controller;
 
-import java.awt.Dimension;
+
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ComponentEvent;
@@ -9,17 +9,15 @@ import java.awt.event.ComponentListener;
 import javax.swing.JFrame;
 
 import Model.Carte;
-import Model.Joueur;
 import Model.Model;
 import Model.Model.EtatPossible;
 import View.MenuManager;
 
 public class MenuController implements ActionListener, ComponentListener {
 	public MenuManager menuManager;
-	public Joueur joueur;
+	public Model m;
 	
-	public MenuController(Joueur joueur) {
-		this.joueur=joueur;
+	public MenuController() {
 	}
 
 
@@ -47,10 +45,13 @@ public class MenuController implements ActionListener, ComponentListener {
 		EtatPossible etat = Model.etatApp;
 		
 		if (etat== EtatPossible.CREATIONDECK) {
-			joueur.deck.ajouter(c);
+			Boolean ajouté = m.joueurEnCours.deck.ajouter(c);
+			if (ajouté) {
+				menuManager.creePanel.onDeckModified(c);
+			}
 			System.out.println(c.nom);
-			System.out.println(joueur.deck.size());
-			System.out.println(joueur.deck);
+			System.out.println(m.joueurEnCours.deck.size());
+			System.out.println(m.joueurEnCours.deck);
 		}
 	}
 	
@@ -88,6 +89,12 @@ public class MenuController implements ActionListener, ComponentListener {
 	public void componentHidden(ComponentEvent e) {
 		// TODO Auto-generated method stub
 		
+	}
+
+
+	public void setModel(Model model) {
+		// TODO Auto-generated method stub
+		this.m=model;
 	}
 
 }

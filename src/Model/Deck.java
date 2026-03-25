@@ -12,6 +12,7 @@ public class Deck extends ArrayList<Carte>{
 		// TODO Auto-generated method stub
 		if (this.size()<Model.TAILLEDECK) {
 			add(e);
+			return true;
 		} else {
 			System.err.println("Essai d'ajout alors que deck plein");
 		}

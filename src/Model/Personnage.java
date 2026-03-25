@@ -18,4 +18,9 @@ public class Personnage extends Carte {
 		this.energie = 100;
 		this.estActif = false;
 	}
+
+	@Override
+	public Carte copy() {
+		return new Personnage(nom,nomComplet,cheminImage,mc,pv,attaque);
+	}
 }

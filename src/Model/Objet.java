@@ -12,4 +12,10 @@ public class Objet extends Carte {
 		this.effet = effet;
 	}
 
+	@Override
+	public Carte copy() {
+		// TODO Auto-generated method stub
+		return new Objet(nom,cheminImage,mc,effet);
+	}
+
 }

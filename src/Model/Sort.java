@@ -17,4 +17,10 @@ public class Sort extends Carte  {
 		super(nom,nom,image,mc);
 		this.effet = effet;
 	}
+
+	@Override
+	public Carte copy() {
+		// TODO Auto-generated method stub
+		return new Sort(nom, cheminImage, mc, effet);
+	}
 }
