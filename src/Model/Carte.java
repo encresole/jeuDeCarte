@@ -17,6 +17,7 @@ import Controller.MenuController;
 public abstract class Carte extends JPanel implements MouseListener {
 	private static final long serialVersionUID = 1L;
 	
+	public String id;
 	public String nom;
 	public String nomComplet;
     public int width = 100;
@@ -27,7 +28,8 @@ public abstract class Carte extends JPanel implements MouseListener {
 
     public abstract Carte copy();
     
-    public Carte(String nom, String nomComplet,String cheminImage, MenuController mc) {
+    public Carte(String id, String nom, String nomComplet,String cheminImage, MenuController mc) {
+        this.id = id;
         this.nom = nom;
         this.nomComplet=nomComplet;
         this.cheminImage=cheminImage;
@@ -42,7 +44,7 @@ public abstract class Carte extends JPanel implements MouseListener {
     }
     
     public Carte(Carte c) {
-    	this(c.nom, c.nomComplet, c.cheminImage, c.mc);
+    	this(c.id, c.nom, c.nomComplet, c.cheminImage, c.mc);
     }
     
     @Override

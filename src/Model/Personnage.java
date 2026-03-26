@@ -10,9 +10,12 @@ public class Personnage extends Carte {
 	public int attaque;
 	public int energie;
 	public Boolean estActif;
+	public int coutEnergie;
+	public Model.Faction faction;
+	public String nomEffet;
 	
-	public Personnage(String nom,String nomComplet,String image,MenuController mc, int pv, int attaque) {
-		super(nom,nomComplet,image,mc);
+	public Personnage(String id, String nom, String nomComplet, String image, MenuController mc, int pv, int attaque) {
+		super(id, nom, nomComplet, image, mc);
 		this.pv = pv;
 		this.attaque = attaque;
 		this.energie = 100;
@@ -21,6 +24,6 @@ public class Personnage extends Carte {
 
 	@Override
 	public Carte copy() {
-		return new Personnage(nom,nomComplet,cheminImage,mc,pv,attaque);
+		return new Personnage(id, nom, nomComplet, cheminImage, mc, pv, attaque);
 	}
 }

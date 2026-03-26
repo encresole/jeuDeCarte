@@ -12,15 +12,17 @@ public class Sort extends Carte  {
 	 * des dégats on le met dans la variable effet
 	 */
 	public Effet effet;
+	public Model.Faction faction;
+	public String nomEffet;
+	public String description;
 
-	public Sort(String nom,String image,MenuController mc, Effet effet) {
-		super(nom,nom,image,mc);
+	public Sort(String id, String nom, String image, MenuController mc, Effet effet) {
+		super(id, nom, nom, image, mc);
 		this.effet = effet;
 	}
 
 	@Override
 	public Carte copy() {
-		// TODO Auto-generated method stub
-		return new Sort(nom, cheminImage, mc, effet);
+		return new Sort(id, nom, cheminImage, mc, effet);
 	}
 }

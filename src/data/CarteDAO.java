@@ -48,13 +48,9 @@ public class CarteDAO {
         return cartes;
     }
 
-    // -------------------------------------------------------
-    // Extrait tous les objets JSON d'un tableau nommé section
-    // -------------------------------------------------------
     private List<Carte> parserSection(String json, String section, String type) {
         List<Carte> cartes = new ArrayList<>();
 
-        // Trouver le tableau "section": [ ... ]
         String marqueur = "\"" + section + "\"";
         int debut = json.indexOf(marqueur);
         if (debut == -1) return cartes;
@@ -65,7 +61,6 @@ public class CarteDAO {
 
         String tableau = json.substring(debutTableau + 1, finTableau);
 
-        // Découper en objets { ... }
         List<String> objets = extraireObjets(tableau);
         for (String obj : objets) {
             Carte c = creerCarte(obj, type);
@@ -74,9 +69,6 @@ public class CarteDAO {
         return cartes;
     }
 
-    // -------------------------------------------------------
-    // Crée une Carte depuis un bloc JSON { ... }
-    // -------------------------------------------------------
     private Carte creerCarte(String obj, String type) {
         try {
             String id          = lireChamp(obj, "id");
@@ -84,14 +76,14 @@ public class CarteDAO {
             String image       = lireChamp(obj, "image");
             String factionStr  = lireChamp(obj, "faction");
             String nomEffet    = lireChamp(obj, "effet");
-            Faction faction    = factionStr != null ? Faction.valueOf(factionStr) : null;
+            Faction faction    = (factionStr != null && !factionStr.isEmpty()) ? Faction.valueOf(factionStr) : null;
 
             switch (type) {
                 case "PERSONNAGE": {
                     int pv          = lireInt(obj, "pv");
                     int attaque     = lireInt(obj, "attaque");
                     int coutEnergie = lireInt(obj, "coutEnergie");
-                    Personnage p    = new Personnage(id, nom, image, mc, pv, attaque);
+                    Personnage p    = new Personnage(id, nom, nom, image, mc, pv, attaque);
                     p.coutEnergie   = coutEnergie;
                     p.faction       = faction;
                     p.nomEffet      = nomEffet;
@@ -120,9 +112,6 @@ public class CarteDAO {
         return null;
     }
 
-    // -------------------------------------------------------
-    // Lit la valeur d'un champ string : "clé": "valeur"
-    // -------------------------------------------------------
     private String lireChamp(String obj, String cle) {
         String marqueur = "\"" + cle + "\"";
         int idx = obj.indexOf(marqueur);
@@ -139,9 +128,6 @@ public class CarteDAO {
         return obj.substring(debutVal + 1, finVal);
     }
 
-    // -------------------------------------------------------
-    // Lit la valeur d'un champ entier : "clé": 42
-    // -------------------------------------------------------
     private int lireInt(String obj, String cle) {
         String marqueur = "\"" + cle + "\"";
         int idx = obj.indexOf(marqueur);
@@ -151,14 +137,12 @@ public class CarteDAO {
         int debut = deuxPoints + 1;
         while (debut < obj.length() && (obj.charAt(debut) == ' ' || obj.charAt(debut) == '\n' || obj.charAt(debut) == '\r')) debut++;
         int fin = debut;
+        if (fin < obj.length() && obj.charAt(fin) == '-') fin++; // support négatif
         while (fin < obj.length() && Character.isDigit(obj.charAt(fin))) fin++;
         if (debut == fin) return 0;
         return Integer.parseInt(obj.substring(debut, fin));
     }
 
-    // -------------------------------------------------------
-    // Trouve la position du caractère fermant correspondant
-    // -------------------------------------------------------
     private int trouverFermeture(String s, int debut, char ouvrant, char fermant) {
         int profondeur = 0;
         for (int i = debut; i < s.length(); i++) {
@@ -168,9 +152,6 @@ public class CarteDAO {
         return -1;
     }
 
-    // -------------------------------------------------------
-    // Extrait la liste des blocs { ... } d'un tableau JSON
-    // -------------------------------------------------------
     private List<String> extraireObjets(String tableau) {
         List<String> objets = new ArrayList<>();
         int i = 0;
