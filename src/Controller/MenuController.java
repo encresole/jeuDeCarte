@@ -31,7 +31,7 @@ public class MenuController implements ActionListener, ComponentListener {
 		if (e.getActionCommand()=="SHOWMENU") {
 			menuManager.showMenu();
 		} else if (e.getActionCommand()=="JOUER") {
-		
+			menuManager.showJeu();
 		} else if (e.getActionCommand()=="CREER") {
 			menuManager.showCreer();
 		

@@ -38,15 +38,15 @@ public class Model {
 	}
 	
 	public void initCartes() {
-		lesCartes.add(new Personnage("Aldric","Sire Aldric l'Indomptable","/images/personnages/Sire Aldric l'indomptable.jpg",mc,150,100));
-		lesCartes.add(new Personnage("Kenshi","Kenshi la Lame Silencieuse","/images/personnages/Kenshi la lame silencieuse.jpg",mc,110,80));
-		lesCartes.add(new Personnage("AgentFantome","Kenshi la Lame Silencieuse","/images/personnages/Agent Fantome.jpg",mc,110,80));
-		lesCartes.add(new Personnage("CalamityJane","Kenshi la Lame Silencieuse","/images/personnages/Calamity Jane.jpg",mc,110,80));
-		lesCartes.add(new Personnage("DocHolliday","Kenshi la Lame Silencieuse","/images/personnages/Doc Holliday.png",mc,110,80));
-		lesCartes.add(new Personnage("maitreTakeda","Kenshi la Lame Silencieuse","/images/personnages/Maître Takeda.jpg",mc,110,80));
-		lesCartes.add(new Personnage("Paladin","Kenshi la Lame Silencieuse","/images/personnages/Paladin Maudit.jpg",mc,110,80));
-		lesCartes.add(new Personnage("Ronin","Kenshi la Lame Silencieuse","/images/personnages/Ronin sans maître.jpg",mc,110,80));
-		lesCartes.add(new Personnage("SniperElite","Kenshi la Lame Silencieuse","/images/personnages/Sniper Elite.jpg",mc,110,80));
+		lesCartes.add(new Personnage("","Aldric","Sire Aldric l'Indomptable","/images/personnages/Sire Aldric l'indomptable.jpg",mc,150,100));
+		lesCartes.add(new Personnage("","Kenshi","Kenshi la Lame Silencieuse","/images/personnages/Kenshi la lame silencieuse.jpg",mc,110,80));
+		lesCartes.add(new Personnage("","AgentFantome","Kenshi la Lame Silencieuse","/images/personnages/Agent Fantome.jpg",mc,110,80));
+		lesCartes.add(new Personnage("","CalamityJane","Kenshi la Lame Silencieuse","/images/personnages/Calamity Jane.jpg",mc,110,80));
+		lesCartes.add(new Personnage("","DocHolliday","Kenshi la Lame Silencieuse","/images/personnages/Doc Holliday.png",mc,110,80));
+		lesCartes.add(new Personnage("","maitreTakeda","Kenshi la Lame Silencieuse","/images/personnages/Maître Takeda.jpg",mc,110,80));
+		lesCartes.add(new Personnage("","Paladin","Kenshi la Lame Silencieuse","/images/personnages/Paladin Maudit.jpg",mc,110,80));
+		lesCartes.add(new Personnage("","Ronin","Kenshi la Lame Silencieuse","/images/personnages/Ronin sans maître.jpg",mc,110,80));
+		lesCartes.add(new Personnage("","SniperElite","Kenshi la Lame Silencieuse","/images/personnages/Sniper Elite.jpg",mc,110,80));
 		
 	}
 }

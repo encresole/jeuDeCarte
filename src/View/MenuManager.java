@@ -15,8 +15,10 @@ public class MenuManager {
 	public MainMenu menuPanel;
 	public CreerDeck creePanel;
 	public ChoixJoueur choixJoueurPanel;
-	public JPanel cardPanel;
+	public GameView gamePanel;
 	
+	
+	public JPanel cardPanel;
 	
 	public CardLayout cardLayout;
 	
@@ -42,12 +44,14 @@ public class MenuManager {
         menuPanel= new MainMenu(this);
         creePanel = new CreerDeck(this);
         choixJoueurPanel = new ChoixJoueur(this);
+        gamePanel = new GameView(this);
         
 
         cardPanel.add(startPanel, "Start");
         cardPanel.add(menuPanel,"Menu");
         cardPanel.add(creePanel,"Crée");
         cardPanel.add(choixJoueurPanel,"Choisis");
+        cardPanel.add(gamePanel,"Jeu");
 
         frame.add(cardPanel);
         frame.setVisible(true);
@@ -78,6 +82,11 @@ public class MenuManager {
         cardLayout.show(cardPanel, "Choisis");
     }
 
+    public void showJeu() {
+    	menuController.changeEtat(Model.EtatPossible.COMBAT);
+    	cardLayout.show(cardPanel, "Jeu");
+    }
+    
 	public void onFrameResize() {
 		// TODO Auto-generated method stub
 		creePanel.onFrameResize(frameSize);
