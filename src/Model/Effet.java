@@ -1,5 +1,6 @@
 package Model;
 
-public class Effet {
-
+public interface Effet {
+    void appliquer(Joueur cible);
+    String getDescription();
 }
