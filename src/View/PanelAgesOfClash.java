@@ -21,3 +21,4 @@ public class PanelAgesOfClash extends JPanel{
 	}
 
 }
+	
