@@ -8,6 +8,7 @@ import java.util.List;
 import Controller.MenuController;
 import Model.Carte;
 import Model.Effet;
+import Model.EffetVide;
 import Model.Model.Faction;
 import Model.Objet;
 import Model.Personnage;
@@ -91,7 +92,7 @@ public class CarteDAO {
                     int pv          = lireInt(obj, "pv");
                     int attaque     = lireInt(obj, "attaque");
                     int coutEnergie = lireInt(obj, "coutEnergie");
-                    Personnage p    = new Personnage(id, nom, image, mc, pv, attaque);
+                    Personnage p    = new Personnage(id, nom, image, nomEffet, mc, pv, attaque);
                     p.coutEnergie   = coutEnergie;
                     p.faction       = faction;
                     p.nomEffet      = nomEffet;
