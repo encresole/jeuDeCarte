@@ -8,11 +8,12 @@ import java.util.LinkedList;
  * Auteur : Raphael
  *
  * Ce qui a ete fait :
- * - estEtourdi() : verifie si "ETOURDI" est dans la HashMap
- * - estMort() : verifie si les pv <= 0 ET le banc est vide
- * - promouvoirBanc() : met le 1er Personnage du banc en actif
- * - jouerTour() : gere l'etourdissement et la fin de partie
+ * - estEtourdi()      : verifie si "ETOURDI" est dans la HashMap
+ * - estMort()         : verifie si les pv <= 0 ET le banc est vide
+ * - promouvoirBanc()  : met le 1er Personnage du banc en actif
+ * - jouerTour()       : gere l'etourdissement, ATTAQUER, JOUER_SORT et fin de partie
  * - resoudreAttaque() : applique BUFF_ATQ, ESQUIVE, et K.O.
+ * - jouerSort()       : joue le 1er Sort de la main, applique son Effet sur la bonne cible
  *
  * Structures utilisees :
  * - HashMap<String, Integer> : effets actifs (nom effet -> tours restants)
@@ -59,6 +60,8 @@ public class Combat {
 
         if (action == Model.ActionJoueur.ATTAQUER) {
             resoudreAttaque(attaquant, defenseur, effetsAtt, effetsDef);
+        } else if (action == Model.ActionJoueur.JOUER_SORT) {
+            jouerSort(attaquant, defenseur);
         } else {
             historique.add("Tour " + partie.tour + " : " + attaquant.name + " passe son tour.");
         }
@@ -142,6 +145,44 @@ public class Combat {
         }
         joueur.actif = null;
         historique.add(joueur.name + " n'a plus de Personnage !");
+    }
+
+    /**
+     * jouerSort — joue le premier Sort trouvé dans la main de l'attaquant.
+     * - EffetDebuff cible l'adversaire (defenseur)
+     * - EffetSoin et EffetBuff ciblent l'attaquant lui-même
+     * Le sort joué est retiré de la main après utilisation.
+     */
+    public void jouerSort(Joueur attaquant, Joueur defenseur) {
+        Sort sortAJouer = null;
+        int index = -1;
+
+        for (int i = 0; i < attaquant.main.size(); i++) {
+            if (attaquant.main.get(i) instanceof Sort) {
+                sortAJouer = (Sort) attaquant.main.get(i);
+                index = i;
+                break;
+            }
+        }
+
+        if (sortAJouer == null) {
+            historique.add("Tour " + partie.tour + " : " + attaquant.name + " n'a pas de sort en main !");
+            return;
+        }
+
+        // EffetDebuff cible l'adversaire, les autres ciblent soi-même
+        Joueur cible;
+        if (sortAJouer.effet instanceof EffetDebuff) {
+            cible = defenseur;
+        } else {
+            cible = attaquant;
+        }
+
+        sortAJouer.effet.appliquer(cible);
+        historique.add("Tour " + partie.tour + " : " + attaquant.name + " joue [" + sortAJouer.nom + "] sur " + cible.name + " !");
+
+        // Le sort est consommé : on le retire de la main
+        attaquant.main.remove(index);
     }
 
     public void ajouterEffet(HashMap<String, Integer> effets, String nomEffet, int duree) {

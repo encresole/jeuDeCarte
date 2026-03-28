@@ -38,15 +38,22 @@ public class Model {
 	}
 	
 	public void initCartes() {
+		// --- Personnages ---
 		lesCartes.add(new Personnage("","Aldric","Sire Aldric l'Indomptable","/images/personnages/Sire Aldric l'indomptable.jpg",mc,150,100));
 		lesCartes.add(new Personnage("","Kenshi","Kenshi la Lame Silencieuse","/images/personnages/Kenshi la lame silencieuse.jpg",mc,110,80));
-		lesCartes.add(new Personnage("","AgentFantome","Kenshi la Lame Silencieuse","/images/personnages/Agent Fantome.jpg",mc,110,80));
-		lesCartes.add(new Personnage("","CalamityJane","Kenshi la Lame Silencieuse","/images/personnages/Calamity Jane.jpg",mc,110,80));
-		lesCartes.add(new Personnage("","DocHolliday","Kenshi la Lame Silencieuse","/images/personnages/Doc Holliday.png",mc,110,80));
-		lesCartes.add(new Personnage("","maitreTakeda","Kenshi la Lame Silencieuse","/images/personnages/Maître Takeda.jpg",mc,110,80));
-		lesCartes.add(new Personnage("","Paladin","Kenshi la Lame Silencieuse","/images/personnages/Paladin Maudit.jpg",mc,110,80));
-		lesCartes.add(new Personnage("","Ronin","Kenshi la Lame Silencieuse","/images/personnages/Ronin sans maître.jpg",mc,110,80));
-		lesCartes.add(new Personnage("","SniperElite","Kenshi la Lame Silencieuse","/images/personnages/Sniper Elite.jpg",mc,110,80));
-		
+		lesCartes.add(new Personnage("","AgentFantome","Agent Fantôme","/images/personnages/Agent Fantome.jpg",mc,110,80));
+		lesCartes.add(new Personnage("","CalamityJane","Calamity Jane","/images/personnages/Calamity Jane.jpg",mc,110,80));
+		lesCartes.add(new Personnage("","DocHolliday","Doc Holliday","/images/personnages/Doc Holliday.png",mc,110,80));
+		lesCartes.add(new Personnage("","maitreTakeda","Maître Takeda","/images/personnages/Maître Takeda.jpg",mc,110,80));
+		lesCartes.add(new Personnage("","Paladin","Paladin Maudit","/images/personnages/Paladin Maudit.jpg",mc,110,80));
+		lesCartes.add(new Personnage("","Ronin","Ronin sans maître","/images/personnages/Ronin sans maître.jpg",mc,110,80));
+		lesCartes.add(new Personnage("","SniperElite","Sniper Elite","/images/personnages/Sniper Elite.jpg",mc,110,80));
+
+		// --- Sorts (Raphael) — utilisent EffetSoin, EffetBuff, EffetDebuff ---
+		lesCartes.add(new Sort("s1","Potion","/images/sorts/potion.png",mc, new EffetSoin(40)));
+		lesCartes.add(new Sort("s2","Grande Potion","/images/sorts/grande_potion.png",mc, new EffetSoin(80)));
+		lesCartes.add(new Sort("s3","Rage","/images/sorts/rage.png",mc, new EffetBuff(20)));
+		lesCartes.add(new Sort("s4","Malédiction","/images/sorts/malediction.png",mc, new EffetDebuff(25)));
+		lesCartes.add(new Sort("s5","Affaiblissement","/images/sorts/affaiblissement.png",mc, new EffetDebuff(15)));
 	}
 }
