@@ -1,8 +1,7 @@
 package Model;
 
 import java.awt.Color;
-
-
+import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
@@ -28,23 +27,35 @@ public abstract class Carte extends JPanel implements MouseListener {
 
     public abstract Carte copy();
     
-    public Carte(String id, String nom, String nomComplet,String cheminImage, MenuController mc) {
+    public Carte(String id, String nom, String nomComplet, String cheminImage, MenuController mc) {
         this.id = id;
         this.nom = nom;
-        this.nomComplet=nomComplet;
-        this.cheminImage=cheminImage;
-        this.mc=mc;
+        this.nomComplet = nomComplet;
+        this.cheminImage = cheminImage;
+        this.mc = mc;
         this.setLayout(null);
+        this.setOpaque(false);       
+        this.setPreferredSize(new Dimension(width, heigth)); 
         this.addMouseListener(this);
         try {
-			image = ImageIO.read(getClass().getResource(this.cheminImage));
-		} catch (IOException e) {
-			System.err.println("Image pas trouvée");
-		}
+            image = ImageIO.read(getClass().getResource(this.cheminImage));
+        } catch (IOException e) {
+            System.err.println("Image pas trouvée");
+        }
     }
     
     public Carte(Carte c) {
     	this(c.id, c.nom, c.nomComplet, c.cheminImage, c.mc);
+    }
+
+
+    public boolean contains(int x, int y) {
+        return x >= 0 && x < width && y >= 0 && y < heigth;
+    }
+
+    @Override
+    public Dimension getPreferredSize() {
+        return new Dimension(width, heigth);
     }
     
     @Override
@@ -65,25 +76,20 @@ public abstract class Carte extends JPanel implements MouseListener {
     	return this.nom;
     }
     
-    
     @Override
     public void mouseClicked(MouseEvent e) {
     	mc.carteClique(this);
     }
     
     @Override
-    public void mouseEntered(MouseEvent e) {
-    }
+    public void mouseEntered(MouseEvent e) {}
     
     @Override
-    public void mouseExited(MouseEvent e) {
-    }
+    public void mouseExited(MouseEvent e) {}
     
     @Override
-    public void mousePressed(MouseEvent e) {
-    }
+    public void mousePressed(MouseEvent e) {}
     
     @Override
-    public void mouseReleased(MouseEvent e) {
-    }
+    public void mouseReleased(MouseEvent e) {}
 }
