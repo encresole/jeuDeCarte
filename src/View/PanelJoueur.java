@@ -6,17 +6,19 @@ import java.awt.Dimension;
 import javax.swing.BoxLayout;
 import javax.swing.JPanel;
 
+import Model.Joueur;
 import Model.Palette;
 import Model.Personnage;
 
 public class PanelJoueur extends JPanel{
 	private static final long serialVersionUID = 1L;
 	
+	Joueur joueur;
 	JPanel panelBanc = new JPanel();
 	JPanel panelMain = new JPanel();
 	
 	
-	public PanelJoueur(Boolean reverse) {
+	public PanelJoueur(Boolean reverse,Joueur joueur) {
 		// TODO Auto-generated constructor stub
 		setLayout(new BorderLayout());
 		

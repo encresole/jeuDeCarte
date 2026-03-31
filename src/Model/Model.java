@@ -49,11 +49,5 @@ public class Model {
 		lesCartes.add(new Personnage("","Ronin","Ronin sans maître","/images/personnages/Ronin sans maître.jpg",mc,110,80));
 		lesCartes.add(new Personnage("","SniperElite","Sniper Elite","/images/personnages/Sniper Elite.jpg",mc,110,80));
 
-		// --- Sorts (Raphael) — utilisent EffetSoin, EffetBuff, EffetDebuff ---
-		lesCartes.add(new Sort("s1","Potion","/images/sorts/potion.png",mc, new EffetSoin(40)));
-		lesCartes.add(new Sort("s2","Grande Potion","/images/sorts/grande_potion.png",mc, new EffetSoin(80)));
-		lesCartes.add(new Sort("s3","Rage","/images/sorts/rage.png",mc, new EffetBuff(20)));
-		lesCartes.add(new Sort("s4","Malédiction","/images/sorts/malediction.png",mc, new EffetDebuff(25)));
-		lesCartes.add(new Sort("s5","Affaiblissement","/images/sorts/affaiblissement.png",mc, new EffetDebuff(15)));
 	}
 }

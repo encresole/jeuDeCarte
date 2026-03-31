@@ -23,9 +23,9 @@ public class GameView extends PanelAgesOfClash {
 		
 		
 		
-		panelJ1 = new PanelJoueur(false);
+		panelJ1 = new PanelJoueur(false,menuManager.model.joueur1);
 		
-		panelJ2 = new PanelJoueur(true);
+		panelJ2 = new PanelJoueur(true,menuManager.model.joueur2);
 		
 		panelJ1.setBackground(new Color(0,0,255));
 		
