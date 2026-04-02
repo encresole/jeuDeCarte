@@ -279,6 +279,24 @@
       "faction": "SAMURAI",
       "effet": "",
       "description": "Augmente l'attaque de 35 en permanence."
+    },
+    {
+      "id": "o009",
+      "nom": "PotionSoin",
+      "nomComplet": "Potion de Soin",
+      "image": "/images/objets/Potion de Soin.jpg",
+      "faction": "",
+      "effet": "SOIN",
+      "description": "Restaure 30 PV au personnage actif allié."
+    },
+    {
+      "id": "o010",
+      "nom": "GrossePotionSoin",
+      "nomComplet": "Grosse Potion de Soin",
+      "image": "/images/objets/Grosse Potion de Soin.jpg",
+      "faction": "",
+      "effet": "SOIN",
+      "description": "Restaure 60 PV au personnage actif allié."
     }
   ]
 }
