@@ -56,5 +56,7 @@ public class Model {
         lesCartes.add(new Personnage("", "Paladin", "Paladin Maudit", "/images/personnages/Paladin Maudit.jpg", mc, 110, 80));
         lesCartes.add(new Personnage("", "Ronin", "Ronin sans maître", "/images/personnages/Ronin sans maître.jpg", mc, 110, 80));
         lesCartes.add(new Personnage("", "SniperElite", "Sniper Elite", "/images/personnages/Sniper Elite.jpg", mc, 110, 80));
+        lesCartes.add(new Sort("", "Eclair", "/images/sorts/Eclair.jpg", mc, new EffetVide()));
+        lesCartes.add(new Objet("", "gilet par balle", "/images/objets/Gilet Pare-balles.jpg",mc,new EffetVide()));
     }
 }
