@@ -6,19 +6,20 @@ import java.awt.Dimension;
 import javax.swing.BoxLayout;
 import javax.swing.JPanel;
 
+import Controller.MenuController;
+import Model.Carte;
 import Model.Joueur;
-import Model.Palette;
 import Model.Personnage;
 
 public class PanelJoueur extends JPanel{
 	private static final long serialVersionUID = 1L;
 	
 	Joueur joueur;
-	JPanel panelBanc = new JPanel();
-	JPanel panelMain = new JPanel();
+	PanelAgesOfClash panelBanc = new PanelAgesOfClash();
+	PanelAgesOfClash panelMain = new PanelAgesOfClash();
+	MenuController mc;
 	
-	
-	public PanelJoueur(Boolean reverse,Joueur joueur) {
+	public PanelJoueur(Boolean reverse,Joueur joueur, MenuController mc) {
 		// TODO Auto-generated constructor stub
 		setLayout(new BorderLayout());
 		
@@ -26,18 +27,36 @@ public class PanelJoueur extends JPanel{
 		panelBanc.setLayout(new BoxLayout(panelBanc, BoxLayout.Y_AXIS));
 		
 		
-		panelBanc.setBackground(Palette.BUTTON_TEXT);
+		
+		
+		
+		Carte carteActive=new Personnage("","AgentFantome","Kenshi la Lame Silencieuse","/images/personnages/Agent Fantome.jpg",mc,110,80);
 		if (reverse) {
 			add(panelBanc,BorderLayout.LINE_END);
+			add(
+					carteActive,
+					BorderLayout.LINE_START
+				);
 		} else {
 			add(panelBanc,BorderLayout.LINE_START);
+			add(
+					carteActive,
+					BorderLayout.LINE_END
+				);
 		}
 		
 		
-		panelBanc.add(new Personnage("","Aldric","Sire Aldric l'Indomptable","/images/personnages/Sire Aldric l'indomptable.jpg",null,150,100));
-		panelBanc.add(new Personnage("","Kenshi","Kenshi la Lame Silencieuse","/images/personnages/Kenshi la lame silencieuse.jpg",null,110,80));
-		panelBanc.add(new Personnage("","AgentFantome","Kenshi la Lame Silencieuse","/images/personnages/Agent Fantome.jpg",null,110,80));
+		add(panelMain,BorderLayout.SOUTH);
+		
+		panelMain.add(new Personnage("","Aldric","Sire Aldric l'Indomptable","/images/personnages/Sire Aldric l'indomptable.jpg",mc,150,100));
+		panelMain.add(new Personnage("","Kenshi","Kenshi la Lame Silencieuse","/images/personnages/Kenshi la lame silencieuse.jpg",mc,110,80));
+		panelMain.add(new Personnage("","AgentFantome","Kenshi la Lame Silencieuse","/images/personnages/Agent Fantome.jpg",mc,110,80));
+		
+		panelBanc.add(new Personnage("","Aldric","Sire Aldric l'Indomptable","/images/personnages/Sire Aldric l'indomptable.jpg",mc,150,100));
+		panelBanc.add(new Personnage("","Kenshi","Kenshi la Lame Silencieuse","/images/personnages/Kenshi la lame silencieuse.jpg",mc,110,80));
+		panelBanc.add(new Personnage("","AgentFantome","Kenshi la Lame Silencieuse","/images/personnages/Agent Fantome.jpg",mc,110,80));
 	}
+	
 	
 
 }

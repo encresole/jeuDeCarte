@@ -16,6 +16,7 @@ public class Joueur {
     public ArrayList<Carte> banc = new ArrayList<Carte>();
     public ArrayList<Carte> main = new ArrayList<Carte>();
     public Deck deck = new Deck();
+    public Carte carteSelectionnee;
 
     public Joueur(String name) {
         this.name = name;

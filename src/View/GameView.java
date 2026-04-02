@@ -1,11 +1,8 @@
 package View;
 
 import java.awt.BorderLayout;
-import java.awt.Button;
-import java.awt.Color;
-import java.awt.Dimension;
 
-import javax.swing.JPanel;
+import java.awt.Dimension;
 
 public class GameView extends PanelAgesOfClash {
 	private static final long serialVersionUID = 1L;
@@ -23,13 +20,9 @@ public class GameView extends PanelAgesOfClash {
 		
 		
 		
-		panelJ1 = new PanelJoueur(false,menuManager.model.joueur1);
+		panelJ1 = new PanelJoueur(false,menuManager.model.joueur1, menuManager.menuController);
 		
-		panelJ2 = new PanelJoueur(true,menuManager.model.joueur2);
-		
-		panelJ1.setBackground(new Color(0,0,255));
-		
-		panelJ2.setBackground(new Color(255,0,0));
+		panelJ2 = new PanelJoueur(true,menuManager.model.joueur2, menuManager.menuController);
 		
 		panelJ1.setPreferredSize(new Dimension(400,600));
 		panelJ2.setPreferredSize(new Dimension(400,600));

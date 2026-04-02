@@ -9,6 +9,7 @@ import java.awt.event.ComponentListener;
 import javax.swing.JFrame;
 
 import Model.Carte;
+import Model.Joueur;
 import Model.Model;
 import Model.Model.EtatPossible;
 import View.MenuManager;
@@ -63,6 +64,25 @@ public class MenuController implements ActionListener, ComponentListener {
 			System.out.println(c.nom);
 			System.out.println(m.joueurEnCours.deck.size());
 			System.out.println(m.joueurEnCours.deck);
+		} else if (etat == EtatPossible.COMBAT) {
+			System.out.println(c);
+			m.joueurEnCours.carteSelectionnee=c;
+		}
+	}
+	
+	public void carteClique(Carte c,Joueur j) {
+		EtatPossible etat = Model.etatApp;
+		
+		if (etat== EtatPossible.CREATIONDECK) {
+			Boolean ajouté = m.joueurEnCours.deck.ajouter(c);
+			if (ajouté) {
+				menuManager.creePanel.onDeckModified(c);
+			}
+			System.out.println(c.nom);
+			System.out.println(m.joueurEnCours.deck.size());
+			System.out.println(m.joueurEnCours.deck);
+		} else if (etat == EtatPossible.COMBAT) {
+			c.setSelectionnee(true);
 		}
 	}
 	

@@ -25,6 +25,8 @@ public abstract class Carte extends JPanel implements MouseListener {
     public String cheminImage;
     public BufferedImage image = null;
 
+    public boolean selectionnee = false;
+    
     public abstract Carte copy();
     
     public Carte(String id, String nom, String nomComplet, String cheminImage, MenuController mc) {
@@ -34,8 +36,8 @@ public abstract class Carte extends JPanel implements MouseListener {
         this.cheminImage = cheminImage;
         this.mc = mc;
         this.setLayout(null);
-        this.setOpaque(false);       
-        this.setPreferredSize(new Dimension(width, heigth)); 
+        this.setOpaque(false);
+        this.setPreferredSize(new Dimension(width+10, heigth+10)); 
         this.addMouseListener(this);
         try {
             image = ImageIO.read(getClass().getResource(this.cheminImage));
@@ -50,23 +52,24 @@ public abstract class Carte extends JPanel implements MouseListener {
 
 
     public boolean contains(int x, int y) {
-        return x >= 0 && x < width && y >= 0 && y < heigth;
+        return x >= 0 && x < width+10 && y >= 0 && y < heigth+10;
     }
-
+    
+    public void setSelectionnee(Boolean b) {
+    	selectionnee=b;
+    	revalidate();
+    	repaint();
+    }
+    
     @Override
     public Dimension getPreferredSize() {
-        return new Dimension(width, heigth);
+        return new Dimension(width+10, heigth+10);
     }
     
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
-        g.setColor(Color.BLACK);
-        g.drawRect(0, 0, width, heigth);
-        g.setColor(Color.WHITE);
-        g.fillRect(1, 1, width - 1, heigth - 1);
-        g.drawImage(image, 0, 0, width - 1, heigth - 1, this);
-        
+        g.drawImage(image, 5, 5, width +5, heigth + 5, this);
         g.setColor(Color.WHITE);
         g.drawString(nom, 10, 20);
     }

@@ -1,6 +1,9 @@
 package Model;
 
 
+import java.awt.Color;
+import java.awt.Graphics;
+
 import Controller.MenuController;
 
 public class Sort extends Carte  {
@@ -25,4 +28,12 @@ public class Sort extends Carte  {
 	public Carte copy() {
 		return new Sort(id, nom, cheminImage, mc, effet);
 	}
+	
+	@Override
+	public void paint(Graphics g) {
+		g.setColor(Color.PINK);
+        g.fillRect(0, 0, width +15, heigth +15);
+		super.paint(g);
+	}
+	
 }

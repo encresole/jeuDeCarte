@@ -1,5 +1,8 @@
 package Model;
 
+import java.awt.Color;
+import java.awt.Graphics;
+
 import Controller.MenuController;
 
 public class Objet extends Carte {
@@ -18,6 +21,13 @@ public class Objet extends Carte {
 	@Override
 	public Carte copy() {
 		return new Objet(id, nom, cheminImage, mc, effet);
+	}
+	
+	@Override
+	public void paint(Graphics g) {
+		g.setColor(Color.CYAN);
+        g.fillRect(0, 0, width +15, heigth +15);
+		super.paint(g);
 	}
 
 }

@@ -1,6 +1,9 @@
 package Model;
 
 
+import java.awt.Color;
+import java.awt.Graphics;
+
 import Controller.MenuController;
 
 public class Personnage extends Carte {
@@ -25,5 +28,13 @@ public class Personnage extends Carte {
 	@Override
 	public Carte copy() {
 		return new Personnage(id, nom, nomComplet, cheminImage, mc, pv, attaque);
+	}
+	
+	@Override
+	public void paint(Graphics g) {
+		// TODO Auto-generated method stub
+		g.setColor(Color.YELLOW);
+        g.fillRect(0, 0, width +15, heigth +15);
+		super.paint(g);
 	}
 }
