@@ -52,9 +52,9 @@ public class Model {
         lesCartes.add(new Personnage("", "AgentFantome", "Agent Fantôme", "/images/personnages/Agent Fantome.jpg", mc, 110, 80));
         lesCartes.add(new Personnage("", "CalamityJane", "Calamity Jane", "/images/personnages/Calamity Jane.jpg", mc, 110, 80));
         lesCartes.add(new Personnage("", "DocHolliday", "Doc Holliday", "/images/personnages/Doc Holliday.png", mc, 110, 80));
-        lesCartes.add(new Personnage("", "maitreTakeda", "Maître Takeda", "/images/personnages/Maitre Takeda.jpg", mc, 110, 80));
+        lesCartes.add(new Personnage("", "maitreTakeda", "Maître Takeda", "/images/personnages/Maître Takeda.jpg", mc, 110, 80));
         lesCartes.add(new Personnage("", "Paladin", "Paladin Maudit", "/images/personnages/Paladin Maudit.jpg", mc, 110, 80));
-        lesCartes.add(new Personnage("", "Ronin", "Ronin sans maître", "/images/personnages/Ronin sans maitre.jpg", mc, 110, 80));
+        lesCartes.add(new Personnage("", "Ronin", "Ronin sans maître", "/images/personnages/Ronin sans maître.jpg", mc, 110, 80));
         lesCartes.add(new Personnage("", "SniperElite", "Sniper Elite", "/images/personnages/Sniper Elite.jpg", mc, 110, 80));
     }
 }
