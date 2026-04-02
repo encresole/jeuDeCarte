@@ -1,0 +1,284 @@
+{
+  "personnages": [
+    {
+      "id": "p001",
+      "nom": "Aldric",
+      "nomComplet": "Sire Aldric l'Indomptable",
+      "image": "/images/personnages/Sire Aldric l'indomptable.jpg",
+      "faction": "CHEVALIER",
+      "pv": 150,
+      "attaque": 100,
+      "coutEnergie": 3,
+      "effet": ""
+    },
+    {
+      "id": "p002",
+      "nom": "Kenshi",
+      "nomComplet": "Kenshi la Lame Silencieuse",
+      "image": "/images/personnages/Kenshi la lame silencieuse.jpg",
+      "faction": "SAMURAI",
+      "pv": 110,
+      "attaque": 80,
+      "coutEnergie": 2,
+      "effet": ""
+    },
+    {
+      "id": "p003",
+      "nom": "AgentFantome",
+      "nomComplet": "Agent Fantôme",
+      "image": "/images/personnages/Agent Fantome.jpg",
+      "faction": "SOLDAT",
+      "pv": 110,
+      "attaque": 80,
+      "coutEnergie": 2,
+      "effet": ""
+    },
+    {
+      "id": "p004",
+      "nom": "CalamityJane",
+      "nomComplet": "Calamity Jane",
+      "image": "/images/personnages/Calamity Jane.jpg",
+      "faction": "COWBOY",
+      "pv": 110,
+      "attaque": 80,
+      "coutEnergie": 2,
+      "effet": ""
+    },
+    {
+      "id": "p005",
+      "nom": "DocHolliday",
+      "nomComplet": "Doc Holliday",
+      "image": "/images/personnages/Doc Holliday.png",
+      "faction": "COWBOY",
+      "pv": 110,
+      "attaque": 80,
+      "coutEnergie": 2,
+      "effet": ""
+    },
+    {
+      "id": "p006",
+      "nom": "maitreTakeda",
+      "nomComplet": "Maître Takeda",
+      "image": "/images/personnages/Maitre Takeda.jpg",
+      "faction": "SAMURAI",
+      "pv": 110,
+      "attaque": 80,
+      "coutEnergie": 2,
+      "effet": ""
+    },
+    {
+      "id": "p007",
+      "nom": "Paladin",
+      "nomComplet": "Paladin Maudit",
+      "image": "/images/personnages/Paladin Maudit.jpg",
+      "faction": "CHEVALIER",
+      "pv": 110,
+      "attaque": 80,
+      "coutEnergie": 2,
+      "effet": ""
+    },
+    {
+      "id": "p008",
+      "nom": "Ronin",
+      "nomComplet": "Ronin sans maître",
+      "image": "/images/personnages/Ronin sans maitre.jpg",
+      "faction": "SAMURAI",
+      "pv": 110,
+      "attaque": 80,
+      "coutEnergie": 2,
+      "effet": ""
+    },
+    {
+      "id": "p009",
+      "nom": "SniperElite",
+      "nomComplet": "Sniper Elite",
+      "image": "/images/personnages/Sniper Elite.jpg",
+      "faction": "SOLDAT",
+      "pv": 110,
+      "attaque": 80,
+      "coutEnergie": 2,
+      "effet": ""
+    },
+    {
+      "id": "p010",
+      "nom": "EcuyerBrave",
+      "nomComplet": "Ecuyer Brave",
+      "image": "/images/personnages/Ecuyer Brave.jpg",
+      "faction": "CHEVALIER",
+      "pv": 80,
+      "attaque": 60,
+      "coutEnergie": 1,
+      "effet": ""
+    },
+    {
+      "id": "p011",
+      "nom": "JesseKane",
+      "nomComplet": "Jesse Kane",
+      "image": "/images/personnages/Jesse Kane.jpg",
+      "faction": "COWBOY",
+      "pv": 90,
+      "attaque": 85,
+      "coutEnergie": 2,
+      "effet": ""
+    },
+    {
+      "id": "p012",
+      "nom": "SergentCross",
+      "nomComplet": "Sergent Cross",
+      "image": "/images/personnages/Sergent Cross.jpg",
+      "faction": "SOLDAT",
+      "pv": 130,
+      "attaque": 70,
+      "coutEnergie": 2,
+      "effet": ""
+    }
+  ],
+  "sorts": [
+    {
+      "id": "s001",
+      "nom": "BenedictionRoyale",
+      "nomComplet": "Bénédiction Royale",
+      "image": "/images/sorts/Bénédiction Royale.jpg",
+      "faction": "CHEVALIER",
+      "effet": "",
+      "description": "Restaure 40 PV au personnage actif allié."
+    },
+    {
+      "id": "s002",
+      "nom": "CodeBushido",
+      "nomComplet": "Code Bushido",
+      "image": "/images/sorts/Code Bushido.jpg",
+      "faction": "SAMURAI",
+      "effet": "",
+      "description": "Augmente l'attaque du personnage actif de 30 jusqu'à la fin du tour."
+    },
+    {
+      "id": "s003",
+      "nom": "Eclair",
+      "nomComplet": "Éclair",
+      "image": "/images/sorts/Eclair.jpg",
+      "faction": "",
+      "effet": "",
+      "description": "Inflige 50 dégâts au personnage actif ennemi."
+    },
+    {
+      "id": "s004",
+      "nom": "FrappeAerienne",
+      "nomComplet": "Frappe Aérienne",
+      "image": "/images/sorts/Frappe Aerienne.jpg",
+      "faction": "SOLDAT",
+      "effet": "",
+      "description": "Inflige 40 dégâts à tous les personnages ennemis."
+    },
+    {
+      "id": "s005",
+      "nom": "GrenadeEMP",
+      "nomComplet": "Grenade EMP",
+      "image": "/images/sorts/Grenade EMP.jpg",
+      "faction": "SOLDAT",
+      "effet": "",
+      "description": "Désactive l'effet du personnage ennemi actif pendant un tour."
+    },
+    {
+      "id": "s006",
+      "nom": "JugementDivin",
+      "nomComplet": "Jugement Divin",
+      "image": "/images/sorts/Jugement Divin.jpg",
+      "faction": "CHEVALIER",
+      "effet": "",
+      "description": "Inflige 70 dégâts au personnage ennemi actif."
+    },
+    {
+      "id": "s007",
+      "nom": "SortDeChance",
+      "nomComplet": "Sort de Chance",
+      "image": "/images/sorts/Sort de Chance.jpg",
+      "faction": "",
+      "effet": "",
+      "description": "Pioche 2 cartes supplémentaires."
+    },
+    {
+      "id": "s008",
+      "nom": "SortEmbuscade",
+      "nomComplet": "Sort d'Embuscade",
+      "image": "/images/sorts/Sort Embuscade.jpg",
+      "faction": "COWBOY",
+      "effet": "",
+      "description": "Inflige 35 dégâts et réduit l'attaque ennemie de 20 pendant un tour."
+    }
+  ],
+  "objets": [
+    {
+      "id": "o001",
+      "nom": "ArmureLaqueNoir",
+      "nomComplet": "Armure de Laque Noir",
+      "image": "/images/objets/Armure De Laque Noir.jpg",
+      "faction": "SAMURAI",
+      "effet": "",
+      "description": "Réduit les dégâts reçus de 20 pendant 2 tours."
+    },
+    {
+      "id": "o002",
+      "nom": "BouclierRoi",
+      "nomComplet": "Bouclier du Roi",
+      "image": "/images/objets/Bouclier du Roi.jpg",
+      "faction": "CHEVALIER",
+      "effet": "",
+      "description": "Absorbe les 30 premiers dégâts reçus."
+    },
+    {
+      "id": "o003",
+      "nom": "ColtPeacemaker",
+      "nomComplet": "Colt Peacemaker",
+      "image": "/images/objets/Colt Peacemaker.jpg",
+      "faction": "COWBOY",
+      "effet": "",
+      "description": "Augmente l'attaque de 25 en permanence."
+    },
+    {
+      "id": "o004",
+      "nom": "DroneCombat",
+      "nomComplet": "Drone de Combat",
+      "image": "/images/objets/Drone de combat.jpg",
+      "faction": "SOLDAT",
+      "effet": "",
+      "description": "Inflige 15 dégâts automatiques à l'ennemi à chaque début de tour."
+    },
+    {
+      "id": "o005",
+      "nom": "EtoileSherif",
+      "nomComplet": "Étoile de Shérif",
+      "image": "/images/objets/Etoile de sherif.jpg",
+      "faction": "COWBOY",
+      "effet": "",
+      "description": "Augmente la défense de 15 et l'attaque de 10."
+    },
+    {
+      "id": "o006",
+      "nom": "Excalibur",
+      "nomComplet": "Excalibur",
+      "image": "/images/objets/Exalibur.jpg",
+      "faction": "CHEVALIER",
+      "effet": "",
+      "description": "Augmente l'attaque de 40 en permanence."
+    },
+    {
+      "id": "o007",
+      "nom": "GiletPareBalles",
+      "nomComplet": "Gilet Pare-balles",
+      "image": "/images/objets/Gilet Pare-balles.jpg",
+      "faction": "SOLDAT",
+      "effet": "",
+      "description": "Réduit les dégâts reçus de 25 en permanence."
+    },
+    {
+      "id": "o008",
+      "nom": "KatanaMuramasa",
+      "nomComplet": "Katana Muramasa",
+      "image": "/images/objets/Katana Muramasa.jpg",
+      "faction": "SAMURAI",
+      "effet": "",
+      "description": "Augmente l'attaque de 35 en permanence."
+    }
+  ]
+}
