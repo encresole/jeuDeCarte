@@ -4,6 +4,7 @@ import java.awt.BorderLayout;
 import java.awt.Dimension;
 
 import javax.swing.BoxLayout;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 import Controller.MenuController;
@@ -16,7 +17,9 @@ public class PanelJoueur extends JPanel{
 	
 	Joueur joueur;
 	PanelAgesOfClash panelBanc = new PanelAgesOfClash();
+	LabelTitle labelBanc= new LabelTitle("Banc");
 	PanelAgesOfClash panelMain = new PanelAgesOfClash();
+	LabelTitle labelMain= new LabelTitle("Main");
 	MenuController mc;
 	
 	public PanelJoueur(Boolean reverse,Joueur joueur, MenuController mc) {
@@ -47,6 +50,9 @@ public class PanelJoueur extends JPanel{
 		
 		
 		add(panelMain,BorderLayout.SOUTH);
+		
+		panelBanc.add(labelBanc);
+		panelMain.add(labelMain);
 		
 		panelMain.add(new Personnage("","Aldric","Sire Aldric l'Indomptable","/images/personnages/Sire Aldric l'indomptable.jpg",mc,150,100));
 		panelMain.add(new Personnage("","Kenshi","Kenshi la Lame Silencieuse","/images/personnages/Kenshi la lame silencieuse.jpg",mc,110,80));
