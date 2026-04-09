@@ -13,6 +13,7 @@ public class Personnage extends Carte {
 	public int pvMax;
 	public int attaque;
 	public int energie;
+	public int energieMax=100;
 	public Boolean estActif;
 	public int coutEnergie;
 	public Model.Faction faction;
@@ -41,8 +42,11 @@ public class Personnage extends Carte {
 		super.paint(g);
 		g.setColor(Color.BLACK);
 		g.fillRect(5, 155, (Integer)width+5, (int) ((int)heigth*0.05));
+		g.fillRect(5, 150, (Integer)width+5, (int) ((int)heigth*0.05));
 		
-		
+		g.setColor(Color.CYAN);
+		g.fillRect(5, 149, (int)((energie / (double) energieMax) * width) + 5, (int)(heigth * 0.05));
+
 		if ((pv / (double) pvMax) <0.25) {
 			g.setColor(Color.RED);
 		} else if ((pv / (double) pvMax) <0.50) {
@@ -52,6 +56,7 @@ public class Personnage extends Carte {
 		}
 		g.fillRect(5, 155, (int)((pv / (double) pvMax) * width) + 5, (int)(heigth * 0.05));
 		g.setColor(Color.WHITE);
-		g.drawString(pv+"/"+pvMax+"pv", 7, 150);
+		g.drawString(pv+"/"+pvMax+"pv", 7, 145);
+		g.drawString(energie+"/"+energieMax+"energy", 7, 135);
 	}
 }
