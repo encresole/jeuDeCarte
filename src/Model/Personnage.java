@@ -42,7 +42,6 @@ public class Personnage extends Carte {
 		g.setColor(Color.BLACK);
 		g.fillRect(5, 155, (Integer)width+5, (int) ((int)heigth*0.05));
 		
-		pv=55;
 		
 		if ((pv / (double) pvMax) <0.25) {
 			g.setColor(Color.RED);
