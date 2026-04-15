@@ -9,6 +9,7 @@ import java.awt.event.ComponentListener;
 import javax.swing.JFrame;
 
 import Model.Carte;
+import Model.Carte.POSITION;
 import Model.Joueur;
 import Model.Model;
 import Model.Model.EtatPossible;
@@ -17,7 +18,7 @@ import View.MenuManager;
 public class MenuController implements ActionListener, ComponentListener {
 	public MenuManager menuManager;
 	public Model m;
-	
+	public GameController gc;
 	public MenuController() {
 	}
 
@@ -25,6 +26,11 @@ public class MenuController implements ActionListener, ComponentListener {
 	public void setMenuManager(MenuManager menuManager) {
 		this.menuManager=menuManager;
 	}
+	
+	public  void setGameController(GameController gc) {
+		this.gc=gc;
+	}
+	
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		// TODO Auto-generated method stub
@@ -32,7 +38,12 @@ public class MenuController implements ActionListener, ComponentListener {
 		if (e.getActionCommand()=="SHOWMENU") {
 			menuManager.showMenu();
 		} else if (e.getActionCommand()=="JOUER") {
-			menuManager.showJeu();
+			Boolean ok = peutCommencer();
+			if (ok) {
+				menuManager.showJeu();
+			} else {
+				System.err.println("deck d'un des joueurs incomplet");
+			}
 		} else if (e.getActionCommand()=="CREER") {
 			menuManager.showCreer();
 		
@@ -65,14 +76,15 @@ public class MenuController implements ActionListener, ComponentListener {
 			System.out.println(m.joueurEnCours.deck.size());
 			System.out.println(m.joueurEnCours.deck);
 		} else if (etat == EtatPossible.COMBAT) {
-			System.out.println(c);
+			System.out.println("combat dans menuController");
 			m.joueurEnCours.carteSelectionnee=c;
+			carteClique(c, m.joueurEnCours,c.position);
 		}
 	}
 	
-	public void carteClique(Carte c,Joueur j) {
+	public void carteClique(Carte c,Joueur j,POSITION p) {
 		EtatPossible etat = Model.etatApp;
-		
+		System.out.println(p);
 		if (etat== EtatPossible.CREATIONDECK) {
 			Boolean ajouté = m.joueurEnCours.deck.ajouter(c);
 			if (ajouté) {
@@ -82,12 +94,29 @@ public class MenuController implements ActionListener, ComponentListener {
 			System.out.println(m.joueurEnCours.deck.size());
 			System.out.println(m.joueurEnCours.deck);
 		} else if (etat == EtatPossible.COMBAT) {
-			c.setSelectionnee(true);
+			gc.carteClique(c, j);
 		}
 	}
 	
 	public void changeEtat(Model.EtatPossible etat) {
 		Model.etatApp=etat;
+	}
+	
+	public Boolean peutCommencer() {
+		if (m.joueur1.deck.size()==0) {
+			if (m.joueur2.deck.size()==0) {
+				System.err.println("0 carte dans 1 des decks");
+				return false;
+			}
+		}
+		
+		if (m.joueur1.deck.size()==20 || m.joueur1.deck.size()==0) {
+			if (m.joueur2.deck.size()==20 || m.joueur2.deck.size()==0) {
+				return true;
+			}
+		}
+		// A MODIFIER PLUS TARD METTRE FALSE POUR QUE LE COMBAT SE LANCE PAS TANT QUE DECK PAS COMPLET
+		return true; 
 	}
 
 

@@ -32,6 +32,7 @@ public class Sort extends Carte  {
 	@Override
 	public void paint(Graphics g) {
 		g.setColor(Color.PINK);
+		if (selectionnee) {g.setColor(Color.WHITE);}
         g.fillRect(0, 0, width +15, heigth +15);
 		super.paint(g);
 	}

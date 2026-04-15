@@ -1,4 +1,5 @@
 package Controller;
+import java.io.Console;
 
 /**
  * GameController — Contrôleur principal du combat
@@ -13,6 +14,8 @@ package Controller;
 
 import java.util.Random;
 import Model.*;
+import Model.Carte.POSITION;
+import Model.Model.EtatPossible;
 
 public class GameController {
 
@@ -27,17 +30,27 @@ public class GameController {
     public void commencerCombat(Joueur joueur1, Joueur joueur2) {
         m.partieEnCours = new Partie(joueur1, joueur2, Model.TypeDePartie.JcJ);
         combat = new Combat(m.partieEnCours);
-
+        
+        joueur1.banc.removeAll(joueur1.banc);
+        joueur1.main.removeAll(joueur1.main);
+        
+        joueur2.banc.removeAll(joueur2.banc);
+        joueur2.main.removeAll(joueur2.main);
+        
         for (int i = 0; i < m.TAILLEMAINDEBUT; i++) {
-            if (joueur1.deck.size() > i) {
-                joueur1.main.add(joueur1.deck.get(i));
-            }
+        	int indexCarte=random.nextInt(joueur1.deck.size());
+        	Carte c = joueur1.deck.get(indexCarte).copy();
+        	c.setPosition(POSITION.MAIN);
+        	joueur1.main.add(c);
+        	System.out.println(joueur1.main);
         }
 
         for (int i = 0; i < m.TAILLEMAINDEBUT; i++) {
-            if (joueur2.deck.size() > i) {
-                joueur2.main.add(joueur2.deck.get(i));
-            }
+        	int indexCarte=random.nextInt(joueur2.deck.size());
+        	Carte c = joueur2.deck.get(indexCarte).copy();
+        	c.setPosition(POSITION.MAIN);
+        	joueur2.main.add(c);
+        	System.out.println(joueur2.main);
         }
 
         m.partieEnCours.tourDe = tirageJoueur();
@@ -83,4 +96,17 @@ public class GameController {
             System.out.println("[GameController] Partie terminée !");
         }
     }
+    
+    public void carteClique(Carte c,Joueur j) {
+		EtatPossible etat = Model.etatApp;
+		if (etat== EtatPossible.COMBAT) {
+			for (Carte carte : j.main) {
+				System.out.println(carte);
+				carte.setSelectionnee(false);
+			}
+			j.carteSelectionnee=c;
+			c.setSelectionnee(true);
+			System.out.println("caca");
+		}
+	}
 }

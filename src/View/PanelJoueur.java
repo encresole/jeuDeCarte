@@ -4,9 +4,9 @@ import java.awt.BorderLayout;
 import java.awt.Dimension;
 
 import javax.swing.BoxLayout;
-import javax.swing.JLabel;
 import javax.swing.JPanel;
 
+import Controller.GameController;
 import Controller.MenuController;
 import Model.Carte;
 import Model.Joueur;
@@ -21,10 +21,13 @@ public class PanelJoueur extends JPanel{
 	PanelAgesOfClash panelMain = new PanelAgesOfClash();
 	LabelTitle labelMain= new LabelTitle("Main");
 	MenuController mc;
+	GameController gc;
 	
-	public PanelJoueur(Boolean reverse,Joueur joueur, MenuController mc) {
+	public PanelJoueur(Boolean reverse,Joueur joueur, MenuController mc, GameController gc) {
 		// TODO Auto-generated constructor stub
 		setLayout(new BorderLayout());
+		
+		this.joueur=joueur;
 		
 		panelBanc.setPreferredSize(new Dimension((int) (400*0.3),600));
 		panelBanc.setLayout(new BoxLayout(panelBanc, BoxLayout.Y_AXIS));
@@ -63,6 +66,22 @@ public class PanelJoueur extends JPanel{
 		panelBanc.add(new Personnage("","AgentFantome","Kenshi la Lame Silencieuse","/images/personnages/Agent Fantome.jpg",mc,110,80));
 	}
 	
+	public void actualiserMain() {
+		panelMain.removeAll();
+		for (Carte c : joueur.main) {
+			panelMain.add(c);
+		}
+		panelMain.repaint();
+		panelMain.revalidate();
+	}
 	
+	public void actualiserBanc() {
+		panelBanc.removeAll();
+		for (Carte c : joueur.banc) {
+			panelMain.add(c);
+		}
+		panelBanc.repaint();
+		panelBanc.revalidate();
+	}
 
 }

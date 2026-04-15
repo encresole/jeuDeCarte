@@ -58,7 +58,6 @@ public class MainMenu extends PanelAgesOfClash {
 	    
 	    leftWrapper = new PanelAgesOfClash();
 	    leftWrapper.setLayout(new BoxLayout(leftWrapper, BoxLayout.Y_AXIS));
-	    
 	    leftWrapper.add(Box.createVerticalGlue());
 	    leftWrapper.add(panelDesButtons);
 	    leftWrapper.add(Box.createVerticalGlue());

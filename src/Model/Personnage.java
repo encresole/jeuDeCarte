@@ -36,7 +36,9 @@ public class Personnage extends Carte {
 	@Override
 	public void paint(Graphics g) {
 		// TODO Auto-generated method stub
+		
 		g.setColor(Color.YELLOW);
+		if (selectionnee) {g.setColor(Color.WHITE);}
         g.fillRect(0, 0, width +15, heigth +15);
 
 		super.paint(g);

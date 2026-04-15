@@ -16,6 +16,8 @@ import Controller.MenuController;
 public abstract class Carte extends JPanel implements MouseListener {
 	private static final long serialVersionUID = 1L;
 	
+	public static enum POSITION{BANC,ACTIF,MAIN};
+	
 	public String id;
 	public String nom;
 	public String nomComplet;
@@ -25,6 +27,7 @@ public abstract class Carte extends JPanel implements MouseListener {
     public String cheminImage;
     public BufferedImage image = null;
 
+    public POSITION position;
     public boolean selectionnee = false;
     
     public abstract Carte copy();
@@ -61,6 +64,10 @@ public abstract class Carte extends JPanel implements MouseListener {
     	repaint();
     }
     
+    public void setPosition(POSITION p) {
+    	this.position=p;
+    }
+    
     @Override
     public Dimension getPreferredSize() {
         return new Dimension(width+10, heigth+10);
@@ -76,7 +83,7 @@ public abstract class Carte extends JPanel implements MouseListener {
     
     @Override
     public String toString() {
-    	return this.nom;
+    	return this.nom+" "+position;
     }
     
     @Override

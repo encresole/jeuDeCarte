@@ -23,17 +23,24 @@ public class GameView extends PanelAgesOfClash {
     PanelJoueur panelJ1;
     PanelJoueur panelJ2;
     PanelAgesOfClash panelDesBoutons = new PanelAgesOfClash();
-
+    PanelAgesOfClash panelDesActions = new PanelAgesOfClash();
+	LabelTitle indicateurTour;
     ButtonAgesOfClash boutonUtiliser;
     ButtonAgesOfClash boutonRetraite;
+    ButtonAgesOfClash buttonBanc;
+    ButtonAgesOfClash buttonActif;
     ButtonAgesOfClash boutonFinDuTour;
 
     public GameView(MenuManager menuManager) {
         this.menuManager = menuManager;
         setLayout(new BorderLayout());
-
-        panelJ1 = new PanelJoueur(false, menuManager.model.joueur1, menuManager.menuController);
-        panelJ2 = new PanelJoueur(true, menuManager.model.joueur2, menuManager.menuController);
+        
+		indicateurTour = new LabelTitle("TOUR DE ");
+		
+		add(indicateurTour, BorderLayout.NORTH);
+		
+        panelJ1 = new PanelJoueur(false, menuManager.model.joueur1, menuManager.menuController, menuManager.gameController);
+        panelJ2 = new PanelJoueur(true, menuManager.model.joueur2, menuManager.menuController, menuManager.gameController);
 
         panelJ1.setPreferredSize(new Dimension(400, 600));
         panelJ2.setPreferredSize(new Dimension(400, 600));
@@ -44,7 +51,7 @@ public class GameView extends PanelAgesOfClash {
         panelDesBoutons.setLayout(new BorderLayout());
         add(panelDesBoutons, BorderLayout.SOUTH);
 
-        boutonUtiliser = new ButtonAgesOfClash("Utiliser");
+        boutonUtiliser = new ButtonAgesOfClash("Attaquer");
         boutonUtiliser.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 menuManager.menuController.m.gameController.utiliser();
@@ -57,21 +64,43 @@ public class GameView extends PanelAgesOfClash {
                 menuManager.menuController.m.gameController.retraite();
             }
         });
-
         boutonFinDuTour = new ButtonAgesOfClash("Fin du tour");
         boutonFinDuTour.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 menuManager.menuController.m.gameController.finDuTour();
             }
         });
+        
+        buttonBanc = new ButtonAgesOfClash("Placer sur le banc");
+        
+        buttonActif= new ButtonAgesOfClash("Placer sur le poste actif");
 
-        panelDesBoutons.add(boutonUtiliser, BorderLayout.LINE_START);
-        panelDesBoutons.add(boutonRetraite);
-        panelDesBoutons.add(boutonFinDuTour, BorderLayout.LINE_END);
-
+        panelDesActions.add(boutonUtiliser);
+        panelDesActions.add(boutonRetraite);
+        panelDesActions.add(buttonBanc);
+        panelDesActions.add(buttonActif);
+        panelDesActions.add(boutonFinDuTour);
+        
+        panelDesBoutons.add(panelDesActions);
+        
         boutonRetour = new ButtonAgesOfClash("Retour");
         boutonRetour.setActionCommand("SHOWMENU");
         boutonRetour.addActionListener(menuManager.menuController);
         panelDesBoutons.add(boutonRetour, BorderLayout.PAGE_END);
+        
+        initialiser();
     }
+    
+    public void initialiser() {
+    	panelJ1.actualiserBanc();
+    	panelJ1.actualiserMain();
+    	panelJ2.actualiserBanc();
+    	panelJ2.actualiserMain();
+    	
+    }
+    
+    public void onCombatCommence() {
+    indicateurTour.setText("TOUR DE "+menuManager.model.partieEnCours.tourDe);
+    }
+    
 }

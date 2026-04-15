@@ -2,6 +2,7 @@ package View;
 
 import javax.swing.*;
 
+import Controller.GameController;
 import Controller.MenuController;
 import Model.Model;
 
@@ -9,6 +10,7 @@ import java.awt.*;
 
 public class MenuManager {
 	public MenuController menuController;
+	public GameController gameController;
 	public Model model;
 	
 	public MenuStart startPanel;
@@ -28,8 +30,8 @@ public class MenuManager {
 	public Dimension frameSize;
 	
 
-    public MenuManager(MenuController menuController,Model model) {
-    	
+    public MenuManager(MenuController menuController,Model model, GameController gameController) {
+    	this.gameController=gameController;
     	this.menuController= menuController;
     	this.model=model;
     	
@@ -84,6 +86,9 @@ public class MenuManager {
 
     public void showJeu() {
     	menuController.changeEtat(Model.EtatPossible.COMBAT);
+    	gameController.commencerCombat(model.joueur1, model.joueur2);
+    	gamePanel.initialiser();
+    	gamePanel.onCombatCommence();
     	cardLayout.show(cardPanel, "Jeu");
     }
     
