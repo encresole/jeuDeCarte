@@ -64,6 +64,15 @@ public class Model {
         lesCartes.add(new Sort("", "Jugement Divin", "/images/sorts/Jugement Divin.jpg", mc, new EffetVide()));
         lesCartes.add(new Sort("", "Sort de Chance", "/images/sorts/Sort de Chance.jpg", mc, new EffetVide()));
         lesCartes.add(new Sort("", "Sort Embuscade", "/images/sorts/Sort Embuscade.jpg", mc, new EffetVide()));
-        lesCartes.add(new Objet("", "gilet par balle", "/images/objets/Gilet Pare-balles.jpg",mc,new EffetVide()));
+        lesCartes.add(new Objet("", "Armure De Laque Noir", "/images/objets/Armure De Laque Noir.jpg",mc,new EffetVide()));
+        lesCartes.add(new Objet("", "Bouclier du Roi", "/images/objets/Bouclier du Roi.jpg",mc,new EffetVide()));
+        lesCartes.add(new Objet("", "Colt Peacemaker", "/images/objets/Colt Peacemaker.jpg",mc,new EffetVide()));
+        lesCartes.add(new Objet("", "Drone de combat", "/images/objets/Drone de combat.jpg",mc,new EffetVide()));
+        lesCartes.add(new Objet("", "Etoile de sherif", "/images/objets/Etoile de sherif.jpg",mc,new EffetVide()));
+        lesCartes.add(new Objet("", "Exalibur", "/images/objets/Exalibur.jpg",mc,new EffetVide()));
+        lesCartes.add(new Objet("", "Gilet par balle", "/images/objets/Gilet Pare-balles.jpg",mc,new EffetVide()));
+        lesCartes.add(new Objet("", "Grande potion de Soin", "/images/objets/Grande potion de Soin.jpg",mc,new EffetVide()));
+        lesCartes.add(new Objet("", "Katana MUramasa", "/images/objets/Katana MUramasa.jpg",mc,new EffetVide()));
+        lesCartes.add(new Objet("", "Petite potion de soin", "/images/objets/Petite potion de soin.jpg",mc,new EffetVide()));
     }
 }
