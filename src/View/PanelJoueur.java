@@ -1,6 +1,7 @@
 package View;
 
 import java.awt.BorderLayout;
+import java.awt.Container;
 import java.awt.Dimension;
 
 import javax.swing.BoxLayout;
@@ -10,6 +11,7 @@ import Controller.GameController;
 import Controller.MenuController;
 import Model.Carte;
 import Model.Joueur;
+import Model.Palette;
 import Model.Personnage;
 
 public class PanelJoueur extends JPanel{
@@ -32,10 +34,6 @@ public class PanelJoueur extends JPanel{
 		panelBanc.setPreferredSize(new Dimension((int) (400*0.3),600));
 		panelBanc.setLayout(new BoxLayout(panelBanc, BoxLayout.Y_AXIS));
 		
-		
-		
-		
-		
 		Carte carteActive=new Personnage("","AgentFantome","Kenshi la Lame Silencieuse","/images/personnages/Agent Fantome.jpg",mc,110,80);
 		if (reverse) {
 			add(panelBanc,BorderLayout.LINE_END);
@@ -57,17 +55,11 @@ public class PanelJoueur extends JPanel{
 		panelBanc.add(labelBanc);
 		panelMain.add(labelMain);
 		
-		panelMain.add(new Personnage("","Aldric","Sire Aldric l'Indomptable","/images/personnages/Sire Aldric l'indomptable.jpg",mc,150,100));
-		panelMain.add(new Personnage("","Kenshi","Kenshi la Lame Silencieuse","/images/personnages/Kenshi la lame silencieuse.jpg",mc,110,80));
-		panelMain.add(new Personnage("","AgentFantome","Kenshi la Lame Silencieuse","/images/personnages/Agent Fantome.jpg",mc,110,80));
-		
-		panelBanc.add(new Personnage("","Aldric","Sire Aldric l'Indomptable","/images/personnages/Sire Aldric l'indomptable.jpg",mc,150,100));
-		panelBanc.add(new Personnage("","Kenshi","Kenshi la Lame Silencieuse","/images/personnages/Kenshi la lame silencieuse.jpg",mc,110,80));
-		panelBanc.add(new Personnage("","AgentFantome","Kenshi la Lame Silencieuse","/images/personnages/Agent Fantome.jpg",mc,110,80));
 	}
 	
 	public void actualiserMain() {
 		panelMain.removeAll();
+		panelMain.add(labelMain);
 		for (Carte c : joueur.main) {
 			panelMain.add(c);
 		}
@@ -77,8 +69,9 @@ public class PanelJoueur extends JPanel{
 	
 	public void actualiserBanc() {
 		panelBanc.removeAll();
+		panelBanc.add(labelBanc);	
 		for (Carte c : joueur.banc) {
-			panelMain.add(c);
+			panelBanc.add(c);
 		}
 		panelBanc.repaint();
 		panelBanc.revalidate();

@@ -72,6 +72,11 @@ public class GameView extends PanelAgesOfClash {
         });
         
         buttonBanc = new ButtonAgesOfClash("Placer sur le banc");
+        buttonBanc.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				GameView.this.menuManager.gameController.placerSurBanc();
+			}
+		});
         
         buttonActif= new ButtonAgesOfClash("Placer sur le poste actif");
 

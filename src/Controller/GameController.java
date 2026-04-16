@@ -1,5 +1,4 @@
 package Controller;
-import java.io.Console;
 
 /**
  * GameController — Contrôleur principal du combat
@@ -16,12 +15,14 @@ import java.util.Random;
 import Model.*;
 import Model.Carte.POSITION;
 import Model.Model.EtatPossible;
+import View.MenuManager;
 
 public class GameController {
 
     public Model m;
     Random random = new Random();
     public Combat combat;
+    public MenuManager menuManager;
 
     public GameController(Model m) {
         this.m = m;
@@ -31,6 +32,9 @@ public class GameController {
         m.partieEnCours = new Partie(joueur1, joueur2, Model.TypeDePartie.JcJ);
         combat = new Combat(m.partieEnCours);
         
+        Deck deckJ1 = joueur1.deck.copy();
+        Deck deckJ2 = joueur2.deck.copy();
+        
         joueur1.banc.removeAll(joueur1.banc);
         joueur1.main.removeAll(joueur1.main);
         
@@ -38,19 +42,26 @@ public class GameController {
         joueur2.main.removeAll(joueur2.main);
         
         for (int i = 0; i < m.TAILLEMAINDEBUT; i++) {
-        	int indexCarte=random.nextInt(joueur1.deck.size());
-        	Carte c = joueur1.deck.get(indexCarte).copy();
+        	if (deckJ1.size()==0) {
+        		break;
+        	}
+        	int indexCarte=random.nextInt(deckJ1.size());
+        	Carte c = deckJ1.get(indexCarte);
         	c.setPosition(POSITION.MAIN);
         	joueur1.main.add(c);
-        	System.out.println(joueur1.main);
+        	deckJ1.remove(c);
+        	System.out.println("deck :"+deckJ1);
         }
 
         for (int i = 0; i < m.TAILLEMAINDEBUT; i++) {
-        	int indexCarte=random.nextInt(joueur2.deck.size());
-        	Carte c = joueur2.deck.get(indexCarte).copy();
+        	if (deckJ2.size()==0) {
+        		break;
+        	}
+        	int indexCarte=random.nextInt(deckJ2.size());
+        	Carte c = deckJ2.get(indexCarte);
         	c.setPosition(POSITION.MAIN);
         	joueur2.main.add(c);
-        	System.out.println(joueur2.main);
+        	deckJ2.remove(c);
         }
 
         m.partieEnCours.tourDe = tirageJoueur();
@@ -106,7 +117,26 @@ public class GameController {
 			}
 			j.carteSelectionnee=c;
 			c.setSelectionnee(true);
-			System.out.println("caca");
 		}
+	}
+
+	public void placerSurBanc() {
+		Joueur joueur= m.joueurEnCours;
+		Carte c;
+		if (joueur.carteSelectionnee==null) return;
+		c=joueur.carteSelectionnee;
+		if (c.position!=POSITION.MAIN) return;
+		Carte nouvelleC=c.copy();
+		nouvelleC.position=POSITION.BANC;
+		joueur.banc.add(nouvelleC);
+		joueur.main.remove(c);
+		System.out.println(joueur.banc);
+		joueur.carteSelectionnee=null;
+		menuManager.gamePanel.initialiser();
+	}
+
+	public void setMenuManager(MenuManager menuManager) {
+		// TODO Auto-generated method stub
+		this.menuManager=menuManager;
 	}
 }

@@ -61,7 +61,7 @@ public class MenuController implements ActionListener, ComponentListener {
 			m.setJoueurEnCours(m.joueur2);
 			menuManager.creePanel.onPlayerModified();
 			menuManager.showCreer();
-		}
+		} 
 	}
 	
 	public void carteClique(Carte c) {

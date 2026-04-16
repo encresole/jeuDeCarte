@@ -18,4 +18,12 @@ public class Deck extends ArrayList<Carte>{
 		}
 		return false;
 	}
+	
+	public Deck copy() {
+		Deck copy= new Deck();
+		for (Carte carte : this) {
+			copy.ajouter(carte.copy());
+		}
+		return copy;
+	}
 }

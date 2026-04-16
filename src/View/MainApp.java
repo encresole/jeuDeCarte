@@ -14,5 +14,6 @@ public class MainApp {
 		menucontroller.setGameController(gameController);
 		menucontroller.setMenuManager(menuManager);
 		menucontroller.setModel(model);
-	}
+		gameController.setMenuManager(menuManager);
+	}	
 }
