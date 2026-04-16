@@ -57,6 +57,13 @@ public class Model {
         lesCartes.add(new Personnage("", "Ronin", "Ronin sans maître", "/images/personnages/Ronin sans maître.jpg", mc, 110, 80));
         lesCartes.add(new Personnage("", "SniperElite", "Sniper Elite", "/images/personnages/Sniper Elite.jpg", mc, 110, 80));
         lesCartes.add(new Sort("", "Eclair", "/images/sorts/Eclair.jpg", mc, new EffetVide()));
+        lesCartes.add(new Sort("", "Bénédiction Royale", "/images/sorts/Bénédiction Royale.jpg", mc, new EffetVide()));
+        lesCartes.add(new Sort("", "Code Bushido", "/images/sorts/Code Bushido.jpg", mc, new EffetVide()));
+        lesCartes.add(new Sort("", "Frappe Aerienne", "/images/sorts/Frappe Aerienne.jpg", mc, new EffetVide()));
+        lesCartes.add(new Sort("", "Grenade EMP", "/images/sorts/Grenade EMP.jpg", mc, new EffetVide()));
+        lesCartes.add(new Sort("", "Jugement Divin", "/images/sorts/Jugement Divin.jpg", mc, new EffetVide()));
+        lesCartes.add(new Sort("", "Sort de Chance", "/images/sorts/Sort de Chance.jpg", mc, new EffetVide()));
+        lesCartes.add(new Sort("", "Sort Embuscade", "/images/sorts/Sort Embuscade.jpg", mc, new EffetVide()));
         lesCartes.add(new Objet("", "gilet par balle", "/images/objets/Gilet Pare-balles.jpg",mc,new EffetVide()));
     }
 }
