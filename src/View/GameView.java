@@ -55,20 +55,20 @@ public class GameView extends PanelAgesOfClash {
         boutonUtiliser = new ButtonAgesOfClash("Utiliser");
         boutonUtiliser.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                menuManager.menuController.m.gameController.utiliser();
+                menuManager.gameController.utiliser();
             }
         });
 
         boutonRetraite = new ButtonAgesOfClash("Retraite");
         boutonRetraite.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                menuManager.menuController.m.gameController.retraite();
+                menuManager.gameController.retraite();
             }
         });
         boutonAttaquer= new ButtonAgesOfClash("Attaquer");
         boutonAttaquer.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                menuManager.menuController.m.gameController.attaquer();
+                menuManager.gameController.attaquer();
             }
         });
         

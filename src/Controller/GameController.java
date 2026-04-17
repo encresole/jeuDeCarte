@@ -37,9 +37,11 @@ public class GameController {
         
         joueur1.banc.removeAll(joueur1.banc);
         joueur1.main.removeAll(joueur1.main);
+        joueur1.actif=null;
         
         joueur2.banc.removeAll(joueur2.banc);
         joueur2.main.removeAll(joueur2.main);
+        joueur2.actif=null;
         
         for (int i = 0; i < m.TAILLEMAINDEBUT; i++) {
         	if (deckJ1.size()==0) {
@@ -90,6 +92,7 @@ public class GameController {
         getCombat().jouerTour(Model.ActionJoueur.JOUER_SORT);
         System.out.println("[GameController] UTILISER (sort joué)");
         System.out.println(getCombat().getHistorique());
+        menuManager.gamePanel.refresh();
     }
 
     public void retraite() {
@@ -99,6 +102,7 @@ public class GameController {
         getCombat().jouerTour(Model.ActionJoueur.PASSER);
         System.out.println("[GameController] RETRAITE (tour passé)");
         System.out.println(getCombat().getHistorique());
+        menuManager.gamePanel.refresh();
     }
 
     public void attaquer() {
@@ -108,6 +112,7 @@ public class GameController {
         boolean fin = getCombat().jouerTour(Model.ActionJoueur.ATTAQUER);
         System.out.println("[GameController] FIN DU TOUR (attaque)");
         System.out.println(getCombat().getHistorique());
+        menuManager.gamePanel.refresh();
         if (fin) {
             System.out.println("[GameController] Partie terminée !");
         }
@@ -162,8 +167,10 @@ public class GameController {
 	public void finDuTour() {
 		if (m.joueurEnCours==m.joueur1) {
 			m.setJoueurEnCours(m.joueur2);
+			m.partieEnCours.tourDe=1;
 		} else {
 			m.setJoueurEnCours(m.joueur1);
+			m.partieEnCours.tourDe=2;
 		}
 		menuManager.gamePanel.refresh();
 	}

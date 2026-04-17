@@ -1,6 +1,7 @@
 package View;
 
 import java.awt.BorderLayout;
+import java.awt.Component;
 import java.awt.Dimension;
 
 import javax.swing.BoxLayout;
@@ -10,46 +11,44 @@ import Controller.MenuController;
 import Model.Carte;
 import Model.Joueur;
 
-public class PanelJoueur extends PanelAgesOfClash{
+public class PanelJoueur extends PanelAgesOfClash {
 	private static final long serialVersionUID = 1L;
-	
+
 	Joueur joueur;
 	PanelAgesOfClash panelBanc = new PanelAgesOfClash();
-	LabelTitle labelBanc= new LabelTitle("Banc");
+	LabelTitle labelBanc = new LabelTitle("Banc");
 	PanelAgesOfClash panelMain = new PanelAgesOfClash();
-	LabelTitle labelMain= new LabelTitle("Main");
+	LabelTitle labelMain = new LabelTitle("Main");
 	MenuController mc;
 	GameController gc;
 	Carte carteActive;
-	
+
 	Boolean reverse;
-	
-	public PanelJoueur(Boolean reverse,Joueur joueur, MenuController mc, GameController gc) {
+
+	public PanelJoueur(Boolean reverse, Joueur joueur, MenuController mc, GameController gc) {
 		setLayout(new BorderLayout());
-		
-		this.joueur=joueur;
-		this.reverse=reverse;
-		
-		panelBanc.setPreferredSize(new Dimension((int) (400*0.3),600));
+
+		this.joueur = joueur;
+		this.reverse = reverse;
+
+		panelBanc.setPreferredSize(new Dimension((int) (400 * 0.3), 600));
 		panelBanc.setLayout(new BoxLayout(panelBanc, BoxLayout.Y_AXIS));
-		
-		
+
 		if (reverse) {
-			add(new LabelTitle("Actif"),BorderLayout.LINE_START);
-			add(panelBanc,BorderLayout.LINE_END);
+			add(new LabelTitle("Actif"), BorderLayout.LINE_START);
+			add(panelBanc, BorderLayout.LINE_END);
 		} else {
-			add(new LabelTitle("Actif"),BorderLayout.LINE_END);
-			add(panelBanc,BorderLayout.LINE_START);
+			add(new LabelTitle("Actif"), BorderLayout.LINE_END);
+			add(panelBanc, BorderLayout.LINE_START);
 		}
-		
-		
-		add(panelMain,BorderLayout.SOUTH);
-		
+
+		add(panelMain, BorderLayout.SOUTH);
+
 		panelBanc.add(labelBanc);
 		panelMain.add(labelMain);
-		
+
 	}
-	
+
 	public void actualiserMain() {
 		panelMain.removeAll();
 		panelMain.add(labelMain);
@@ -59,40 +58,41 @@ public class PanelJoueur extends PanelAgesOfClash{
 		panelMain.repaint();
 		panelMain.revalidate();
 	}
-	
+
 	public void actualiserBanc() {
 		panelBanc.removeAll();
 		panelBanc.add(labelBanc);
 		for (Carte c : joueur.banc) {
-			System.out.println("carte "+c);
+			System.out.println("carte " + c);
 			panelBanc.add(c);
 		}
 		panelBanc.repaint();
 		panelBanc.revalidate();
 	}
-	
+
 	public void actualiserActif() {
 		System.out.println("start actualiser actif");
-		if (joueur.actif==null) return;
-		carteActive=joueur.actif;
-		System.out.println(carteActive);
-		if (reverse) {
-			System.out.println("added");
-			add(
-					carteActive,
-					BorderLayout.LINE_START
-				);
+		if (joueur.actif == null) {
+			for (Component comp : this.getComponents()) {
+				if (comp instanceof Carte) {
+					this.remove((Carte) comp);
+				}
+			}
 		} else {
-			System.out.println("added2");
-			add(
-					carteActive,
-					BorderLayout.LINE_END
-				);
+			carteActive = joueur.actif;
+			System.out.println(carteActive);
+			if (reverse) {
+				System.out.println("added");
+				add(carteActive, BorderLayout.LINE_START);
+			} else {
+				System.out.println("added2");
+				add(carteActive, BorderLayout.LINE_END);
+			}
+			repaint();
+			revalidate();
 		}
-		repaint();
-		revalidate();
 	}
-	
+
 	public void actualiserAll() {
 		actualiserBanc();
 		actualiserMain();
