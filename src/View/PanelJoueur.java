@@ -10,6 +10,7 @@ import Controller.GameController;
 import Controller.MenuController;
 import Model.Carte;
 import Model.Joueur;
+import Model.Personnage;
 
 public class PanelJoueur extends PanelAgesOfClash {
 	private static final long serialVersionUID = 1L;
@@ -72,6 +73,15 @@ public class PanelJoueur extends PanelAgesOfClash {
 
 	public void actualiserActif() {
 		System.out.println("start actualiser actif");
+		for (Component comp : this.getComponents()) {
+			if (comp instanceof Personnage) {
+				Personnage lacarte=(Personnage) comp;
+				if (lacarte.pv<=0) {
+					this.remove(lacarte);
+				}
+			}
+		}
+		
 		if (joueur.actif == null) {
 			for (Component comp : this.getComponents()) {
 				if (comp instanceof Carte) {
