@@ -8,14 +8,14 @@ import javax.swing.BoxLayout;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
-public class ChoixJoueur extends JPanel {
+public class ChoixJoueur extends PanelAgesOfClash {
 	private static final long serialVersionUID = 1L;
 	
 	public MenuManager menuManager;
 	
 	public JPanel centerPanel;
-	public JPanel panelPourLabel = new JPanel();
-	public JPanel panelDesButtons= new JPanel();
+	public JPanel panelPourLabel = new PanelAgesOfClash();
+	public JPanel panelDesButtons= new PanelAgesOfClash();
 	public JLabel labelChoix;
 	public ButtonAgesOfClash buttonJoueur1 = new ButtonAgesOfClash("Joueur 1");
 	public ButtonAgesOfClash buttonJoueur2 = new ButtonAgesOfClash("Joueur 2");
@@ -25,7 +25,7 @@ public class ChoixJoueur extends JPanel {
 		this.menuManager=menuManager;
 		this.setLayout(new BorderLayout());
 		
-		labelChoix = new JLabel("Quel joueur va créer son deck ?");
+		labelChoix = new LabelTitle("Quel joueur va créer son deck ?");
 		panelPourLabel.setBorder(BorderFactory.createEmptyBorder(40, 0, 0, 0));
 		panelPourLabel.add(labelChoix);
 		
@@ -40,7 +40,7 @@ public class ChoixJoueur extends JPanel {
 		buttonJoueur1.addActionListener(menuManager.menuController);
 		buttonJoueur2.addActionListener(menuManager.menuController);
 		
-		centerPanel = new JPanel();
+		centerPanel = new PanelAgesOfClash();
 		centerPanel.setLayout(new BoxLayout(centerPanel, BoxLayout.Y_AXIS));
 		centerPanel.add(Box.createVerticalGlue());
 		centerPanel.add(panelDesButtons);

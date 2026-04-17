@@ -87,7 +87,7 @@ public class MenuManager {
     public void showJeu() {
     	menuController.changeEtat(Model.EtatPossible.COMBAT);
     	gameController.commencerCombat(model.joueur1, model.joueur2);
-    	gamePanel.initialiser();
+    	gamePanel.refresh();
     	gamePanel.onCombatCommence();
     	cardLayout.show(cardPanel, "Jeu");
     }

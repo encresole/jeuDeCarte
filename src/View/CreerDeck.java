@@ -42,17 +42,17 @@ public class CreerDeck extends JPanel {
         
         this.cartesDispo= new JScrollPane();
         
-        grandLeftPanel= new JPanel();
+        grandLeftPanel= new PanelAgesOfClash();
         grandLeftPanel.setLayout(new BorderLayout());
         
-        panelPourLeLabel = new JPanel();
-        labelCartesDispo= new JLabel("CARTES DISPONIBLES :");
+        panelPourLeLabel = new PanelAgesOfClash();
+        labelCartesDispo= new LabelTitle("CARTES DISPONIBLES :");
         labelCartesDispo.setAlignmentX(JLabel.CENTER_ALIGNMENT);
         panelPourLeLabel.add(labelCartesDispo);
         grandLeftPanel.add(panelPourLeLabel,BorderLayout.PAGE_START);
         labelCartesDispo.setBorder(BorderFactory.createEmptyBorder(10, 0, 10, 0));
         
-        leftPanel= new JPanel();
+        leftPanel= new PanelAgesOfClash();
         leftPanel.setLayout(new GridLayout(0, 2, 10, 10)); 
         leftPanel.setPreferredSize(new Dimension(400, Math.round(200*cartes.size())/2)); 
         leftPanel.setBorder(BorderFactory.createEmptyBorder(0, 40, 0, 0));
@@ -69,18 +69,18 @@ public class CreerDeck extends JPanel {
         
         this.cartesDuDeck= new JScrollPane();
         
-        grandRightPanel= new JPanel();
+        grandRightPanel= new PanelAgesOfClash();
         grandRightPanel.setLayout(new BorderLayout());
         
-        panelPourLeLabelDeck = new JPanel();
-        labelCartesDeck= new JLabel("VOUS AVEZ 0/20 CARTES");
+        panelPourLeLabelDeck = new PanelAgesOfClash();
+        labelCartesDeck= new LabelTitle("VOUS AVEZ 0/20 CARTES");
         labelCartesDeck.setAlignmentX(JLabel.CENTER_ALIGNMENT);
         panelPourLeLabelDeck.add(labelCartesDeck);
         grandRightPanel.add(panelPourLeLabelDeck,BorderLayout.PAGE_START);
         labelCartesDeck.setBorder(BorderFactory.createEmptyBorder(10, 0, 10, 0));
         
         
-        rightPanel= new JPanel();
+        rightPanel= new PanelAgesOfClash();
         rightPanel.setLayout(new GridLayout(0, 2, 10, 10)); 
         rightPanel.setPreferredSize(new Dimension(380, Math.round(200*cartes.size())/2)); 
         rightPanel.setBorder(BorderFactory.createEmptyBorder(0, 40, 0, 0));

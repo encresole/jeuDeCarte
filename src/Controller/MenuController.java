@@ -33,7 +33,6 @@ public class MenuController implements ActionListener, ComponentListener {
 	
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		// TODO Auto-generated method stub
 		System.out.println(e.getActionCommand());
 		if (e.getActionCommand()=="SHOWMENU") {
 			menuManager.showMenu();
@@ -76,9 +75,7 @@ public class MenuController implements ActionListener, ComponentListener {
 			System.out.println(m.joueurEnCours.deck.size());
 			System.out.println(m.joueurEnCours.deck);
 		} else if (etat == EtatPossible.COMBAT) {
-			System.out.println("combat dans menuController");
-			m.joueurEnCours.carteSelectionnee=c;
-			carteClique(c, m.joueurEnCours,c.position);
+			gc.carteClique(c, m.joueurEnCours);
 		}
 	}
 	
@@ -93,8 +90,6 @@ public class MenuController implements ActionListener, ComponentListener {
 			System.out.println(c.nom);
 			System.out.println(m.joueurEnCours.deck.size());
 			System.out.println(m.joueurEnCours.deck);
-		} else if (etat == EtatPossible.COMBAT) {
-			gc.carteClique(c, j);
 		}
 	}
 	
@@ -122,7 +117,6 @@ public class MenuController implements ActionListener, ComponentListener {
 
 	@Override
 	public void componentResized(ComponentEvent e) {
-		// TODO Auto-generated method stub
 		if (e.getSource() instanceof JFrame) {
             JFrame frame = (JFrame) e.getSource();
             menuManager.frameSize=frame.getSize();
@@ -130,30 +124,20 @@ public class MenuController implements ActionListener, ComponentListener {
 		}
 	}
 
-
 	@Override
 	public void componentMoved(ComponentEvent e) {
-		// TODO Auto-generated method stub
-		
 	}
-
 
 	@Override
 	public void componentShown(ComponentEvent e) {
-		// TODO Auto-generated method stub
-		
 	}
 
-
 	@Override
-	public void componentHidden(ComponentEvent e) {
-		// TODO Auto-generated method stub
-		
+	public void componentHidden(ComponentEvent e) {		
 	}
 
 
 	public void setModel(Model model) {
-		// TODO Auto-generated method stub
 		this.m=model;
 	}
 

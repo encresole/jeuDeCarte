@@ -50,7 +50,6 @@ public class GameController {
         	c.setPosition(POSITION.MAIN);
         	joueur1.main.add(c);
         	deckJ1.remove(c);
-        	System.out.println("deck :"+deckJ1);
         }
 
         for (int i = 0; i < m.TAILLEMAINDEBUT; i++) {
@@ -65,6 +64,12 @@ public class GameController {
         }
 
         m.partieEnCours.tourDe = tirageJoueur();
+        
+        if (m.partieEnCours.tourDe==1) {
+			m.setJoueurEnCours(m.joueur2);
+		} else {
+			m.setJoueurEnCours(m.joueur1);
+		}
     }
 
     public Combat getCombat() {
@@ -96,7 +101,7 @@ public class GameController {
         System.out.println(getCombat().getHistorique());
     }
 
-    public void finDuTour() {
+    public void attaquer() {
         if (m.partieEnCours == null || m.partieEnCours.finPartie) {
             return;
         }
@@ -110,33 +115,61 @@ public class GameController {
     
     public void carteClique(Carte c,Joueur j) {
 		EtatPossible etat = Model.etatApp;
+		System.out.println("click "+ c);
 		if (etat== EtatPossible.COMBAT) {
 			for (Carte carte : j.main) {
-				System.out.println(carte);
 				carte.setSelectionnee(false);
 			}
 			j.carteSelectionnee=c;
+			System.out.println("selectionée en combat "+ j.carteSelectionnee+" par "+j);
 			c.setSelectionnee(true);
 		}
 	}
 
 	public void placerSurBanc() {
+		System.out.println("==========Debut placerSurBanc()========");
+		Joueur joueur= m.joueurEnCours;
+		System.out.println("tour de "+joueur+" avec selected "+joueur.carteSelectionnee);
+		Carte c;
+		System.out.println("test si null :"+joueur.carteSelectionnee);
+		if (joueur.carteSelectionnee==null) return;
+		c=joueur.carteSelectionnee;
+		System.out.println("la carte est "+c);
+		if (c.position!=POSITION.MAIN) return;
+		Carte nouvelleC=c.copy();
+		nouvelleC.position=POSITION.BANC;
+		joueur.banc.add(nouvelleC);
+		joueur.main.remove(c);
+		joueur.carteSelectionnee=null;
+		menuManager.gamePanel.refresh();
+		System.out.println("==========Fin placerSurBanc()========");
+	}
+	
+	public void placerEnActif() {
 		Joueur joueur= m.joueurEnCours;
 		Carte c;
 		if (joueur.carteSelectionnee==null) return;
 		c=joueur.carteSelectionnee;
 		if (c.position!=POSITION.MAIN) return;
 		Carte nouvelleC=c.copy();
-		nouvelleC.position=POSITION.BANC;
-		joueur.banc.add(nouvelleC);
+		nouvelleC.position=POSITION.ACTIF;
+		joueur.actif=nouvelleC;
 		joueur.main.remove(c);
-		System.out.println(joueur.banc);
 		joueur.carteSelectionnee=null;
-		menuManager.gamePanel.initialiser();
+		menuManager.gamePanel.refresh();
 	}
 
+	public void finDuTour() {
+		if (m.joueurEnCours==m.joueur1) {
+			m.setJoueurEnCours(m.joueur2);
+		} else {
+			m.setJoueurEnCours(m.joueur1);
+		}
+		menuManager.gamePanel.refresh();
+	}
+	
 	public void setMenuManager(MenuManager menuManager) {
-		// TODO Auto-generated method stub
 		this.menuManager=menuManager;
 	}
+
 }
