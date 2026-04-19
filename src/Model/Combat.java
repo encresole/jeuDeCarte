@@ -207,7 +207,6 @@ public class Combat {
     }
 
     public void passerAuTourSuivant() {
-        partie.tour++;
         if (partie.tourDe == 0) {
             partie.tourDe = 1;
         } else {

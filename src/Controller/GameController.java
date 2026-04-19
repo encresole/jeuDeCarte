@@ -161,22 +161,37 @@ public class GameController {
 		nouvelleC.setPosition(POSITION.ACTIF);
 		nouvelleC.setJoueur(joueur);
 		joueur.actif=nouvelleC;
-		joueur.main.remove(c);
+		if (c.position==POSITION.MAIN) {
+			joueur.main.remove(c);
+		} else {
+			joueur.banc.remove(c);
+		}
 		joueur.carteSelectionnee=null;
 		menuManager.gamePanel.refresh();
 	}
 
 	public void finDuTour() {
-		
-		if (m.joueurEnCours==m.joueur1) {
-			m.setJoueurEnCours(m.joueur2);
-			m.partieEnCours.tourDe=1;
-		} else {
-			m.setJoueurEnCours(m.joueur1);
-			m.partieEnCours.tourDe=0;
+		Boolean ok = true;
+		if (m.partieEnCours.tour<2) {
+			if (m.joueurEnCours.actif==null) {
+				System.err.println("Placer au moins une carte active avant de commencer");
+				ok=false;
+			}
 		}
-		m.partieEnCours.tour+=1;
-		menuManager.gamePanel.refresh();
+		
+		if (ok) {
+			m.partieEnCours.tour++;
+			m.joueurEnCours.unselectAll();
+			if (m.joueurEnCours==m.joueur1) {
+				m.setJoueurEnCours(m.joueur2);
+				m.partieEnCours.tourDe=1;
+			} else {
+				m.setJoueurEnCours(m.joueur1);
+				m.partieEnCours.tourDe=0;
+			} 
+			System.out.println("le tour=========="+m.partieEnCours.tour);
+			menuManager.gamePanel.refresh();
+		}
 	}
 	
 	public void setMenuManager(MenuManager menuManager) {
