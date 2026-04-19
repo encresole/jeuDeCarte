@@ -37,7 +37,7 @@ public class MenuManager {
     	
         frame = new JFrame("Jeu de Cartes");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setSize(800, 600);
+        frame.setSize(900, 600);
         
         cardLayout = new CardLayout();
         cardPanel = new JPanel(cardLayout);
