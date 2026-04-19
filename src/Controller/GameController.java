@@ -42,6 +42,7 @@ public class GameController {
         joueur2.banc.removeAll(joueur2.banc);
         joueur2.main.removeAll(joueur2.main);
         joueur2.actif=null;
+        System.out.println(deckJ1);
         
         for (int i = 0; i < m.TAILLEMAINDEBUT; i++) {
         	if (deckJ1.size()==0) {
@@ -115,24 +116,24 @@ public class GameController {
         if (fin) {
             System.out.println("[GameController] Partie terminée !");
         }
+        finDuTour();
         menuManager.gamePanel.refresh();
     }
     
     public void carteClique(Carte c,Joueur j) {
 		EtatPossible etat = Model.etatApp;
 		System.out.println("click "+ c);
-		if (etat== EtatPossible.COMBAT) {
-			for (Carte carte : j.main) {
-				carte.setSelectionnee(false);
+		if (c.joueur==m.joueurEnCours) {
+			if (etat== EtatPossible.COMBAT) {
+				j.unselectAll();
+				j.carteSelectionnee=c;
+				System.out.println("selectionée en combat "+ j.carteSelectionnee+" par "+j);
+				c.setSelectionnee(true);
 			}
-			j.carteSelectionnee=c;
-			System.out.println("selectionée en combat "+ j.carteSelectionnee+" par "+j);
-			c.setSelectionnee(true);
 		}
 	}
 
 	public void placerSurBanc() {
-		System.out.println("==========Debut placerSurBanc()========");
 		Joueur joueur= m.joueurEnCours;
 		System.out.println("tour de "+joueur+" avec selected "+joueur.carteSelectionnee);
 		Carte c;
@@ -142,12 +143,12 @@ public class GameController {
 		System.out.println("la carte est "+c);
 		if (c.position!=POSITION.MAIN) return;
 		Carte nouvelleC=c.copy();
-		nouvelleC.position=POSITION.BANC;
+		nouvelleC.setPosition(POSITION.BANC);
+		nouvelleC.setJoueur(joueur);
 		joueur.banc.add(nouvelleC);
 		joueur.main.remove(c);
 		joueur.carteSelectionnee=null;
 		menuManager.gamePanel.refresh();
-		System.out.println("==========Fin placerSurBanc()========");
 	}
 	
 	public void placerEnActif() {
@@ -155,9 +156,10 @@ public class GameController {
 		Carte c;
 		if (joueur.carteSelectionnee==null) return;
 		c=joueur.carteSelectionnee;
-		if (c.position!=POSITION.MAIN) return;
+		if (c.position==POSITION.ACTIF) return;
 		Carte nouvelleC=c.copy();
-		nouvelleC.position=POSITION.ACTIF;
+		nouvelleC.setPosition(POSITION.ACTIF);
+		nouvelleC.setJoueur(joueur);
 		joueur.actif=nouvelleC;
 		joueur.main.remove(c);
 		joueur.carteSelectionnee=null;
@@ -165,6 +167,7 @@ public class GameController {
 	}
 
 	public void finDuTour() {
+		
 		if (m.joueurEnCours==m.joueur1) {
 			m.setJoueurEnCours(m.joueur2);
 			m.partieEnCours.tourDe=1;

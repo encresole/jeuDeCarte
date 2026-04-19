@@ -12,6 +12,7 @@ import java.awt.GridLayout;
 import java.util.ArrayList;
 
 import Model.Carte;
+import Model.Carte.POSITION;
 
 public class CreerDeck extends JPanel {
     private static final long serialVersionUID = 1L;
@@ -128,7 +129,10 @@ public class CreerDeck extends JPanel {
     	System.out.println("player modified to "+ menuManager.model.joueurEnCours);
     	this.labelCartesDeck.setText("VOUS AVEZ "+ menuManager.model.joueurEnCours.deck.size() +"/20 CARTES");
     	for (Carte carte : menuManager.model.joueurEnCours.deck) {
-			rightPanel.add(carte.copy());
+    		Carte copy= carte.copy();
+    		copy.setPosition(POSITION.DECK);
+    		copy.setJoueur(carte.joueur);
+			rightPanel.add(copy);
 		}
     	rightPanel.revalidate();
     	rightPanel.repaint();

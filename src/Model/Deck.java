@@ -20,10 +20,13 @@ public class Deck extends ArrayList<Carte>{
 	}
 	
 	public Deck copy() {
-		Deck copy= new Deck();
+		Deck newDeck= new Deck();
 		for (Carte carte : this) {
-			copy.ajouter(carte.copy());
+			Carte copy= carte.copy();
+			copy.setPosition(carte.position);
+			copy.setJoueur(carte.joueur);
+			newDeck.ajouter(copy);
 		}
-		return copy;
+		return newDeck;
 	}
 }

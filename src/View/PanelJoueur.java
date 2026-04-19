@@ -34,6 +34,8 @@ public class PanelJoueur extends PanelAgesOfClash {
 
 		panelBanc.setPreferredSize(new Dimension((int) (400 * 0.3), 600));
 		panelBanc.setLayout(new BoxLayout(panelBanc, BoxLayout.Y_AXIS));
+		
+		panelMain.setLayout(new BoxLayout(panelMain, BoxLayout.X_AXIS));
 
 		if (reverse) {
 			add(new LabelTitle("Actif"), BorderLayout.LINE_START);

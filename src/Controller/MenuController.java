@@ -67,6 +67,7 @@ public class MenuController implements ActionListener, ComponentListener {
 		EtatPossible etat = Model.etatApp;
 		System.out.println(c.position);
 		if (etat== EtatPossible.CREATIONDECK) {
+			System.out.println(c);
 			if (c.position==null) {
 				Carte copy=c.copy();
 				copy.setJoueur(m.joueurEnCours);

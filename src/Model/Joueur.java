@@ -58,4 +58,16 @@ public class Joueur {
     public String toString() {
         return name;
     }
+
+	public void unselectAll() {
+		for (Carte carte : main) {
+			carte.setSelectionnee(false);
+		}
+		for (Carte carte : banc) {
+			carte.setSelectionnee(false);
+		}
+		if (actif!=null) {
+			actif.setSelectionnee(false);
+		}
+	}
 }
