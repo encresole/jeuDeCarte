@@ -24,7 +24,9 @@ public class GameView extends PanelAgesOfClash {
     PanelJoueur panelJ2;
     PanelAgesOfClash panelDesBoutons = new PanelAgesOfClash();
     PanelAgesOfClash panelDesActions = new PanelAgesOfClash();
+    PanelAgesOfClash panelLabel= new PanelAgesOfClash();
 	LabelTitle indicateurTour;
+	LabelTitle indicateurCptTour;
     ButtonAgesOfClash boutonUtiliser;
     ButtonAgesOfClash boutonRetraite;
     ButtonAgesOfClash buttonBanc;
@@ -36,9 +38,15 @@ public class GameView extends PanelAgesOfClash {
         this.menuManager = menuManager;
         setLayout(new BorderLayout());
         
+        
 		indicateurTour = new LabelTitle("TOUR DE ");
+		indicateurCptTour=new LabelTitle("TOUR N");
 		
-		add(indicateurTour, BorderLayout.NORTH);
+		panelLabel.add(indicateurTour);
+		panelLabel.add(indicateurCptTour);
+		
+		add(panelLabel, BorderLayout.NORTH);
+		
 		
         panelJ1 = new PanelJoueur(false, menuManager.model.joueur1, menuManager.menuController, menuManager.gameController);
         panelJ2 = new PanelJoueur(true, menuManager.model.joueur2, menuManager.menuController, menuManager.gameController);
@@ -119,10 +127,12 @@ public class GameView extends PanelAgesOfClash {
     
     public void onCombatCommence() {
     	indicateurTour.setText("TOUR DE JOUEUR "+((int)menuManager.model.partieEnCours.tourDe+1));
+    	indicateurCptTour.setText("TOUR N°"+((int)menuManager.model.partieEnCours.tour+1));
     }
     
     public void refreshText() {
     	indicateurTour.setText("TOUR DE JOUEUR "+((int)menuManager.model.partieEnCours.tourDe+1));
+    	indicateurCptTour.setText("TOUR N°"+((int)menuManager.model.partieEnCours.tour+1));
     }
     
 }

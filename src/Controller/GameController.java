@@ -112,10 +112,10 @@ public class GameController {
         boolean fin = getCombat().jouerTour(Model.ActionJoueur.ATTAQUER);
         System.out.println("[GameController] FIN DU TOUR (attaque)");
         System.out.println(getCombat().getHistorique());
-        menuManager.gamePanel.refresh();
         if (fin) {
             System.out.println("[GameController] Partie terminée !");
         }
+        menuManager.gamePanel.refresh();
     }
     
     public void carteClique(Carte c,Joueur j) {
@@ -170,8 +170,9 @@ public class GameController {
 			m.partieEnCours.tourDe=1;
 		} else {
 			m.setJoueurEnCours(m.joueur1);
-			m.partieEnCours.tourDe=2;
+			m.partieEnCours.tourDe=0;
 		}
+		m.partieEnCours.tour+=1;
 		menuManager.gamePanel.refresh();
 	}
 	
