@@ -116,7 +116,7 @@ public class CreerDeck extends JPanel {
     }
     
     public void onDeckModified(Carte c) {
-        rightPanel.add(c.copy());
+        rightPanel.add(c);
         rightPanel.setPreferredSize(new Dimension(size.width/2, Math.round(200*menuManager.model.joueurEnCours.deck.size())/2));
         this.labelCartesDeck.setText("VOUS AVEZ "+ menuManager.model.joueurEnCours.deck.size() +"/20 CARTES");
         rightPanel.revalidate();

@@ -65,15 +65,23 @@ public class MenuController implements ActionListener, ComponentListener {
 	
 	public void carteClique(Carte c) {
 		EtatPossible etat = Model.etatApp;
-		
+		System.out.println(c.position);
 		if (etat== EtatPossible.CREATIONDECK) {
-			Boolean ajouté = m.joueurEnCours.deck.ajouter(c);
-			if (ajouté) {
-				menuManager.creePanel.onDeckModified(c);
+			if (c.position==null) {
+				Carte copy=c.copy();
+				copy.setJoueur(m.joueurEnCours);
+				copy.setPosition(Carte.POSITION.DECK);
+				Boolean ajouté = m.joueurEnCours.deck.ajouter(copy);
+				if (ajouté) {
+					menuManager.creePanel.onDeckModified(copy);
+				}
+				System.out.println(c.nom);
+				System.out.println(m.joueurEnCours.deck.size());
+				System.out.println(m.joueurEnCours.deck);
+			} else {
+				System.err.println("dedans");
 			}
-			System.out.println(c.nom);
-			System.out.println(m.joueurEnCours.deck.size());
-			System.out.println(m.joueurEnCours.deck);
+			
 		} else if (etat == EtatPossible.COMBAT) {
 			gc.carteClique(c, m.joueurEnCours);
 		}
