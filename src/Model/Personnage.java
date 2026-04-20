@@ -58,7 +58,9 @@ public class Personnage extends Carte {
 		}
 		g.fillRect(5, 155, (int)((pv / (double) pvMax) * width) + 5, (int)(heigth * 0.05));
 		g.setColor(Color.WHITE);
+ 		
 		g.drawString(pv+"/"+pvMax+"pv", 7, 145);
 		g.drawString(energie+"/"+energieMax+"energy", 7, 135);
+		g.drawString("ATK "+attaque, 7, 125);
 	}
 }

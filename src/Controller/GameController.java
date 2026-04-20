@@ -12,6 +12,7 @@ package Controller;
  */
 
 import java.util.Random;
+
 import Model.*;
 import Model.Carte.POSITION;
 import Model.Model.EtatPossible;
@@ -23,7 +24,10 @@ public class GameController {
     Random random = new Random();
     public Combat combat;
     public MenuManager menuManager;
-
+    
+    Deck deckJ1;
+    Deck deckJ2;
+    
     public GameController(Model m) {
         this.m = m;
     }
@@ -32,8 +36,8 @@ public class GameController {
         m.partieEnCours = new Partie(joueur1, joueur2, Model.TypeDePartie.JcJ);
         combat = new Combat(m.partieEnCours);
         
-        Deck deckJ1 = joueur1.deck.copy();
-        Deck deckJ2 = joueur2.deck.copy();
+        deckJ1 = joueur1.deck.copy();
+        deckJ2 = joueur2.deck.copy();
         
         joueur1.banc.removeAll(joueur1.banc);
         joueur1.main.removeAll(joueur1.main);
@@ -100,9 +104,25 @@ public class GameController {
         if (m.partieEnCours == null || m.partieEnCours.finPartie) {
             return;
         }
-        getCombat().jouerTour(Model.ActionJoueur.PASSER);
-        System.out.println("[GameController] RETRAITE (tour passé)");
+        //getCombat().jouerTour(Model.ActionJoueur.PASSER);
+        Joueur j = m.joueurEnCours;
+        if (j.banc.size()==0) return;
+        Personnage oldActive=(Personnage) j.actif;
+        Personnage copy=(Personnage) oldActive.copy();
+        
+        copy.setPosition(POSITION.BANC);
+        copy.setJoueur(j);
+        copy.pv=oldActive.pv;
+        copy.pvMax=oldActive.pvMax;
+        copy.energie= oldActive.energie;
+        j.banc.add(copy);
+        j.actif=null;
+        menuManager.gamePanel.refresh();
+        getCombat().promouvoirBanc(j);
+
+        System.out.println("[GameController] RETRAITE");
         System.out.println(getCombat().getHistorique());
+        finDuTour();
         menuManager.gamePanel.refresh();
     }
 
@@ -178,6 +198,7 @@ public class GameController {
 		}
 		
 		if (ok) {
+			piocherCarte();
 			m.partieEnCours.tour++;
 			m.joueurEnCours.unselectAll();
 			if (m.joueurEnCours==m.joueur1) {
@@ -187,8 +208,42 @@ public class GameController {
 				m.setJoueurEnCours(m.joueur1);
 				m.partieEnCours.tourDe=0;
 			} 
+			updateStats(m.joueur1);
+			updateStats(m.joueur2);
 			menuManager.gamePanel.onTourUpdate();
 			menuManager.gamePanel.refresh();
+		}
+	}
+	
+	public void updateStats(Joueur joueur) {
+		for (Carte carte : joueur.banc) {
+			Personnage p =(Personnage) carte;
+			if (p.pvMax-p.pv<10) {
+				p.pv=p.pvMax;
+			} else {
+				p.pv+=10;
+			}
+			if (p.energie-100<=40) {
+				p.energie=100;
+			} else {
+				p.energie+=40;
+			}
+		}
+	}
+	
+	public void piocherCarte() {
+		if (m.joueurEnCours==m.joueur1) {
+			if (deckJ1.size()==0) return;
+			int indexPioche=random.nextInt(deckJ1.size());
+			deckJ1.get(indexPioche).position=POSITION.MAIN;
+			m.joueurEnCours.main.add(deckJ1.get(indexPioche));
+			deckJ1.remove(indexPioche);
+		} else {
+			if (deckJ2.size()==0) return;
+			int indexPioche=random.nextInt(deckJ2.size());
+			deckJ2.get(indexPioche).position=POSITION.MAIN;
+			m.joueurEnCours.main.add(deckJ2.get(indexPioche));
+			deckJ2.remove(indexPioche);
 		}
 	}
 	
