@@ -130,9 +130,21 @@ public class GameView extends PanelAgesOfClash {
     	if (menuManager.model.partieEnCours.tour<2) {
     		indicateurCptTour.setText("TOUR DE PREPARATION");
     	} else {
-    		indicateurCptTour.setText("TOUR N°"+((int)menuManager.model.partieEnCours.tour-1));
+    		indicateurCptTour.setText("TOUR N°"+((int)menuManager.model.partieEnCours.tour-1 ));
     	}
 
+    }
+    
+    public void onTourUpdate() {
+    	if (menuManager.model.partieEnCours.tour<2) {
+    		boutonUtiliser.setEnabled(false);
+    		boutonAttaquer.setEnabled(false);
+    		boutonRetraite.setEnabled(false);
+    	} else {
+			boutonUtiliser.setEnabled(true);
+			boutonAttaquer.setEnabled(true);
+			boutonRetraite.setEnabled(true);
+		}
     }
     
     public void refreshText() {

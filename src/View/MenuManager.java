@@ -89,6 +89,7 @@ public class MenuManager {
     	gameController.commencerCombat(model.joueur1, model.joueur2);
     	gamePanel.refresh();
     	gamePanel.onCombatCommence();
+    	gamePanel.onTourUpdate();
     	cardLayout.show(cardPanel, "Jeu");
     }
     

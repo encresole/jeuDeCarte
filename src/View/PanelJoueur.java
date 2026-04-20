@@ -66,7 +66,6 @@ public class PanelJoueur extends PanelAgesOfClash {
 		panelBanc.removeAll();
 		panelBanc.add(labelBanc);
 		for (Carte c : joueur.banc) {
-			System.out.println("carte " + c);
 			panelBanc.add(c);
 		}
 		panelBanc.repaint();
@@ -74,7 +73,6 @@ public class PanelJoueur extends PanelAgesOfClash {
 	}
 
 	public void actualiserActif() {
-		System.out.println("start actualiser actif");
 		for (Component comp : this.getComponents()) {
 			if (comp instanceof Personnage) {
 				Personnage lacarte=(Personnage) comp;
@@ -92,12 +90,9 @@ public class PanelJoueur extends PanelAgesOfClash {
 			}
 		} else {
 			carteActive = joueur.actif;
-			System.out.println(carteActive);
 			if (reverse) {
-				System.out.println("added");
 				add(carteActive, BorderLayout.LINE_START);
 			} else {
-				System.out.println("added2");
 				add(carteActive, BorderLayout.LINE_END);
 			}
 			repaint();

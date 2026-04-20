@@ -135,12 +135,9 @@ public class GameController {
 
 	public void placerSurBanc() {
 		Joueur joueur= m.joueurEnCours;
-		System.out.println("tour de "+joueur+" avec selected "+joueur.carteSelectionnee);
 		Carte c;
-		System.out.println("test si null :"+joueur.carteSelectionnee);
 		if (joueur.carteSelectionnee==null) return;
 		c=joueur.carteSelectionnee;
-		System.out.println("la carte est "+c);
 		if (c.position!=POSITION.MAIN) return;
 		Carte nouvelleC=c.copy();
 		nouvelleC.setPosition(POSITION.BANC);
@@ -156,6 +153,7 @@ public class GameController {
 		Carte c;
 		if (joueur.carteSelectionnee==null) return;
 		c=joueur.carteSelectionnee;
+		if (joueur.actif!=null) return;
 		if (c.position==POSITION.ACTIF) return;
 		Carte nouvelleC=c.copy();
 		nouvelleC.setPosition(POSITION.ACTIF);
@@ -189,7 +187,7 @@ public class GameController {
 				m.setJoueurEnCours(m.joueur1);
 				m.partieEnCours.tourDe=0;
 			} 
-			System.out.println("le tour=========="+m.partieEnCours.tour);
+			menuManager.gamePanel.onTourUpdate();
 			menuManager.gamePanel.refresh();
 		}
 	}

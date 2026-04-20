@@ -60,7 +60,11 @@ public class MenuController implements ActionListener, ComponentListener {
 			m.setJoueurEnCours(m.joueur2);
 			menuManager.creePanel.onPlayerModified();
 			menuManager.showCreer();
-		} 
+		} else if (e.getActionCommand()=="REINITIALISER") {
+			m.joueurEnCours.deck.removeAll(m.joueurEnCours.deck);
+			menuManager.creePanel.onReinitialiser();
+			menuManager.showCreer();
+		}
 	}
 	
 	public void carteClique(Carte c) {

@@ -1,12 +1,13 @@
 package View;
 
 import javax.swing.BorderFactory;
+import javax.swing.BoxLayout;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 
 import java.awt.BorderLayout;
-
+import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.GridLayout;
 import java.util.ArrayList;
@@ -32,6 +33,7 @@ public class CreerDeck extends JPanel {
     public JPanel panelPourLeLabelDeck;
     public JLabel labelCartesDeck;
     public Dimension size;
+    public ButtonAgesOfClash buttonReinitialiser;
     
     public CreerDeck(MenuManager menuManager) {
         this.menuManager= menuManager;
@@ -74,17 +76,26 @@ public class CreerDeck extends JPanel {
         grandRightPanel.setLayout(new BorderLayout());
         
         panelPourLeLabelDeck = new PanelAgesOfClash();
+        panelPourLeLabelDeck.setLayout(new BoxLayout(panelPourLeLabelDeck, BoxLayout.Y_AXIS));
+        
         labelCartesDeck= new LabelTitle("VOUS AVEZ 0/20 CARTES");
         labelCartesDeck.setAlignmentX(JLabel.CENTER_ALIGNMENT);
+       
         panelPourLeLabelDeck.add(labelCartesDeck);
         grandRightPanel.add(panelPourLeLabelDeck,BorderLayout.PAGE_START);
         labelCartesDeck.setBorder(BorderFactory.createEmptyBorder(10, 0, 10, 0));
         
+        buttonReinitialiser = new ButtonAgesOfClash("REINITIALISER LE DECK");
+        buttonReinitialiser.setBackground(Color.RED);
+        buttonReinitialiser.setAlignmentX(ButtonAgesOfClash.CENTER_ALIGNMENT);
+        buttonReinitialiser.setActionCommand("REINITIALISER");
+        buttonReinitialiser.addActionListener(menuManager.menuController);
+        panelPourLeLabelDeck.add(buttonReinitialiser);
         
         rightPanel= new PanelAgesOfClash();
         rightPanel.setLayout(new GridLayout(0, 2, 10, 10)); 
         rightPanel.setPreferredSize(new Dimension(380, Math.round(200*cartes.size())/2)); 
-        rightPanel.setBorder(BorderFactory.createEmptyBorder(0, 40, 0, 0));
+        rightPanel.setBorder(BorderFactory.createEmptyBorder(10, 40, 0, 0));
         
         for (Carte c : menuManager.model.joueurEnCours.deck) {
         	rightPanel.add(c.copy());
@@ -137,4 +148,11 @@ public class CreerDeck extends JPanel {
     	rightPanel.revalidate();
     	rightPanel.repaint();
     }
+
+	public void onReinitialiser() {
+		rightPanel.removeAll();
+		this.labelCartesDeck.setText("VOUS AVEZ 0/20 CARTES");
+		rightPanel.revalidate();
+    	rightPanel.repaint();
+	}
 }
