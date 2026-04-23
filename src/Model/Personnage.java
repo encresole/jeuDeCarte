@@ -30,7 +30,13 @@ public class Personnage extends Carte {
 
 	@Override
 	public Carte copy() {
-		return new Personnage(id, nom, nomComplet, cheminImage, mc, pv, attaque);
+		// On utilise pvMax (et non pv courant) pour que la copie ait le bon maximum
+		Personnage p = new Personnage(id, nom, nomComplet, cheminImage, mc, pvMax, attaque);
+		p.pv          = this.pv;        // on conserve les PV actuels
+		p.energie     = this.energie;   // on conserve l'énergie actuelle
+		p.faction     = this.faction;   // on copie la faction
+		p.coutEnergie = this.coutEnergie; // on copie le coût d'attaque
+		return p;
 	}
 	
 	@Override

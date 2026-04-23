@@ -94,9 +94,14 @@ public class GameController {
         if (m.partieEnCours == null || m.partieEnCours.finPartie) {
             return;
         }
-        getCombat().jouerTour(Model.ActionJoueur.JOUER_SORT);
+        // On joue le sort directement (sans passer par jouerTour pour éviter
+        // un double-changement de tourDe) puis on clôture le tour normalement.
+        Joueur attaquant = m.joueurEnCours;
+        Joueur defenseur = (m.joueurEnCours == m.joueur1) ? m.joueur2 : m.joueur1;
+        getCombat().jouerSort(attaquant, defenseur);
         System.out.println("[GameController] UTILISER (sort joué)");
         System.out.println(getCombat().getHistorique());
+        finDuTour();
         menuManager.gamePanel.refresh();
     }
 
@@ -216,18 +221,16 @@ public class GameController {
 	}
 	
 	public void updateStats(Joueur joueur) {
+		// Personnages sur le banc : régénèrent PV (+10) et énergie (+30 selon Gameplay.txt)
 		for (Carte carte : joueur.banc) {
-			Personnage p =(Personnage) carte;
-			if (p.pvMax-p.pv<10) {
-				p.pv=p.pvMax;
-			} else {
-				p.pv+=10;
-			}
-			if (p.energie-100<=40) {
-				p.energie=100;
-			} else {
-				p.energie+=40;
-			}
+			Personnage p = (Personnage) carte;
+			p.pv     = Math.min(p.pvMax,      p.pv     + 10);
+			p.energie = Math.min(p.energieMax, p.energie + 30);
+		}
+		// Personnage actif : régénère uniquement de l'énergie (+20 selon Gameplay.txt)
+		if (joueur.actif instanceof Personnage) {
+			Personnage p = (Personnage) joueur.actif;
+			p.energie = Math.min(p.energieMax, p.energie + 20);
 		}
 	}
 	

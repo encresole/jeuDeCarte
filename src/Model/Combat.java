@@ -88,11 +88,12 @@ public class Combat {
         Personnage pAtt = (Personnage) attaquant.actif;
         Personnage pDef = (Personnage) defenseur.actif;
 
-        if (pAtt.energie < 20) {
-            historique.add(pAtt.nom + " n'a pas assez d'energie !");
+        if (pAtt.energie < pAtt.coutEnergie) {
+            historique.add(pAtt.nom + " n'a pas assez d'energie ! ("
+                    + pAtt.energie + "/" + pAtt.coutEnergie + " requis)");
             return;
         }
-        pAtt.energie -= 20;
+        pAtt.energie -= pAtt.coutEnergie;
 
         int degats = pAtt.attaque;
 
@@ -170,9 +171,10 @@ public class Combat {
             return;
         }
 
-        // EffetDebuff cible l'adversaire, les autres ciblent soi-même
+        // EffetDebuff et EffetDommage ciblent l'adversaire, les autres ciblent soi-même
         Joueur cible;
-        if (sortAJouer.effet instanceof EffetDebuff) {
+        if (sortAJouer.effet instanceof EffetDebuff
+                || sortAJouer.effet instanceof EffetDommage) {
             cible = defenseur;
         } else {
             cible = attaquant;
