@@ -38,10 +38,8 @@ public class PanelJoueur extends PanelAgesOfClash {
 		panelMain.setLayout(new BoxLayout(panelMain, BoxLayout.X_AXIS));
 
 		if (reverse) {
-			add(new LabelTitle("Actif"), BorderLayout.LINE_START);
 			add(panelBanc, BorderLayout.LINE_END);
 		} else {
-			add(new LabelTitle("Actif"), BorderLayout.LINE_END);
 			add(panelBanc, BorderLayout.LINE_START);
 		}
 

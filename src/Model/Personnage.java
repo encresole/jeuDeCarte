@@ -15,7 +15,7 @@ public class Personnage extends Carte {
 	public int energie;
 	public int energieMax=100;
 	public Boolean estActif;
-	public int coutEnergie;
+	public int coutEnergie=20;
 	public Model.Faction faction;
 	public String nomEffet;
 	

@@ -97,7 +97,13 @@ public class GameController {
         // On joue le sort directement (sans passer par jouerTour pour éviter
         // un double-changement de tourDe) puis on clôture le tour normalement.
         Joueur attaquant = m.joueurEnCours;
-        Joueur defenseur = (m.joueurEnCours == m.joueur1) ? m.joueur2 : m.joueur1;
+        
+        Joueur defenseur;
+        if (attaquant==m.joueur1) {
+        	defenseur=m.joueur2;
+        } else {
+        	defenseur=m.joueur1;
+        }
         getCombat().jouerSort(attaquant, defenseur);
         System.out.println("[GameController] UTILISER (sort joué)");
         System.out.println(getCombat().getHistorique());
