@@ -15,6 +15,8 @@ import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+import Model.Joueur;
+
 public class GameView extends PanelAgesOfClash {
     private static final long serialVersionUID = 1L;
 
@@ -155,5 +157,14 @@ public class GameView extends PanelAgesOfClash {
     		indicateurCptTour.setText("TOUR N°"+((int)menuManager.model.partieEnCours.tour-1));
     	}
     }
+
+	public void finPartie(Joueur joueurEnCours) {
+		indicateurTour.setText(joueurEnCours+ " GAGNE LA PARTIE !");
+		indicateurCptTour.setText("");
+		repaint();
+		revalidate();
+		panelJ1.actualiserActif();
+		panelJ2.actualiserActif();
+	}
     
 }

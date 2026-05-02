@@ -93,9 +93,9 @@ public class PanelJoueur extends PanelAgesOfClash {
 			} else {
 				add(carteActive, BorderLayout.LINE_END);
 			}
-			repaint();
-			revalidate();
 		}
+		repaint();
+		revalidate();
 	}
 
 	public void actualiserAll() {

@@ -146,9 +146,11 @@ public class GameController {
         System.out.println(getCombat().getHistorique());
         if (fin) {
             System.out.println("[GameController] Partie terminée !");
+            menuManager.gamePanel.finPartie(m.joueurEnCours);
+        } else {
+        	finDuTour();
+            menuManager.gamePanel.refresh();
         }
-        finDuTour();
-        menuManager.gamePanel.refresh();
     }
     
     public void carteClique(Carte c,Joueur j) {
@@ -169,7 +171,7 @@ public class GameController {
 		Carte c;
 		if (joueur.carteSelectionnee==null) return;
 		c=joueur.carteSelectionnee;
-		if (c.position!=POSITION.MAIN) return;
+		if (c.position!=POSITION.MAIN || !(c instanceof Personnage)) return;
 		Carte nouvelleC=c.copy();
 		nouvelleC.setPosition(POSITION.BANC);
 		nouvelleC.setJoueur(joueur);
@@ -185,7 +187,7 @@ public class GameController {
 		if (joueur.carteSelectionnee==null) return;
 		c=joueur.carteSelectionnee;
 		if (joueur.actif!=null) return;
-		if (c.position==POSITION.ACTIF) return;
+		if (c.position==POSITION.ACTIF || !(c instanceof Personnage)) return;
 		Carte nouvelleC=c.copy();
 		nouvelleC.setPosition(POSITION.ACTIF);
 		nouvelleC.setJoueur(joueur);
