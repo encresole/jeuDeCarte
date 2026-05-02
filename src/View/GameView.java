@@ -11,9 +11,12 @@ package View;
  */
 
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+
+import javax.swing.JLabel;
 
 import Model.Joueur;
 
@@ -35,6 +38,8 @@ public class GameView extends PanelAgesOfClash {
     ButtonAgesOfClash buttonActif;
     ButtonAgesOfClash boutonAttaquer;
     ButtonAgesOfClash boutonFinDuTour;
+    PanelAgesOfClash panelHistorique = new PanelAgesOfClash();
+    JLabel historiqueLabel= new JLabel("historique");
 
     public GameView(MenuManager menuManager) {
         this.menuManager = menuManager;
@@ -103,6 +108,10 @@ public class GameView extends PanelAgesOfClash {
 			}
 		});
         
+        panelHistorique.add(historiqueLabel);
+        historiqueLabel.setForeground(Color.WHITE);
+        add(panelHistorique);
+        
         panelDesActions.add(boutonAttaquer);
         panelDesActions.add(boutonUtiliser);
         panelDesActions.add(boutonRetraite);
@@ -125,9 +134,16 @@ public class GameView extends PanelAgesOfClash {
     	panelJ1.actualiserAll();
     	panelJ2.actualiserAll();
     	refreshText();
+    	
+    	String historique=menuManager.model.gameController.getCombat().getHistorique();
+    	System.out.println("=========debut=========="+historique+"=======================fin=================");
+    	historiqueLabel.setText(historique);
     }
     
     public void onCombatCommence() {
+    	panelJ1.actualiserAll();
+    	panelJ2.actualiserAll();
+    	refreshText();
     	indicateurTour.setText("TOUR DE JOUEUR "+((int)menuManager.model.partieEnCours.tourDe+1));
     	if (menuManager.model.partieEnCours.tour<2) {
     		indicateurCptTour.setText("TOUR DE PREPARATION");

@@ -35,7 +35,7 @@ public class GameController {
     public void commencerCombat(Joueur joueur1, Joueur joueur2) {
         m.partieEnCours = new Partie(joueur1, joueur2, Model.TypeDePartie.JcJ);
         combat = new Combat(m.partieEnCours);
-        
+
         deckJ1 = joueur1.deck.copy();
         deckJ2 = joueur2.deck.copy();
         
@@ -171,7 +171,7 @@ public class GameController {
 		Carte c;
 		if (joueur.carteSelectionnee==null) return;
 		c=joueur.carteSelectionnee;
-		if (c.position!=POSITION.MAIN || !(c instanceof Personnage)) return;
+		if (c.position!=POSITION.MAIN || !(c instanceof Personnage) || joueur.banc.size()>=3) return;
 		Carte nouvelleC=c.copy();
 		nouvelleC.setPosition(POSITION.BANC);
 		nouvelleC.setJoueur(joueur);
