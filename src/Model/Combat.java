@@ -97,25 +97,109 @@ public class Combat {
 
         int degats = pAtt.attaque;
 
+        // --- Bonus BUFF_ATQ (effets actifs via sorts) ---
         if (effetsAtt.containsKey("BUFF_ATQ")) {
             degats += 20;
         }
 
+        // --- Synergies inter-factions (Auteur : Raphael) ---
+        int bonusSynergie = calculerBonusSynergie(attaquant);
+        if (bonusSynergie > 0) {
+            degats += bonusSynergie;
+        }
+
+        // --- Effet passif Ronin : Frenesie — ATQ x2 mais perd 20 PV ---
+        if (pAtt.nom.equals("Ronin")) {
+            degats *= 2;
+            pAtt.pv -= 20;
+            historique.add("[Frenesie] " + pAtt.nom
+                    + " attaque avec double force mais perd 20 PV ! (PV : " + pAtt.pv + ")");
+        }
+
+        // --- Esquive depuis effets actifs (sorts) ---
         if (effetsDef.containsKey("ESQUIVE")) {
-            int hasard = (int)(Math.random() * 3);
-            if (hasard == 0) {
+            if ((int)(Math.random() * 3) == 0) {
                 historique.add("Tour " + partie.tour + " : " + pDef.nom + " esquive l'attaque !");
                 return;
             }
         }
 
+        // --- Effet passif Calamity Jane : Esquive — evite 1 attaque sur 3 ---
+        if (pDef.nom.equals("CalamityJane")) {
+            if ((int)(Math.random() * 3) == 0) {
+                historique.add("Tour " + partie.tour + " : " + pDef.nomComplet
+                        + " esquive l'attaque ! (Esquive passive)");
+                return;
+            }
+        }
+
+        // --- Application des degats ---
         pDef.pv -= degats;
-        historique.add("Tour " + partie.tour + " : " + pAtt.nom + " inflige " + degats + " degats a " + pDef.nom + " (PV : " + pDef.pv + ")");
+        historique.add("Tour " + partie.tour + " : " + pAtt.nomComplet
+                + " inflige " + degats + " degats a " + pDef.nomComplet
+                + " (PV : " + pDef.pv + ")");
+
+        // --- Effet passif Jesse Kane : Headshot — 30% de chance d'etourdir ---
+        if (pAtt.nom.equals("Jesse")) {
+            if ((int)(Math.random() * 10) < 3) {
+                ajouterEffet(effetsDef, "ETOURDI", 1);
+                historique.add("[Headshot] " + pDef.nomComplet
+                        + " est etourdi et passera son prochain tour !");
+            }
+        }
 
         if (pDef.pv <= 0) {
-            historique.add(pDef.nom + " est K.O. !");
+            historique.add(pDef.nomComplet + " est K.O. !");
             promouvoirBanc(defenseur);
         }
+    }
+
+    // -------------------------------------------------------
+    // Synergies inter-factions (Auteur : Raphael)
+    // Utilise une HashMap pour stocker les factions presentes
+    // -------------------------------------------------------
+
+    /**
+     * Verifie si le joueur possede au moins un Personnage de la faction donnee
+     * (actif OU sur le banc).
+     */
+    private boolean aFaction(Joueur joueur, Model.Faction faction) {
+        if (joueur.actif instanceof Personnage) {
+            if (((Personnage) joueur.actif).faction == faction) return true;
+        }
+        for (Carte c : joueur.banc) {
+            if (c instanceof Personnage) {
+                if (((Personnage) c).faction == faction) return true;
+            }
+        }
+        return false;
+    }
+
+    /**
+     * Calcule le bonus d'ATQ total des synergies actives pour un joueur.
+     * Utilise une HashMap pour associer chaque nom de synergie a son bonus.
+     *
+     * Synergies implementees :
+     *  - Chevalier + Samurai  -> Code de l'Honneur : +15 ATQ
+     *  - Cowboy    + Soldat   -> Feu Croise        : +30 ATQ
+     */
+    private int calculerBonusSynergie(Joueur joueur) {
+        HashMap<String, Integer> synergies = new HashMap<>();
+
+        if (aFaction(joueur, Model.Faction.CHEVALIER) && aFaction(joueur, Model.Faction.SAMURAI)) {
+            synergies.put("Code de l'Honneur", 15);
+        }
+        if (aFaction(joueur, Model.Faction.COWBOY) && aFaction(joueur, Model.Faction.SOLDAT)) {
+            synergies.put("Feu Croise", 30);
+        }
+
+        int total = 0;
+        for (String nomSynergie : synergies.keySet()) {
+            int bonus = synergies.get(nomSynergie);
+            total += bonus;
+            historique.add("[Synergie] " + nomSynergie + " : +" + bonus + " ATQ pour " + joueur.name + " !");
+        }
+        return total;
     }
 
     public boolean estEtourdi(HashMap<String, Integer> effets) {

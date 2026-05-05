@@ -40,6 +40,7 @@ public class GameView extends PanelAgesOfClash {
     ButtonAgesOfClash boutonFinDuTour;
     PanelAgesOfClash panelHistorique = new PanelAgesOfClash();
     JLabel historiqueLabel= new JLabel("historique");
+    ButtonAgesOfClash boutonRetourMenu;
 
     public GameView(MenuManager menuManager) {
         this.menuManager = menuManager;
@@ -118,7 +119,14 @@ public class GameView extends PanelAgesOfClash {
         panelDesActions.add(buttonBanc);
         panelDesActions.add(buttonActif);
         panelDesActions.add(boutonFinDuTour);
-        
+
+        // Bouton fin de partie — masqué jusqu'à la victoire
+        boutonRetourMenu = new ButtonAgesOfClash("↩ RETOUR AU MENU PRINCIPAL");
+        boutonRetourMenu.setActionCommand("SHOWMENU");
+        boutonRetourMenu.addActionListener(menuManager.menuController);
+        boutonRetourMenu.setVisible(false);
+        panelDesActions.add(boutonRetourMenu);
+
         panelDesBoutons.add(panelDesActions);
         
         boutonRetour = new ButtonAgesOfClash("Retour");
@@ -141,6 +149,7 @@ public class GameView extends PanelAgesOfClash {
     }
     
     public void onCombatCommence() {
+    	reinitialiserBoutons();
     	panelJ1.actualiserAll();
     	panelJ2.actualiserAll();
     	refreshText();
@@ -150,7 +159,6 @@ public class GameView extends PanelAgesOfClash {
     	} else {
     		indicateurCptTour.setText("TOUR N°"+((int)menuManager.model.partieEnCours.tour-1 ));
     	}
-
     }
     
     public void onTourUpdate() {
@@ -174,13 +182,33 @@ public class GameView extends PanelAgesOfClash {
     	}
     }
 
-	public void finPartie(Joueur joueurEnCours) {
-		indicateurTour.setText(joueurEnCours+ " GAGNE LA PARTIE !");
-		indicateurCptTour.setText("");
+	public void finPartie(Joueur joueurGagnant) {
+		indicateurTour.setText(joueurGagnant + " GAGNE LA PARTIE !");
+		indicateurCptTour.setText("Partie terminee !");
+		// Desactiver tous les boutons d'action
+		boutonAttaquer.setEnabled(false);
+		boutonUtiliser.setEnabled(false);
+		boutonRetraite.setEnabled(false);
+		boutonFinDuTour.setEnabled(false);
+		buttonBanc.setEnabled(false);
+		buttonActif.setEnabled(false);
+		// Afficher le bouton retour menu
+		boutonRetourMenu.setVisible(true);
 		repaint();
 		revalidate();
 		panelJ1.actualiserActif();
 		panelJ2.actualiserActif();
+	}
+
+	/** Remet les boutons dans leur etat initial quand une nouvelle partie commence */
+	public void reinitialiserBoutons() {
+		boutonAttaquer.setEnabled(true);
+		boutonUtiliser.setEnabled(true);
+		boutonRetraite.setEnabled(true);
+		boutonFinDuTour.setEnabled(true);
+		buttonBanc.setEnabled(true);
+		buttonActif.setEnabled(true);
+		boutonRetourMenu.setVisible(false);
 	}
     
 }

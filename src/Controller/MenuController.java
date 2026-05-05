@@ -10,9 +10,11 @@ import javax.swing.JFrame;
 
 import Model.Carte;
 import Model.Carte.POSITION;
+import Model.Deck;
 import Model.Joueur;
 import Model.Model;
 import Model.Model.EtatPossible;
+import Model.Personnage;
 import View.MenuManager;
 
 public class MenuController implements ActionListener, ComponentListener {
@@ -112,21 +114,28 @@ public class MenuController implements ActionListener, ComponentListener {
 		Model.etatApp=etat;
 	}
 	
+	/**
+	 * Verifie que chaque joueur a au moins un Personnage dans son deck.
+	 * Sans Personnage, il est impossible de placer un actif → crash garanti.
+	 */
 	public Boolean peutCommencer() {
-		if (m.joueur1.deck.size()==0) {
-			if (m.joueur2.deck.size()==0) {
-				System.err.println("0 carte dans 1 des decks");
-				return false;
-			}
+		if (!aPersonnageDansDeck(m.joueur1.deck)) {
+			System.err.println("Joueur 1 doit avoir au moins un Personnage dans son deck !");
+			return false;
 		}
-		
-		if (m.joueur1.deck.size()==20 || m.joueur1.deck.size()==0) {
-			if (m.joueur2.deck.size()==20 || m.joueur2.deck.size()==0) {
-				return true;
-			}
+		if (!aPersonnageDansDeck(m.joueur2.deck)) {
+			System.err.println("Joueur 2 doit avoir au moins un Personnage dans son deck !");
+			return false;
 		}
-		// A MODIFIER PLUS TARD METTRE FALSE POUR QUE LE COMBAT SE LANCE PAS TANT QUE DECK PAS COMPLET
-		return true; 
+		return true;
+	}
+
+	/** Retourne true si le deck contient au moins un Personnage. */
+	private boolean aPersonnageDansDeck(Deck deck) {
+		for (Carte c : deck) {
+			if (c instanceof Personnage) return true;
+		}
+		return false;
 	}
 
 
