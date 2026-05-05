@@ -5,6 +5,7 @@ import javax.swing.BoxLayout;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
+import javax.swing.ScrollPaneConstants;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
@@ -44,6 +45,9 @@ public class CreerDeck extends JPanel {
         // left
         
         this.cartesDispo= new JScrollPane();
+        cartesDispo.getVerticalScrollBar().setUnitIncrement(16);
+        cartesDispo.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+        
         
         grandLeftPanel= new PanelAgesOfClash();
         grandLeftPanel.setLayout(new BorderLayout());
@@ -71,6 +75,8 @@ public class CreerDeck extends JPanel {
         // right
         
         this.cartesDuDeck= new JScrollPane();
+        cartesDuDeck.getVerticalScrollBar().setUnitIncrement(16);
+        cartesDuDeck.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
         
         grandRightPanel= new PanelAgesOfClash();
         grandRightPanel.setLayout(new BorderLayout());
