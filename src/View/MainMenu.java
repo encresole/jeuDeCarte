@@ -12,6 +12,7 @@ public class MainMenu extends PanelAgesOfClash {
 	PanelAgesOfClash panelDesButtons;
 	ButtonAgesOfClash buttonJouer;
 	ButtonAgesOfClash buttonCreer;
+	ButtonAgesOfClash buttonInfo;
 	ButtonAgesOfClash buttonOption;
 	ButtonAgesOfClash buttonQuitter;
 	PanelAgesOfClash leftWrapper;
@@ -37,20 +38,25 @@ public class MainMenu extends PanelAgesOfClash {
 		
 	    buttonJouer=new ButtonAgesOfClash("Jouer");
 	    buttonCreer=new ButtonAgesOfClash("Creer un deck");
+	    buttonInfo = new ButtonAgesOfClash("Infos");
 	    buttonOption=new ButtonAgesOfClash("Option");
 	    buttonQuitter=new ButtonAgesOfClash("Quitter");
 	    buttonJouer.addActionListener(menuManager.menuController);
 	    buttonCreer.addActionListener(menuManager.menuController);
+	    buttonInfo.addActionListener(menuManager.menuController);
 	    buttonOption.addActionListener(menuManager.menuController);
 	    buttonQuitter.addActionListener(menuManager.menuController);
 	    buttonJouer.setActionCommand("JOUER");
 	    buttonCreer.setActionCommand("CHOISIS");
+	    buttonInfo.setActionCommand("INFO");
 	    buttonOption.setActionCommand("OPTION");
 	    buttonQuitter.setActionCommand("QUITTER");
 	    
 	    panelDesButtons.add(buttonJouer);
 	    panelDesButtons.add(Box.createVerticalStrut(10)); // espace
 	    panelDesButtons.add(buttonCreer);
+	    panelDesButtons.add(Box.createVerticalStrut(10)); // espace
+	    panelDesButtons.add(buttonInfo);
 	    panelDesButtons.add(Box.createVerticalStrut(10)); // espace
 	    panelDesButtons.add(buttonOption);
 	    panelDesButtons.add(Box.createVerticalStrut(10)); // espace
