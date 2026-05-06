@@ -38,6 +38,8 @@ public class MenuController implements ActionListener, ComponentListener {
 		System.out.println(e.getActionCommand());
 		if (e.getActionCommand()=="SHOWMENU") {
 			menuManager.showMenu();
+		} else if (e.getActionCommand()=="SAVE") {
+			menuManager.showSave();
 		} else if (e.getActionCommand()=="JOUER") {
 			Boolean ok = peutCommencer();
 			if (ok) {
@@ -52,6 +54,8 @@ public class MenuController implements ActionListener, ComponentListener {
 		
 		} else if (e.getActionCommand()=="QUITTER") {
 			System.exit(0);
+		} else if (e.getActionCommand()=="REPRENDRE") {
+			menuManager.showJeuSansRecommancer();
 		} else if (e.getActionCommand()=="CHOISIS") {
 			menuManager.showChoisis();
 		} else if (e.getActionCommand()=="INFO") {

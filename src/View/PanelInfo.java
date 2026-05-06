@@ -316,7 +316,7 @@ public class PanelInfo extends PanelAgesOfClash {
         section.add(Box.createVerticalStrut(8));
 
         String[] regles = {
-            "Objectif : eliminer 5 personnages adverses (actif + banc).",
+            "Objectif : eliminer tout les personnages adverses (actif + banc).",
             "Mise en place : 5 cartes en main, 1 personnage actif + max 3 sur le banc.",
             "Energie : commence a 100% -- Actif +20%/tour, Banc +30%/tour.",
             "Tour : Piocher -> Jouer Sorts/Objets -> Attaquer (optionnel).",

@@ -25,6 +25,7 @@ public class GameView extends PanelAgesOfClash {
 
     MenuManager menuManager;
     ButtonAgesOfClash boutonRetour;
+    ButtonAgesOfClash boutonSauvegarde;
     PanelJoueur panelJ1;
     PanelJoueur panelJ2;
     PanelAgesOfClash panelDesBoutons = new PanelAgesOfClash();
@@ -39,6 +40,7 @@ public class GameView extends PanelAgesOfClash {
     ButtonAgesOfClash boutonAttaquer;
     ButtonAgesOfClash boutonFinDuTour;
     PanelAgesOfClash panelHistorique = new PanelAgesOfClash();
+    PanelAgesOfClash panelSouth = new PanelAgesOfClash();
     JLabel historiqueLabel= new JLabel("historique");
     ButtonAgesOfClash boutonRetourMenu;
 
@@ -132,7 +134,14 @@ public class GameView extends PanelAgesOfClash {
         boutonRetour = new ButtonAgesOfClash("Retour");
         boutonRetour.setActionCommand("SHOWMENU");
         boutonRetour.addActionListener(menuManager.menuController);
-        panelDesBoutons.add(boutonRetour, BorderLayout.PAGE_END);
+        
+        boutonSauvegarde = new ButtonAgesOfClash("Sauvegarder/Charger");
+        boutonSauvegarde.setActionCommand("SAVE");
+        boutonSauvegarde.addActionListener(menuManager.menuController);
+        
+        panelSouth.add(boutonRetour);
+        panelSouth.add(boutonSauvegarde);
+        panelDesBoutons.add(panelSouth, BorderLayout.PAGE_END);
         
         panelJ1.actualiserAll();
     	panelJ2.actualiserAll();
@@ -184,7 +193,7 @@ public class GameView extends PanelAgesOfClash {
 
 	public void finPartie(Joueur joueurGagnant) {
 		indicateurTour.setText(joueurGagnant + " GAGNE LA PARTIE !");
-		indicateurCptTour.setText("Partie terminee !");
+		indicateurCptTour.setText("Partie terminée !");
 		// Desactiver tous les boutons d'action
 		boutonAttaquer.setEnabled(false);
 		boutonUtiliser.setEnabled(false);
