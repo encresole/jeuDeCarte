@@ -25,8 +25,8 @@ public class GameController {
     public Combat combat;
     public MenuManager menuManager;
     
-    Deck deckJ1;
-    Deck deckJ2;
+    public Deck deckJ1;
+    public Deck deckJ2;
     
     public GameController(Model m) {
         this.m = m;

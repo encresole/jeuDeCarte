@@ -109,6 +109,7 @@ public class MenuManager {
     
     public void showSave() {
     	menuController.changeEtat(Model.EtatPossible.COMBAT);
+    	savePanel.rafraichirListe();
         cardLayout.show(cardPanel, "Save");
     }
     
@@ -116,5 +117,4 @@ public class MenuManager {
 		// TODO Auto-generated method stub
 		creePanel.onFrameResize(frameSize);
 	}
-
 }
