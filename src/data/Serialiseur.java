@@ -155,13 +155,41 @@ public class Serialiseur {
         sb.append("        \"name\": \"").append(joueur.name).append("\",\n");
         if (joueur.actif != null) {
             sb.append("        \"actif\": \"").append(joueur.actif.id).append("\",\n");
+            // Sauvegarder les stats actuelles du personnage actif
+            if (joueur.actif instanceof Personnage) {
+                Personnage p = (Personnage) joueur.actif;
+                sb.append("        \"actifPv\": ").append(p.pv).append(",\n");
+                sb.append("        \"actifEnergie\": ").append(p.energie).append(",\n");
+                sb.append("        \"actifAtq\": ").append(p.attaque).append(",\n");
+            }
         } else {
             sb.append("        \"actif\": null,\n");
         }
-        sb.append("        \"banc\": ").append(listeCartesVersJson(joueur.banc)).append(",\n");
+        sb.append("        \"banc\": ").append(listeCartesVersJsonAvecStats(joueur.banc)).append(",\n");
         sb.append("        \"main\": ").append(listeCartesVersJson(joueur.main)).append(",\n");
         sb.append("        \"deck\": ").append(listeCartesVersJson(new ArrayList<Carte>(joueur.deck))).append("\n");
         sb.append("      }");
+        return sb.toString();
+    }
+
+    /** Sérialise une liste de cartes du banc avec leurs stats actuelles (PV, énergie, ATQ). */
+    private String listeCartesVersJsonAvecStats(List<Carte> cartes) {
+        StringBuilder sb = new StringBuilder("[");
+        for (int i = 0; i < cartes.size(); i++) {
+            Carte c = cartes.get(i);
+            if (c instanceof Personnage) {
+                Personnage p = (Personnage) c;
+                sb.append("{\"id\":\"").append(p.id).append("\"")
+                  .append(",\"pv\":").append(p.pv)
+                  .append(",\"energie\":").append(p.energie)
+                  .append(",\"atq\":").append(p.attaque)
+                  .append("}");
+            } else {
+                sb.append("\"").append(c.id).append("\"");
+            }
+            if (i < cartes.size() - 1) sb.append(", ");
+        }
+        sb.append("]");
         return sb.toString();
     }
 
@@ -203,25 +231,72 @@ public class Serialiseur {
         String name = lireChamp(json, "name");
         Joueur joueur = new Joueur(name);
 
+        // ── Actif ────────────────────────────────────────────────────────────
         String actifId = lireChamp(json, "actif");
         if (actifId != null && !actifId.equals("null") && !actifId.isEmpty()) {
             Carte c = trouverCarte(actifId, toutesLesCartes);
-            if (c != null) joueur.actif = c.copy();
+            if (c != null) {
+                Carte copy = c.copy();
+                copy.setPosition(Carte.POSITION.ACTIF);
+                copy.setJoueur(joueur);
+                // Restaurer les stats sauvegardées
+                if (copy instanceof Personnage) {
+                    Personnage p = (Personnage) copy;
+                    int pv      = lireInt(json, "actifPv");
+                    int energie = lireInt(json, "actifEnergie");
+                    int atq     = lireInt(json, "actifAtq");
+                    if (pv      > 0) p.pv      = pv;
+                    if (energie > 0) p.energie  = energie;
+                    if (atq     > 0) p.attaque  = atq;
+                }
+                joueur.actif = copy;
+            }
         }
 
-        for (String id : lireTableauStrings(json, "banc")) {
-            Carte c = trouverCarte(id, toutesLesCartes);
-            if (c != null) joueur.banc.add(c.copy());
+        // ── Banc ─────────────────────────────────────────────────────────────
+        // Le banc est sérialisé comme objets JSON {id, pv, energie, atq}
+        // On extrait le bloc de tableau manuellement pour récupérer les stats.
+        List<String> bancIds   = new ArrayList<>();
+        List<int[]>  bancStats = new ArrayList<>(); // [pv, energie, atq]
+        extraireBancAvecStats(json, bancIds, bancStats);
+
+        for (int i = 0; i < bancIds.size(); i++) {
+            Carte c = trouverCarte(bancIds.get(i), toutesLesCartes);
+            if (c != null) {
+                Carte copy = c.copy();
+                copy.setPosition(Carte.POSITION.BANC);
+                copy.setJoueur(joueur);
+                if (copy instanceof Personnage && i < bancStats.size()) {
+                    Personnage p = (Personnage) copy;
+                    int[] stats = bancStats.get(i);
+                    if (stats[0] > 0) p.pv      = stats[0];
+                    if (stats[1] > 0) p.energie  = stats[1];
+                    if (stats[2] > 0) p.attaque  = stats[2];
+                }
+                joueur.banc.add(copy);
+            }
         }
 
+        // ── Main ─────────────────────────────────────────────────────────────
         for (String id : lireTableauStrings(json, "main")) {
             Carte c = trouverCarte(id, toutesLesCartes);
-            if (c != null) joueur.main.add(c.copy());
+            if (c != null) {
+                Carte copy = c.copy();
+                copy.setPosition(Carte.POSITION.MAIN);
+                copy.setJoueur(joueur);
+                joueur.main.add(copy);
+            }
         }
 
+        // ── Deck ─────────────────────────────────────────────────────────────
         for (String id : lireTableauStrings(json, "deck")) {
             Carte c = trouverCarte(id, toutesLesCartes);
-            if (c != null) joueur.deck.ajouter(c.copy());
+            if (c != null) {
+                Carte copy = c.copy();
+                copy.setPosition(Carte.POSITION.DECK);
+                copy.setJoueur(joueur);
+                joueur.deck.ajouter(copy);
+            }
         }
 
         return joueur;
@@ -276,6 +351,54 @@ public class Serialiseur {
             i = fin + 1;
         }
         return result;
+    }
+
+    /**
+     * Parse le tableau "banc" qui peut contenir soit des strings "id"
+     * soit des objets {"id":"...", "pv":X, "energie":Y, "atq":Z}.
+     */
+    private void extraireBancAvecStats(String json, List<String> ids, List<int[]> stats) {
+        String marqueur = "\"banc\"";
+        int idx = json.indexOf(marqueur);
+        if (idx == -1) return;
+        int debutTab = json.indexOf('[', idx);
+        if (debutTab == -1) return;
+        int finTab = trouverFermeture(json, debutTab, '[', ']');
+        if (finTab == -1) return;
+        String contenu = json.substring(debutTab + 1, finTab).trim();
+        if (contenu.isEmpty()) return;
+
+        int i = 0;
+        while (i < contenu.length()) {
+            // Skip whitespace/commas
+            while (i < contenu.length() && (contenu.charAt(i) == ',' || contenu.charAt(i) == ' ' || contenu.charAt(i) == '\n')) i++;
+            if (i >= contenu.length()) break;
+
+            if (contenu.charAt(i) == '{') {
+                // Objet avec stats
+                int finObj = trouverFermeture(contenu, i, '{', '}');
+                if (finObj == -1) break;
+                String obj = contenu.substring(i + 1, finObj);
+                String id  = lireChamp(obj, "id");
+                int pv     = lireInt(obj, "pv");
+                int energie= lireInt(obj, "energie");
+                int atq    = lireInt(obj, "atq");
+                if (id != null) {
+                    ids.add(id);
+                    stats.add(new int[]{pv, energie, atq});
+                }
+                i = finObj + 1;
+            } else if (contenu.charAt(i) == '"') {
+                // Simple string id
+                int fin = contenu.indexOf('"', i + 1);
+                if (fin == -1) break;
+                ids.add(contenu.substring(i + 1, fin));
+                stats.add(new int[]{0, 0, 0});
+                i = fin + 1;
+            } else {
+                i++;
+            }
+        }
     }
 
     private String lireChamp(String obj, String cle) {
