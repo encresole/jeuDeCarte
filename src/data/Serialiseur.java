@@ -22,13 +22,7 @@ import Model.Model.TypeDePartie;
  *       "tour": 3,
  *       "tourDe": 0,
  *       "finPartie": false,
- *       "joueur1": {
- *         "name": "Player 1",
- *         "actif": "p001",
- *         "banc": ["p002", "p003"],
- *         "main": ["s001", "o001"],
- *         "deck": ["p001", "p002", ...]
- *       },
+ *       "joueur1": { ... },
  *       "joueur2": { ... }
  *     }
  *   ]
@@ -47,7 +41,6 @@ public class Serialiseur {
             String contenuActuel = lireFichier();
             List<String> partiesExistantes = extrairePartiesJson(contenuActuel);
 
-            // Supprimer l'ancienne entrée avec le même id si elle existe
             List<String> filtrees = new ArrayList<>();
             for (String p : partiesExistantes) {
                 if (!idPartie.equals(lireChamp(p, "id"))) {
@@ -56,20 +49,48 @@ public class Serialiseur {
             }
             filtrees.add(partieVersJson(partie, idPartie));
 
-            StringBuilder sb = new StringBuilder();
-            sb.append("{\n  \"parties\": [\n");
-            for (int i = 0; i < filtrees.size(); i++) {
-                sb.append(filtrees.get(i));
-                if (i < filtrees.size() - 1) sb.append(",");
-                sb.append("\n");
-            }
-            sb.append("  ]\n}");
-
-            ecrireFichier(sb.toString());
+            ecrireFichier(assemblerJson(filtrees));
             System.out.println("✅ Partie '" + idPartie + "' sauvegardée.");
 
         } catch (Exception e) {
             System.err.println("ERREUR sauvegarde : " + e.getMessage());
+            e.printStackTrace();
+        }
+    }
+
+    // -------------------------------------------------------
+    // SUPPRESSION
+    // -------------------------------------------------------
+
+    /**
+     * Supprime une partie sauvegardée par son identifiant.
+     * Si l'id est introuvable, ne fait rien.
+     */
+    public void supprimerPartie(String idPartie) {
+        try {
+            String contenuActuel = lireFichier();
+            List<String> partiesExistantes = extrairePartiesJson(contenuActuel);
+
+            List<String> filtrees = new ArrayList<>();
+            boolean trouvee = false;
+            for (String p : partiesExistantes) {
+                if (idPartie.equals(lireChamp(p, "id"))) {
+                    trouvee = true; // on l'ignore → suppression
+                } else {
+                    filtrees.add(p);
+                }
+            }
+
+            if (!trouvee) {
+                System.err.println("Partie '" + idPartie + "' introuvable, rien à supprimer.");
+                return;
+            }
+
+            ecrireFichier(assemblerJson(filtrees));
+            System.out.println("🗑 Partie '" + idPartie + "' supprimée.");
+
+        } catch (Exception e) {
+            System.err.println("ERREUR suppression : " + e.getMessage());
             e.printStackTrace();
         }
     }
@@ -132,7 +153,6 @@ public class Serialiseur {
         StringBuilder sb = new StringBuilder();
         sb.append("{\n");
         sb.append("        \"name\": \"").append(joueur.name).append("\",\n");
-        // actif peut être null → on écrit null sans guillemets
         if (joueur.actif != null) {
             sb.append("        \"actif\": \"").append(joueur.actif.id).append("\",\n");
         } else {
@@ -140,7 +160,6 @@ public class Serialiseur {
         }
         sb.append("        \"banc\": ").append(listeCartesVersJson(joueur.banc)).append(",\n");
         sb.append("        \"main\": ").append(listeCartesVersJson(joueur.main)).append(",\n");
-        // Deck étend ArrayList<Carte>, on convertit pour matcher List<Carte>
         sb.append("        \"deck\": ").append(listeCartesVersJson(new ArrayList<Carte>(joueur.deck))).append("\n");
         sb.append("      }");
         return sb.toString();
@@ -184,14 +203,12 @@ public class Serialiseur {
         String name = lireChamp(json, "name");
         Joueur joueur = new Joueur(name);
 
-        // actif — peut être null (valeur JSON sans guillemets)
         String actifId = lireChamp(json, "actif");
         if (actifId != null && !actifId.equals("null") && !actifId.isEmpty()) {
             Carte c = trouverCarte(actifId, toutesLesCartes);
             if (c != null) joueur.actif = c.copy();
         }
 
-        // banc, main, deck — copy() pour éviter les instances partagées entre joueurs
         for (String id : lireTableauStrings(json, "banc")) {
             Carte c = trouverCarte(id, toutesLesCartes);
             if (c != null) joueur.banc.add(c.copy());
@@ -202,7 +219,6 @@ public class Serialiseur {
             if (c != null) joueur.main.add(c.copy());
         }
 
-        // On utilise deck.ajouter() pour respecter la limite TAILLEDECK
         for (String id : lireTableauStrings(json, "deck")) {
             Carte c = trouverCarte(id, toutesLesCartes);
             if (c != null) joueur.deck.ajouter(c.copy());
@@ -214,6 +230,18 @@ public class Serialiseur {
     // -------------------------------------------------------
     // Utilitaires JSON
     // -------------------------------------------------------
+
+    private String assemblerJson(List<String> parties) {
+        StringBuilder sb = new StringBuilder();
+        sb.append("{\n  \"parties\": [\n");
+        for (int i = 0; i < parties.size(); i++) {
+            sb.append(parties.get(i));
+            if (i < parties.size() - 1) sb.append(",");
+            sb.append("\n");
+        }
+        sb.append("  ]\n}");
+        return sb.toString();
+    }
 
     private String extraireBlocJoueur(String json, String cle) {
         String marqueur = "\"" + cle + "\"";
@@ -250,10 +278,6 @@ public class Serialiseur {
         return result;
     }
 
-    /**
-     * Lit la valeur d'un champ JSON.
-     * Gère les strings (avec guillemets), les nombres, les booléens et null (sans guillemets).
-     */
     private String lireChamp(String obj, String cle) {
         String marqueur = "\"" + cle + "\"";
         int idx = obj.indexOf(marqueur);
@@ -267,7 +291,6 @@ public class Serialiseur {
 
         char premier = obj.charAt(debut);
 
-        // Valeur string entre guillemets
         if (premier == '"') {
             int finVal = debut + 1;
             while (finVal < obj.length()) {
@@ -277,7 +300,6 @@ public class Serialiseur {
             return obj.substring(debut + 1, finVal);
         }
 
-        // Valeur sans guillemets : nombre, booléen, null
         int fin = debut;
         while (fin < obj.length() && obj.charAt(fin) != ',' && obj.charAt(fin) != '\n' && obj.charAt(fin) != '}') fin++;
         return obj.substring(debut, fin).trim();
