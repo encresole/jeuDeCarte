@@ -44,22 +44,23 @@ public class Serialiseur {
 
     public void sauvegarderPartie(Partie partie, String idPartie) {
         try {
-            // Charger le contenu existant
             String contenuActuel = lireFichier();
             List<String> partiesExistantes = extrairePartiesJson(contenuActuel);
 
             // Supprimer l'ancienne entrée avec le même id si elle existe
-            partiesExistantes.removeIf(p -> lireChamp(p, "id") != null && lireChamp(p, "id").equals(idPartie));
+            List<String> filtrees = new ArrayList<>();
+            for (String p : partiesExistantes) {
+                if (!idPartie.equals(lireChamp(p, "id"))) {
+                    filtrees.add(p);
+                }
+            }
+            filtrees.add(partieVersJson(partie, idPartie));
 
-            // Ajouter la nouvelle
-            partiesExistantes.add(partieVersJson(partie, idPartie));
-
-            // Réécrire le fichier
             StringBuilder sb = new StringBuilder();
             sb.append("{\n  \"parties\": [\n");
-            for (int i = 0; i < partiesExistantes.size(); i++) {
-                sb.append(partiesExistantes.get(i));
-                if (i < partiesExistantes.size() - 1) sb.append(",");
+            for (int i = 0; i < filtrees.size(); i++) {
+                sb.append(filtrees.get(i));
+                if (i < filtrees.size() - 1) sb.append(",");
                 sb.append("\n");
             }
             sb.append("  ]\n}");
@@ -131,10 +132,16 @@ public class Serialiseur {
         StringBuilder sb = new StringBuilder();
         sb.append("{\n");
         sb.append("        \"name\": \"").append(joueur.name).append("\",\n");
-        sb.append("        \"actif\": ").append(joueur.actif != null ? "\"" + joueur.actif.id + "\"" : "null").append(",\n");
+        // actif peut être null → on écrit null sans guillemets
+        if (joueur.actif != null) {
+            sb.append("        \"actif\": \"").append(joueur.actif.id).append("\",\n");
+        } else {
+            sb.append("        \"actif\": null,\n");
+        }
         sb.append("        \"banc\": ").append(listeCartesVersJson(joueur.banc)).append(",\n");
         sb.append("        \"main\": ").append(listeCartesVersJson(joueur.main)).append(",\n");
-        sb.append("        \"deck\": ").append(listeCartesVersJson(joueur.deck)).append("\n");
+        // Deck étend ArrayList<Carte>, on convertit pour matcher List<Carte>
+        sb.append("        \"deck\": ").append(listeCartesVersJson(new ArrayList<Carte>(joueur.deck))).append("\n");
         sb.append("      }");
         return sb.toString();
     }
@@ -154,12 +161,11 @@ public class Serialiseur {
     // -------------------------------------------------------
 
     private Partie jsonVersPartie(String json, List<Carte> toutesLesCartes) {
-        String typeStr   = lireChamp(json, "typeDePartie");
-        int tour         = lireInt(json, "tour");
-        int tourDe       = lireInt(json, "tourDe");
+        String typeStr    = lireChamp(json, "typeDePartie");
+        int tour          = lireInt(json, "tour");
+        int tourDe        = lireInt(json, "tourDe");
         boolean finPartie = "true".equals(lireChamp(json, "finPartie"));
 
-        // Extraire les blocs joueur1 et joueur2
         String blocJ1 = extraireBlocJoueur(json, "joueur1");
         String blocJ2 = extraireBlocJoueur(json, "joueur2");
 
@@ -168,8 +174,8 @@ public class Serialiseur {
 
         TypeDePartie type = TypeDePartie.valueOf(typeStr);
         Partie p = new Partie(j1, j2, type);
-        p.tour = tour;
-        p.tourDe = tourDe;
+        p.tour      = tour;
+        p.tourDe    = tourDe;
         p.finPartie = finPartie;
         return p;
     }
@@ -178,28 +184,28 @@ public class Serialiseur {
         String name = lireChamp(json, "name");
         Joueur joueur = new Joueur(name);
 
-        // actif
+        // actif — peut être null (valeur JSON sans guillemets)
         String actifId = lireChamp(json, "actif");
-        if (actifId != null && !actifId.isEmpty()) {
-            joueur.actif = trouverCarte(actifId, toutesLesCartes);
+        if (actifId != null && !actifId.equals("null") && !actifId.isEmpty()) {
+            Carte c = trouverCarte(actifId, toutesLesCartes);
+            if (c != null) joueur.actif = c.copy();
         }
 
-        // banc
+        // banc, main, deck — copy() pour éviter les instances partagées entre joueurs
         for (String id : lireTableauStrings(json, "banc")) {
             Carte c = trouverCarte(id, toutesLesCartes);
-            if (c != null) joueur.banc.add(c);
+            if (c != null) joueur.banc.add(c.copy());
         }
 
-        // main
         for (String id : lireTableauStrings(json, "main")) {
             Carte c = trouverCarte(id, toutesLesCartes);
-            if (c != null) joueur.main.add(c);
+            if (c != null) joueur.main.add(c.copy());
         }
 
-        // deck
+        // On utilise deck.ajouter() pour respecter la limite TAILLEDECK
         for (String id : lireTableauStrings(json, "deck")) {
             Carte c = trouverCarte(id, toutesLesCartes);
-            if (c != null) joueur.deck.add(c);
+            if (c != null) joueur.deck.ajouter(c.copy());
         }
 
         return joueur;
@@ -244,29 +250,37 @@ public class Serialiseur {
         return result;
     }
 
+    /**
+     * Lit la valeur d'un champ JSON.
+     * Gère les strings (avec guillemets), les nombres, les booléens et null (sans guillemets).
+     */
     private String lireChamp(String obj, String cle) {
         String marqueur = "\"" + cle + "\"";
         int idx = obj.indexOf(marqueur);
         if (idx == -1) return null;
         int deuxPoints = obj.indexOf(':', idx);
         if (deuxPoints == -1) return null;
-        // Valeur booléenne ou numérique (pas de guillemets)
+
         int debut = deuxPoints + 1;
         while (debut < obj.length() && obj.charAt(debut) == ' ') debut++;
-        if (debut < obj.length() && obj.charAt(debut) != '"') {
-            int fin = debut;
-            while (fin < obj.length() && obj.charAt(fin) != ',' && obj.charAt(fin) != '\n' && obj.charAt(fin) != '}') fin++;
-            return obj.substring(debut, fin).trim();
+        if (debut >= obj.length()) return null;
+
+        char premier = obj.charAt(debut);
+
+        // Valeur string entre guillemets
+        if (premier == '"') {
+            int finVal = debut + 1;
+            while (finVal < obj.length()) {
+                if (obj.charAt(finVal) == '"' && obj.charAt(finVal - 1) != '\\') break;
+                finVal++;
+            }
+            return obj.substring(debut + 1, finVal);
         }
-        // Valeur string
-        int debutVal = obj.indexOf('"', deuxPoints);
-        if (debutVal == -1) return null;
-        int finVal = debutVal + 1;
-        while (finVal < obj.length()) {
-            if (obj.charAt(finVal) == '"' && obj.charAt(finVal - 1) != '\\') break;
-            finVal++;
-        }
-        return obj.substring(debutVal + 1, finVal);
+
+        // Valeur sans guillemets : nombre, booléen, null
+        int fin = debut;
+        while (fin < obj.length() && obj.charAt(fin) != ',' && obj.charAt(fin) != '\n' && obj.charAt(fin) != '}') fin++;
+        return obj.substring(debut, fin).trim();
     }
 
     private int lireInt(String obj, String cle) {
@@ -287,8 +301,7 @@ public class Serialiseur {
     private List<String> extrairePartiesJson(String json) {
         List<String> parties = new ArrayList<>();
         if (json == null || json.isEmpty()) return parties;
-        String marqueur = "\"parties\"";
-        int idx = json.indexOf(marqueur);
+        int idx = json.indexOf("\"parties\"");
         if (idx == -1) return parties;
         int debutTab = json.indexOf('[', idx);
         if (debutTab == -1) return parties;
@@ -333,7 +346,7 @@ public class Serialiseur {
         for (Carte c : cartes) {
             if (id.equals(c.id)) return c;
         }
-        System.err.println("Carte introuvable : " + id);
+        System.err.println("⚠️ Carte introuvable avec l'id : " + id);
         return null;
     }
 }
