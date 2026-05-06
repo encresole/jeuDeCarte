@@ -15,5 +15,6 @@ public class MainApp {
 		menucontroller.setMenuManager(menuManager);
 		menucontroller.setModel(model);
 		gameController.setMenuManager(menuManager);
+		MusicPlayer.playMusic("/musique/musique.wav");
 	}	
 }
