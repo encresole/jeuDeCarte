@@ -51,7 +51,7 @@ public class MenuController implements ActionListener, ComponentListener {
 			menuManager.showCreer();
 		
 		} else if (e.getActionCommand()=="OPTION") {
-		
+			menuManager.showOption();
 		} else if (e.getActionCommand()=="QUITTER") {
 			System.exit(0);
 		} else if (e.getActionCommand()=="REPRENDRE") {

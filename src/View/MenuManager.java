@@ -20,6 +20,7 @@ public class MenuManager {
 	public GameView gamePanel;
 	public PanelInfo panelInfo;
 	public SavePanel savePanel;
+	public OptionPanel optionPanel;
 	
 	
 	public JPanel cardPanel;
@@ -51,6 +52,7 @@ public class MenuManager {
         gamePanel = new GameView(this);
         panelInfo= new PanelInfo(this);
         savePanel= new SavePanel(this);
+        optionPanel= new OptionPanel(this);
         
         cardPanel.add(startPanel, "Start");
         cardPanel.add(menuPanel,"Menu");
@@ -59,6 +61,7 @@ public class MenuManager {
         cardPanel.add(gamePanel,"Jeu");
         cardPanel.add(panelInfo,"Info");
         cardPanel.add(savePanel,"Save");
+        cardPanel.add(optionPanel,"Option");
 
         frame.add(cardPanel);
         frame.setVisible(true);
@@ -87,6 +90,11 @@ public class MenuManager {
     public void showChoisis() {
     	menuController.changeEtat(Model.EtatPossible.CHOIXJOUEUR);
         cardLayout.show(cardPanel, "Choisis");
+    }
+    
+    public void showOption() {
+    	menuController.changeEtat(Model.EtatPossible.CHOIXJOUEUR);
+        cardLayout.show(cardPanel, "Option");
     }
 
     public void showJeu() {
