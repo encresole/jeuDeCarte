@@ -19,6 +19,8 @@ public class MainMenu extends PanelAgesOfClash {
     
     // GIF de fond
     private Image imageFond;
+    
+    public boolean fondActif;
 
     public MainMenu(MenuManager menuManager) {
         this.menuManager = menuManager;
@@ -31,13 +33,13 @@ public class MainMenu extends PanelAgesOfClash {
         title.setHorizontalAlignment(JLabel.CENTER);
 
         topPanel = new PanelAgesOfClash(new BorderLayout());
-        topPanel.setOpaque(false); // transparent pour voir le gif
+        topPanel.setOpaque(false);
         topPanel.setBorder(BorderFactory.createEmptyBorder(20, 0, 20, 0));
         topPanel.add(title, BorderLayout.CENTER);
         this.add(topPanel, BorderLayout.NORTH);
 
         panelDesButtons = new PanelAgesOfClash();
-        panelDesButtons.setOpaque(false); // transparent
+        panelDesButtons.setOpaque(false);
         panelDesButtons.setLayout(new BoxLayout(panelDesButtons, BoxLayout.Y_AXIS));
         panelDesButtons.setBorder(BorderFactory.createEmptyBorder(0, 20, 0, 0));
 
@@ -70,7 +72,8 @@ public class MainMenu extends PanelAgesOfClash {
         panelDesButtons.add(buttonQuitter);
 
         leftWrapper = new PanelAgesOfClash();
-        leftWrapper.setOpaque(false); // transparent
+        leftWrapper.setOpaque(false);
+        fondActif=true;
         leftWrapper.setLayout(new BoxLayout(leftWrapper, BoxLayout.Y_AXIS));
         leftWrapper.add(Box.createVerticalGlue());
         leftWrapper.add(panelDesButtons);
@@ -81,9 +84,25 @@ public class MainMenu extends PanelAgesOfClash {
 
     @Override
     protected void paintComponent(Graphics g) {
-        super.paintComponent(g);
-        if (imageFond != null) {
-            g.drawImage(imageFond, 0, 0, getWidth(), getHeight(), this);
-        }
+    	if (fondActif) {
+    		super.paintComponent(g);
+            if (imageFond != null) {
+                g.drawImage(imageFond, 0, 0, getWidth(), getHeight(), this);
+            }
+    	} 
+    }
+    
+    public void toggleFond() {
+    	if (fondActif) {
+    		setOpaque(true);
+    		topPanel.setOpaque(true);
+    		panelDesButtons.setOpaque(true);
+    		leftWrapper.setOpaque(true);
+    	} else {
+    		setOpaque(false);
+    		topPanel.setOpaque(false);
+    		panelDesButtons.setOpaque(false);
+    		leftWrapper.setOpaque(false);
+    	}
     }
 }

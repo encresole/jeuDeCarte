@@ -60,7 +60,11 @@ public class MenuController implements ActionListener, ComponentListener {
 			menuManager.showChoisis();
 		} else if (e.getActionCommand()=="INFO") {
 			menuManager.showInfo();
-		}else if (e.getActionCommand()=="SETJOUEUR1") {
+		} else if (e.getActionCommand()=="MUSIC") {
+		 	menuManager.toggleMusique();
+		} else if (e.getActionCommand()=="FOND") {
+			menuManager.menuPanel.toggleFond();
+		} else if (e.getActionCommand()=="SETJOUEUR1") {
 			m.setJoueurEnCours(m.joueur1);
 			menuManager.creePanel.onPlayerModified();
 			menuManager.showCreer();

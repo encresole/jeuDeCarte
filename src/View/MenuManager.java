@@ -12,6 +12,7 @@ public class MenuManager {
 	public MenuController menuController;
 	public GameController gameController;
 	public Model model;
+	public MusicPlayer musicPlayer;
 	
 	public MenuStart startPanel;
 	public MainMenu menuPanel;
@@ -22,21 +23,19 @@ public class MenuManager {
 	public SavePanel savePanel;
 	public OptionPanel optionPanel;
 	
-	
 	public JPanel cardPanel;
 	
 	public CardLayout cardLayout;
-	
-	
 	
 	public JFrame frame;
 	public Dimension frameSize;
 	
 
-    public MenuManager(MenuController menuController,Model model, GameController gameController) {
+    public MenuManager(MenuController menuController,Model model, GameController gameController,MusicPlayer mp) {
     	this.gameController=gameController;
     	this.menuController= menuController;
     	this.model=model;
+    	this.musicPlayer=mp;
     	
         frame = new JFrame("Jeu de Cartes");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -120,6 +119,16 @@ public class MenuManager {
     	savePanel.rafraichirListe();
         cardLayout.show(cardPanel, "Save");
     }
+    
+    public void toggleMusique() {
+		if (musicPlayer.active) {
+			optionPanel.toggleMusique.setText("Activer la musique");
+			musicPlayer.stopMusic();
+		} else {
+			optionPanel.toggleMusique.setText("Désactiver la musique");
+			musicPlayer.playMusic();
+		}
+	}
     
 	public void onFrameResize() {
 		// TODO Auto-generated method stub
