@@ -163,28 +163,33 @@ public class SavePanel extends PanelAgesOfClash {
             return;
         }
 
-        // Injecter la partie chargée dans le modèle
+        // ── Injecter dans le modèle ──────────────────────────────────────────
         menuManager.model.partieEnCours = partie;
         menuManager.model.joueur1       = partie.joueur1;
         menuManager.model.joueur2       = partie.joueur2;
 
-        // Recréer le combat pour la partie chargée
+        // ── Mettre à jour les références dans les PanelJoueur ────────────────
+        // (ils gardaient un pointeur vers les anciennes instances)
+        menuManager.gamePanel.panelJ1.joueur = partie.joueur1;
+        menuManager.gamePanel.panelJ2.joueur = partie.joueur2;
+
+        // ── Recréer le combat pour la partie chargée ─────────────────────────
         menuManager.gameController.combat = new Model.Combat(partie);
 
-        // Synchroniser joueurEnCours selon tourDe
+        // ── Synchroniser joueurEnCours selon tourDe ──────────────────────────
         if (partie.tourDe == 0) {
             menuManager.model.setJoueurEnCours(partie.joueur1);
         } else {
             menuManager.model.setJoueurEnCours(partie.joueur2);
         }
 
-        // Mettre à jour les decks internes du GameController
+        // ── Mettre à jour les decks internes du GameController ───────────────
         menuManager.gameController.deckJ1 = partie.joueur1.deck.copy();
         menuManager.gameController.deckJ2 = partie.joueur2.deck.copy();
 
         setStatus("✅ Partie « " + id + " » chargée avec succès !");
 
-        // Reconstruire la vue de jeu et afficher
+        // ── Rafraîchir la vue et afficher ────────────────────────────────────
         menuManager.gamePanel.onCombatCommence();
         menuManager.gamePanel.onTourUpdate();
         menuManager.gamePanel.refresh();
