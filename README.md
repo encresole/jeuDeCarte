@@ -166,7 +166,7 @@ Gestion du projet :
 ========================================
   RAPPEL IMPORTANT
 ========================================
-- Technologie : JavaFX uniquement (pas Swing !)
+- Technologie : Swing et AWT
 - Commits réguliers OBLIGATOIRES les mercredis en séance
 - Chacun commit depuis son propre compte GitHub
 - Soutenance mi-mai : 12-15 min demo + diaporama auto-évaluation
